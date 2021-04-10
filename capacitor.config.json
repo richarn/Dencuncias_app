@@ -15,8 +15,6 @@
     "allowNavigation": [
       "localhost:8100/*",
       "localhost:8000/*"
-    ],
-    "url": "http://localhost:8100",
-    "cleartext": true
+    ]
   }
 }
