@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="success">
+
+    <ion-buttons  slot="end">
+      <ion-button (click)="mostrarPopVision($event)"  color="light">
+        <label class="header" color="light">Visión</label>
+      </ion-button>
+    </ion-buttons>
+  
+    <ion-buttons  slot="end">
+      <ion-button (click)="mostrarPopMision($event)" color="light">
+        <label class="header" color="light">Misión</label>
+      </ion-button>
+    </ion-buttons>
+   
+    <ion-buttons  slot="end">
+      <ion-button (click)="mostrarPopContacto($event)" color="light">
+        <label class="header" color="light">Contacto</label>
+      </ion-button>
+    </ion-buttons>    
+
+</ion-toolbar>
+</ion-header>
+
+<ion-content class="center">
+    
+      <h2 class="title-fonts">Noticias</h2>
+    
+  
+  <ion-slides pager="true" class="slide-full" [options]="slideOpts">
+
+    <ion-slide *ngFor="let noticia of noticias" (click)="redirectTo(noticia)">
+
+      <ion-card mode="ios">
+        
+        <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
+
+        <ion-card-header>
+          <ion-card-title>{{ noticia.titulo }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          {{ noticia.descripcion.slice(0, 100) }}...
+        </ion-card-content>
+
+      </ion-card>
+
+    </ion-slide>
+
+  </ion-slides>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="agregarDenuncia()" color="success">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+</ion-content>

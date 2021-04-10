@@ -1,0 +1,65 @@
+.center{
+    text-align: center;
+}
+
+.title-fonts{
+    font-family: "Helvetica Neue", Roboto;
+    font-size: 50px;
+    color: #3CB371;
+}
+
+.color-tool{
+    color: #2E8B57
+
+}
+
+.header{
+
+    font-family: "Helvetica Neue", Roboto;
+    font-size: 14   px;
+    color: #FFFAFA;
+    font-weight: bold;
+}
+
+
+.slide-full {
+    height: 80% !important;
+}
+
+ion-card {
+    overflow: unset !important;
+}
+
+ion-card {
+    height: 200px;
+    width: 300px;
+}
+
+.slide-image {
+    width: 100px;
+    text-align: center;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    position: relative;
+    top: -50px;
+}
+
+ion-card-header {
+    position: relative;
+    top: -50px;
+}
+
+ion-card-content {
+    position: relative;
+    top: -50px;
+}
+
+.avatar {
+    width: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

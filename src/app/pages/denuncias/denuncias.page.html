@@ -1,0 +1,71 @@
+<app-header titulo="Agregar Denuncias">
+  
+</app-header>
+
+<ion-content [fullscreen]="true">
+
+  <h2>Agregar Denuncias</h2>
+
+
+  <form [formGroup]="denunciaForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+    
+      <app-mapa [coords]="ubicacion.coords" [ngClass]="{'d-none': !ubicacion.posicion}"></app-mapa>
+
+      <ion-item>
+        <ion-label>Ubicación</ion-label>
+        <ion-spinner name="lines-small"
+        *ngIf="cargandoGeo"></ion-spinner>
+        <ion-toggle slot="end"
+                    [(ngModel)]="ubicacion.posicion"
+                    [ngModelOptions]="{standalone: true}"
+                    (ionChange)="getGeo()"></ion-toggle>
+                  </ion-item>
+                  
+      <ion-item>
+        <ion-row>
+          <ion-col size="6">
+            <ion-button expand="full"
+                        shape="round"
+                        (click)="camara()">
+              <ion-icon slot="start" name="camera"></ion-icon>
+              Cámara
+            </ion-button>       
+          </ion-col>
+
+          <ion-col size="6">
+            <ion-button expand="full"
+                        shape="round"
+                        (click)="libreria()">
+              <ion-icon slot="start" name="images"></ion-icon>
+              Galería
+            </ion-button>       
+          </ion-col>
+        </ion-row>   
+
+        <ion-row>
+          <ion-col size="3" *ngFor="let image of tempImages">
+            <ion-card>
+              <img [src]="image | imageSanitizer">
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Descripción Denuncia</ion-label>
+        <ion-textarea formControlName="descripcion_denuncia"></ion-textarea >
+      </ion-item>
+                  
+      <ion-button 
+          expand="full"
+          type="submit"
+          [disabled]="denunciaForm.invalid"
+          color="success">
+        Enviar
+      </ion-button>
+
+    </ion-list>
+  </form>
+</ion-content>
