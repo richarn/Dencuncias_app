@@ -52,6 +52,10 @@ const routes: Routes = [
         loadChildren: () => import('../registro/registro.module').then( m => m.RegistroPageModule)
       },
       {
+        path: 'detalle-noticia',
+        loadChildren: () => import('../detalle-noticia/detalle-noticia.module').then( m => m.DetalleNoticiaPageModule)
+      },
+      {
         path: '',
         redirectTo: '/',
         pathMatch: 'full'

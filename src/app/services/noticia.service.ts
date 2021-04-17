@@ -29,6 +29,18 @@ export class NoticiaService {
     });
   }
 
+
+  //get id noticia
+  obtenerId(data) {
+    return new Promise(resolve => {
+      this.http.get(`${API}/noticias/id`, data)
+        .subscribe(
+          (response: any) => resolve(response),
+          error => resolve(error)
+        );
+    });
+  }
+
   // enviar noticia
   noticias(data) {
 

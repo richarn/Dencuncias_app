@@ -12,6 +12,7 @@ import { NoticiaService } from 'src/app/services/noticia.service';
 })
 export class InicioPage implements OnInit {
 
+  idNoticia;
   slideOpts = {
     initialSlide: 0,
     speed: 200,
@@ -55,9 +56,9 @@ export class InicioPage implements OnInit {
     this.activeRoute.queryParams.subscribe(params => {
       console.log(params);
       if (params.noticia) {
-
+        this.idNoticia = params.noticia;
       }
-    })
+    });
 
     this.obtenerNoticias();
   }
