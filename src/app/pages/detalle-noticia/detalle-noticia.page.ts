@@ -10,7 +10,7 @@ import { NoticiaService } from 'src/app/services/noticia.service';
 export class DetalleNoticiaPage implements OnInit {
 
   idNoticia;
-  noticias = [];
+  noticia;
 
 
   constructor(
@@ -22,10 +22,10 @@ export class DetalleNoticiaPage implements OnInit {
         console.log(params);
         if (params.noticia) {
           this.idNoticia = params.noticia;
+          this.obtenerNoticias();
         }
       });
 
-      this.obtenerNoticias();
      }
 
 
@@ -34,9 +34,16 @@ export class DetalleNoticiaPage implements OnInit {
 
   async obtenerNoticias() {
     //const query = {estado: 1};
+    console.log('antes peticion: ', this.noticia);
+    
     const response: any = await this.noticiasService.obtenerId(this.idNoticia);
+    console.log(this.idNoticia);
+    
     if (response.success) {
-      this.noticias = response.data;
+      console.log(typeof response.data);
+      
+      this.noticia = response.data;
+      console.log('despues peticion: ', this.noticia);
     }
   }
 

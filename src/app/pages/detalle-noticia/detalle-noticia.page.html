@@ -10,7 +10,7 @@
 
       <ion-list>
         
-        <ion-item *ngFor="let noticia of noticias">
+        <ion-item *ngIf="noticia">
           <ion-label>{{ noticia.titulo }}</ion-label>
 
           <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
