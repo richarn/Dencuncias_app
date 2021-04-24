@@ -53,6 +53,8 @@ export class UserService {
   async user() {
 
     const token = await this.storageService.get("token");
+    console.log('token: ', token);
+    
     
     return new Promise(resolve => {
       const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + token});

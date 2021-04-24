@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Storage } from '@ionic/storage-angular';
 
 const API = environment.api;
 
@@ -10,13 +10,21 @@ const API = environment.api;
 })
 export class StorageService {
 
-  constructor(private storage: NativeStorage) { }
+  constructor(private storage: Storage) {
+    this.init();
+  }
+
+  async init() {
+    await this.storage.create();
+  }
   
 
   // get a token/value object
   async get(key: string): Promise<any> {
     try {
-      const result = await this.storage.getItem(key);
+      const result = await this.storage.get(key);
+      console.log('result: ', result);
+      
       if (result != null) {
         return typeof result == 'string' ? result : JSON.parse(result);
       }
@@ -31,7 +39,7 @@ export class StorageService {
   // // set a token/value
   async set(key: string, value: any): Promise<any> {
     try {
-      const result = await this.storage.setItem(key, value);
+      const result = await this.storage.set(key, value);
       console.log('set string in storage: ' + result);
       return true;
     } catch (reason) {

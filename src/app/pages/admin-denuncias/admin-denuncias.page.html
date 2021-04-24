@@ -7,59 +7,31 @@
 
 
     <h2 class="title-resultado">Listado de Denuncias</h2>
-  
-    <ion-grid>
-      <ion-row>
-          
-        <ion-col>
-          <p></p>
-        </ion-col>
+    
+    <ion-list *ngFor="let denuncia of denuncias">
+      <ion-list-header>
+        Denuncias realizadas
+      </ion-list-header>
 
-        <ion-col>
-          <p></p>
-        </ion-col>
-
-        <ion-col>
-          <p></p>
-        </ion-col>
-
-        <ion-col>
-          <p></p>
-        </ion-col>
-
-        <ion-col>
-          <p></p>
-        </ion-col>
-
-        <ion-col>
-          <p></p>
-        </ion-col>
-
-        <ion-col>
-          <p></p>
-        </ion-col>
-
-        <ion-col>
-          <p></p>
-        </ion-col>
-
-        <ion-col>
-          <p></p>
-        </ion-col>
-
-        <ion-col>
-            <ion-icon  name="share-social-outline"></ion-icon>
-        </ion-col>
-
-        <ion-col>
-          <ion-icon  name="create-outline"></ion-icon>
-        </ion-col>
-
-        <ion-col>
-          <ion-icon  name="trash-outline"></ion-icon>
-        </ion-col>
-
-      </ion-row>
-    </ion-grid>
+      
+      <ion-item-sliding>
+        
+        <ion-item>
+          <ion-label>
+            <h2>{{ denuncia.descripcion_denuncia }}</h2>
+            <h3>{{ denuncia.fecha_denuncia }} </h3>
+          </ion-label>
+        </ion-item>
+ 
+        
+        <ion-item-options side="end">
+          <ion-item-option>Editar</ion-item-option>
+          <ion-item-option color="success">Actualizar</ion-item-option>
+          <ion-item-option color="danger">Eliminar</ion-item-option>
+        </ion-item-options>
+         
+      </ion-item-sliding>
+      
+    </ion-list>
   
   </ion-content>

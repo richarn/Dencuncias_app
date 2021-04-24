@@ -37,4 +37,15 @@ export class DenunciaService {
     });
   }
 
+  GetDenuncia() {
+    return new Promise(resolve => {
+      this.http.get(`${API}/denuncias`)
+        .subscribe(
+          (response: any) => resolve(response),
+          error => resolve(error)
+        );
+    });
+  }
+
+
 }

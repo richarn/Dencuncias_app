@@ -8,6 +8,21 @@
     
       <h2 class="title-fonts">Noticias</h2>
 
+      <ion-card mode="ios" *ngIf="noticia"> 
+        
+        
+        <ion-card-header>
+          <ion-card-title>{{ noticia.titulo }}</ion-card-title>
+        </ion-card-header>
+        
+        <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
+        
+        <ion-card-content>
+          {{ noticia.descripcion.slice(0, 100) }}...
+        </ion-card-content>
+
+      </ion-card>
+<!--
       <ion-list>
         
         <ion-item *ngIf="noticia">
@@ -20,6 +35,6 @@
         </ion-item>
 
       </ion-list>
-  
+    -->
 
 </ion-content>
