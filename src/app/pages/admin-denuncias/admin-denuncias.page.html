@@ -8,7 +8,7 @@
 
     <h2 class="title-resultado">Listado de Denuncias</h2>
     
-    <ion-list *ngFor="let denuncia of denuncias">
+    <ion-list *ngFor="let denuncia of denuncias" (click)="redirectTo(denuncia)">
       <ion-list-header>
         Denuncias realizadas
       </ion-list-header>

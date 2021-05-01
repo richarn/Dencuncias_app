@@ -13,6 +13,7 @@ export class AdminDenunciasPage implements OnInit {
 
   denuncias = [];
 
+  idDenuncia;
   constructor(
     private popoverCtrl: PopoverController,
     private denunciasService: DenunciaService,
@@ -20,6 +21,13 @@ export class AdminDenunciasPage implements OnInit {
     private navCtrl: NavController,
     private router: Router,
   ) {
+
+    this.activeRoute.queryParams.subscribe(params => {
+      console.log(params);
+      if (params.denuncia) {
+        this.idDenuncia = params.denuncia;
+      }
+    });
     this.obtenerDenuncias();
    }
 
@@ -27,11 +35,16 @@ export class AdminDenunciasPage implements OnInit {
   }
 
   async obtenerDenuncias() {
-    const response: any = await this.denunciasService.GetDenuncia();
+    const query = {estado: 1};
+    const response: any = await this.denunciasService.GetDenuncia(query);
 
     if (response.success) {
       this.denuncias = response.denuncias;
     }
+  }
+
+  redirectTo(denuncia) {
+    this.router.navigate(['/detalle-denuncia'], { queryParams: { denuncia: denuncia.id }})
   }
 
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
@@ -37,15 +37,17 @@ export class DenunciaService {
     });
   }
 
-  GetDenuncia() {
+  GetDenuncia(query?) {
     return new Promise(resolve => {
-      this.http.get(`${API}/denuncias`)
+
+      const parametros = new HttpParams({ fromObject: query })
+
+      this.http.get(`${API}/denuncias`, { params: parametros})
         .subscribe(
           (response: any) => resolve(response),
           error => resolve(error)
         );
     });
   }
-
 
 }

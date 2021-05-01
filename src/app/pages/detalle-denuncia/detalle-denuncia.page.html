@@ -1,4 +1,4 @@
-<app-header titulo="Noticias">
+<app-header titulo="Denuncias">
   
 </app-header>
 <ion-header>
@@ -9,17 +9,17 @@
 
 <ion-content class="center">
 
-      <ion-card mode="ios" *ngIf="noticia"> 
+      <ion-card mode="ios"> 
         
         
         <ion-card-header>
-          <ion-card-title>{{ noticia.titulo }}</ion-card-title>
+          <ion-card-title></ion-card-title>
         </ion-card-header>
         
-        <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
+        <img [src]="" class="slide-image">
         
         <ion-card-content>
-          {{ noticia.descripcion.slice(0, 100) }}...
+          
         </ion-card-content>
 
       </ion-card>
