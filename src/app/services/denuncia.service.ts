@@ -50,4 +50,16 @@ export class DenunciaService {
     });
   }
 
+    //get id noticia
+    obtenerId(data) {
+      return new Promise(resolve => {
+        console.log('data: ->', data);
+        
+        this.http.get(`${API}/denuncias/${data}`, data)
+          .subscribe(
+            (response: any) => resolve(response),
+            error => resolve(error)
+          );
+      });
+    }
 }

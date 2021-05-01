@@ -15,10 +15,6 @@
     <param name="android-package" value="org.apache.cordova.geolocation.Geolocation"/>
   </feature>
 
-  <feature name="NativeStorage">
-    <param name="android-package" value="NativeStorage"/>
-  </feature>
-
   <feature name="RequestLocationAccuracy">
     <param name="android-package" value="cordova.plugin.RequestLocationAccuracy"/>
   </feature>

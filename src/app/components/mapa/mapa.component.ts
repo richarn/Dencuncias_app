@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { LocationService } from 'src/app/services/location.service';
+import { environment } from 'src/environments/environment';
 
 declare var mapboxgl: any;
 @Component({
@@ -10,13 +11,15 @@ declare var mapboxgl: any;
 export class MapaComponent implements OnInit, OnChanges {
 
   @Input() coords: string;
-  @ViewChild('mapa') mapa;
+  @ViewChild('mapa', {static: true}) mapa;
 
   constructor(
     private locationService: LocationService
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngAfterViewInit() {
     this.cargarMapa();
 
     // Espera las coordenas del servicio
@@ -39,11 +42,8 @@ export class MapaComponent implements OnInit, OnChanges {
       const latLng = this.coords.split(',');
       const lat = Number(latLng[0]);
       const lng = Number(latLng[1]);
-  
-      console.log('map: ', this.mapa.nativeElement);
-      
 
-      mapboxgl.accessToken = 'pk.eyJ1IjoicmljaDk3IiwiYSI6ImNrazhibTZkZjA1dW4yb29icmpvemV6MTYifQ.6Rl26zo_E9S3T2SYRe0I-w';
+      mapboxgl.accessToken = environment.mapbox.apiKey;
       const map = new mapboxgl.Map({
         container: this.mapa.nativeElement,
         style: 'mapbox://styles/mapbox/streets-v11',

@@ -9,21 +9,39 @@
 
 <ion-content class="center">
 
-      <ion-card mode="ios"> 
+      <ion-card mode="ios" *ngIf="denuncia"> 
         
         
         <ion-card-header>
-          <ion-card-title></ion-card-title>
+          <ion-card-title>{{denuncia.fecha_denuncia}}</ion-card-title>
         </ion-card-header>
         
-        <img [src]="" class="slide-image">
+        <img [src]="denuncia.imagenes | comprobarImagen" class="">
+
+        <app-mapa [coords]="denuncia.ubicacion"></app-mapa>
         
         <ion-card-content>
-          
+          {{ denuncia.ubicacion}}
         </ion-card-content>
-
+        
+        <ion-card-content>
+          {{ denuncia.estado }}
+        </ion-card-content>
+        
+        <ion-card-content>
+          {{ denuncia.descripcion_denuncia }}
+        </ion-card-content>
+        
+        <ion-card-content>
+          {{ denuncia.id_user.nombre}}
+        </ion-card-content>
+        
+        <div *ngIf="user && user.role.nivel == 1">
+          <button (click)="confirmar()">Confirmar</button>
+        </div>
+        
       </ion-card>
-<!--
+      <!--
       <ion-list>
         
         <ion-item *ngIf="noticia">

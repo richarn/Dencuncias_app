@@ -58,7 +58,7 @@ export class DenunciasPage {
     .subscribe(coordenadas => {
       if (coordenadas) {
         // asignar lat;lng al formulario
-        this.denunciaForm.controls.ubicacion.setValue(`${coordenadas.latitude};${coordenadas.longitude}`);
+        this.denunciaForm.controls.ubicacion.setValue(`${coordenadas.latitude},${coordenadas.longitude}`);
       }
       this.cargandoGeo = false;
     });
@@ -109,6 +109,8 @@ export class DenunciasPage {
 
 
   getGeo() {
+    console.log('ubicacion: ', this.ubicacion);
+    
     if (!this.ubicacion.posicion ) {
       this.ubicacion.coords = null;
       return;

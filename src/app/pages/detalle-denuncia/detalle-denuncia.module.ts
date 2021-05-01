@@ -8,12 +8,14 @@ import { DetalleDenunciaPageRoutingModule } from './detalle-denuncia-routing.mod
 
 import { DetalleDenunciaPage } from './detalle-denuncia.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     DetalleDenunciaPageRoutingModule,
     ComponentsModule
   ],

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController, PopoverController } from '@ionic/angular';
 import { DenunciaService } from 'src/app/services/denuncia.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -11,12 +12,14 @@ import { DenunciaService } from 'src/app/services/denuncia.service';
 })
 export class AdminDenunciasPage implements OnInit {
 
+  user;
   denuncias = [];
 
   idDenuncia;
   constructor(
     private popoverCtrl: PopoverController,
     private denunciasService: DenunciaService,
+    private userService: UserService,
     private activeRoute: ActivatedRoute,
     private navCtrl: NavController,
     private router: Router,
@@ -31,15 +34,19 @@ export class AdminDenunciasPage implements OnInit {
     this.obtenerDenuncias();
    }
 
+   async ionViewWillEnter() {
+    // obtener datos del usuario desde el servicio y asignar al formulario
+    this.user = await this.userService.user();
+   }
+
   ngOnInit() {
   }
 
   async obtenerDenuncias() {
-    const query = {estado: 1};
-    const response: any = await this.denunciasService.GetDenuncia(query);
+    const response: any = await this.denunciasService.GetDenuncia();
 
     if (response.success) {
-      this.denuncias = response.denuncias;
+      this.denuncias = response.data;
     }
   }
 
