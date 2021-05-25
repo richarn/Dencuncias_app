@@ -39,7 +39,9 @@ export class MapaComponent implements OnInit, OnChanges {
   cargarMapa() {
     if (this.coords) {
       
-      const latLng = this.coords.split(',');
+      const latLng = this.coords.split(';');
+      console.log('latLng: ', latLng);
+      
       const lat = Number(latLng[0]);
       const lng = Number(latLng[1]);
 

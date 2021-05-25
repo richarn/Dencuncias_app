@@ -36,7 +36,7 @@ export class AdminDenunciasPage implements OnInit {
 
    async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
-    this.user = await this.userService.user();
+    this.user = await this.userService.getUser();
    }
 
   ngOnInit() {

@@ -43,7 +43,7 @@ export class AdminNoticiasPage implements OnInit {
 
   async ionViewWillEnter(){
     //obtener los datos del usuario
-    this.user = await this.userService.user();
+    this.user = await this.userService.getUser();
     if (this.user) {this.noticiasForm.controls.id_user.setValue(this.user.id); }
   }
 

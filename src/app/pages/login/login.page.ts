@@ -25,8 +25,6 @@ export class LoginPage implements OnInit {
   }
 
   async ngOnInit() {
-    const response: any = await this.userService.user();
-    console.log(response);
   }
 
   createForm() {

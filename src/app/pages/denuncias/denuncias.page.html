@@ -23,33 +23,7 @@
                   </ion-item>
                   
       <ion-item>
-        <ion-row>
-          <ion-col size="6">
-            <ion-button expand="full"
-                        shape="round"
-                        (click)="camara()">
-              <ion-icon slot="start" name="camera"></ion-icon>
-              Cámara
-            </ion-button>       
-          </ion-col>
-
-          <ion-col size="6">
-            <ion-button expand="full"
-                        shape="round"
-                        (click)="libreria()">
-              <ion-icon slot="start" name="images"></ion-icon>
-              Galería
-            </ion-button>       
-          </ion-col>
-        </ion-row>   
-
-        <ion-row>
-          <ion-col size="3" *ngFor="let image of tempImages">
-            <ion-card>
-              <img [src]="image | imageSanitizer">
-            </ion-card>
-          </ion-col>
-        </ion-row>
+        <app-select-image (resultados)="imagenesSeleccionadas($event)"></app-select-image>
 
       </ion-item>
 
@@ -63,7 +37,7 @@
           type="submit"
           [disabled]="denunciaForm.invalid"
           color="success">
-        Enviar
+          {{ denunciaForm.value.id ? 'Actualizar' : 'Enviar' }}
       </ion-button>
 
       <!-- <div *ngIf="user && user.role.nivel == 1"></div> Comprobacion por rol de usuario -->

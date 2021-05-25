@@ -1,0 +1,59 @@
+<app-header titulo="Denuncias">
+  
+</app-header>
+
+<ion-content class="center">
+
+      <ion-card mode="ios" *ngFor="let denuncia of denuncias" (click)="detalle(denuncia)"> 
+        
+        
+        <ion-card-header>
+          <ion-card-title>{{denuncia.fecha_denuncia}}</ion-card-title>
+        </ion-card-header>
+     
+        <ion-item *ngFor="let imagen of denuncia.imagenes">
+
+          <img [src]="imagen | formatearImagen" class="">
+          
+        </ion-item>
+        <app-mapa [coords]="denuncia.ubicacion"></app-mapa>
+        
+        <ion-card-content>
+          {{ denuncia.ubicacion}}
+        </ion-card-content>
+        
+        <ion-card-content>
+          {{ denuncia.estado }}
+        </ion-card-content>
+        
+        <ion-card-content>
+          {{ denuncia.descripcion_denuncia }}
+        </ion-card-content>
+        
+        <ion-card-content>
+         <!--  {{ denuncia.id_user.nombre}} -->
+        </ion-card-content>
+
+        <!--- Comprueba que el rol sea del administrador para mostrar el boton de confirmacion -->
+        <!---  1 -> administrador
+        2 -> encargado
+        3 -> usuario que denuncio
+        <div *ngIf="user && [1, 2].includes(user.role.nivel)"> -->
+
+      </ion-card>
+      <!--
+      <ion-list>
+        
+        <ion-item *ngIf="noticia">
+          <ion-label>{{ noticia.titulo }}</ion-label>
+
+          <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
+          
+          <ion-label>{{ noticia.descripcion.slice(0, 100) }}...</ion-label>
+       
+        </ion-item>
+
+      </ion-list>
+    -->
+
+</ion-content>

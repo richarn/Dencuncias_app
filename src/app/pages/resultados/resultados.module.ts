@@ -8,6 +8,7 @@ import { ExploreContainerComponentModule } from '../../explore-container/explore
 
 import { ResultadosPageRoutingModule } from './resultados-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: ResultadosPage }]),
     ResultadosPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ],
   declarations: [ResultadosPage]
 })

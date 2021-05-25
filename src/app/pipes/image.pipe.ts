@@ -1,21 +1,21 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { environment } from 'src/environments/environment';
 
 const API = environment.host;
 
 @Pipe({
-  name: 'comprobarImagen'
+  name: 'formatearImagen'
 })
-export class ComprobarImagenPipe implements PipeTransform {
+export class ImagePipe implements PipeTransform {
 
-  transform(imagenes: any[], index: number = 0): string {
+  transform(imagen: any): string {
     let url = 'assets/images/no-image.jpg';
 
-    if (imagenes && imagenes.length) {
-      url = `${API}${imagenes[index].url}`;
+    if (imagen) {
+      url = `${API}${imagen.url}`;
     }
 
     return url;
   }
-
 }

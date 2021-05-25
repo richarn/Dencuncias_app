@@ -46,11 +46,20 @@ export class DenunciasPage {
     private locationService: LocationService
   ) {
     this.createForm();
+    // Si la url tiene id se obtiene obtiene la denuncia para actualizar
+    // this.activeRoute.queryParams.subscribe(params => {
+      // if (params.denuncia) {
+        // this.idDenuncia = params.denuncia;
+        // this.obtenerDenuncia();
+      // }
+    // });
   }
 
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
-    this.user = await this.userService.user();
+    this.user = await this.userService.getUser();
+    console.log('user: ', this.user);
+    
     if (this.user) { this.denunciaForm.controls.id_user.setValue(this.user.id); }
 
     // Espera las coordenadas enviadas desde el servicio
@@ -58,7 +67,7 @@ export class DenunciasPage {
     .subscribe(coordenadas => {
       if (coordenadas) {
         // asignar lat;lng al formulario
-        this.denunciaForm.controls.ubicacion.setValue(`${coordenadas.latitude},${coordenadas.longitude}`);
+        this.denunciaForm.controls.ubicacion.setValue(`${coordenadas.latitude};${coordenadas.longitude}`);
       }
       this.cargandoGeo = false;
     });
@@ -72,6 +81,7 @@ export class DenunciasPage {
     console.log('createForm');
     
     this.denunciaForm = this.formBuilder.group({
+      id: [''],
       descripcion_denuncia: ['', Validators.required],
       estado : [0, Validators.required],
       ubicacion : ['', Validators.required],
@@ -79,8 +89,24 @@ export class DenunciasPage {
     });
   }
 
-  async onSubmit() {
-    
+  async obtenerDenuncia() {
+    // obtener denuncia y rellenar formulario
+    // servicio.obtenerId(idDenuncia)
+    // this.denuncia = response.body
+    // recorre por las keys del formulario y asigna los datos
+    for (let key in this.denuncia) {
+      if (this.denunciaForm.value[key]) {
+        this.denunciaForm.controls[key].setValue(this.denuncia[key])
+      }
+    }
+  }
+
+  onSubmit() {  
+    if (this.denunciaForm.value.id) this.actualizarDenuncia();
+    else this.crearDenuncia();
+  }
+
+  async crearDenuncia() {
     // formulario -> servicio -> api/controlador
 
     // datos del formulario
@@ -89,7 +115,7 @@ export class DenunciasPage {
     data['imagenes'] = this.imagenes;
     
     // enviar datos del formulario al servicio
-    const respuesta: any = await this.denunciaService.denuncias(data);
+    const respuesta: any = await this.denunciaService.registrar(data);
 
     if (respuesta.success) {
       const toast = await this.toastController.create({
@@ -105,7 +131,35 @@ export class DenunciasPage {
 
       this.router.navigate(['/']);
     }
-  }  
+  }
+
+  imagenesSeleccionadas(imagenes) {
+    this.imagenes = imagenes;
+  }
+
+  async actualizarDenuncia() {
+    const data = {...this.denunciaForm.value};
+    // se agregar el atributo imagenes con las imagenes a enviar
+    data['imagenes'] = this.imagenes;
+    
+    // enviar datos del formulario al servicio
+    const respuesta: any = await this.denunciaService.actualizar(data);
+
+    if (respuesta.success) {
+      const toast = await this.toastController.create({
+        message: 'Denuncia actualizada correctamente',
+        duration: 2000
+      });
+
+      this.imagenes = [];
+      this.tempImages = [];
+      this.denunciaForm.reset();
+
+      await toast.present();
+
+      this.router.navigate(['/']);
+    }
+  }
 
 
   getGeo() {

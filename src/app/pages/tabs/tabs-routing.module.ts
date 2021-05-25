@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/app/guards/auth.guard';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
       },
       {
         path: 'denuncias',
+        // canActivate: [AuthGuard],
         loadChildren: () => import('../denuncias/denuncias.module').then(m => m.DenunciasPageModule)
       },
       {
@@ -25,22 +27,27 @@ const routes: Routes = [
       },
       {
         path:'admin-inicio',
+        canActivate: [AuthGuard],
         loadChildren: () => import('../admin-inicio/admin-inicio.module').then(m => m.AdminInicioPageModule)
       },
       {
         path: 'admin-denuncias',
+        canActivate: [AuthGuard],
         loadChildren: () => import('../admin-denuncias/admin-denuncias.module').then( m => m.AdminDenunciasPageModule)
       },
       {
         path: 'admin-publicadas',
+        canActivate: [AuthGuard],
         loadChildren: () => import('../admin-publicadas/admin-publicadas.module').then( m => m.AdminPublicadasPageModule)
       },
       {
         path: 'admin-arregladas',
+        canActivate: [AuthGuard],
         loadChildren: () => import('../admin-arregladas/admin-arregladas.module').then( m => m.AdminArregladasPageModule)
       },     
       {
         path: 'admin-noticias',
+        canActivate: [AuthGuard],
         loadChildren: () => import('../admin-noticias/admin-noticias.module').then( m => m.AdminNoticiasPageModule)
       },
       {
@@ -57,7 +64,13 @@ const routes: Routes = [
       },
       {
         path: 'detalle-denuncia',
+        canActivate: [AuthGuard],
         loadChildren: () => import('../detalle-denuncia/detalle-denuncia.module').then( m => m.DetalleDenunciaPageModule)
+      },
+      {
+        path: 'user-denuncias',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('../user-denuncias/user-denuncias.module').then( m => m.UserDenunciasPageModule)
       },
       {
         path: '',

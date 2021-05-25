@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { DenunciaService } from 'src/app/services/denuncia.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-resultados',
@@ -7,11 +11,48 @@ import { Component } from '@angular/core';
 })
 export class ResultadosPage {
 
-  lista:string[]=["img1","img2","img3",
-  "img4","img5","img6",
-  "img7","img8","img9",
-  "img10","img11","img12"
-];
-  constructor() {}
+idDenuncia;
+user;  
+denuncias = [];
+  constructor(
+    private denunciaService: DenunciaService,
+    private activeRoute: ActivatedRoute,
+    private navCtrl: NavController,
+    private router: Router,
+    private userService: UserService
 
+  ){
+    this.activeRoute.queryParams.subscribe(params =>{
+      console.log(params);
+      if(params.denuncia){
+        this.idDenuncia = params.denuncia;
+      }
+    });
+  }
+
+  async ionViewWillEnter(){
+    this.user = await this.userService.getUser();
+    this.obtenerDenuncia();
+  }
+
+  ngOnInit() {
+  }
+
+  async obtenerDenuncia(){
+    const query = {estado: 2}
+    const response: any = await this.denunciaService.GetDenuncia(query); 
+    if(response.success){
+      this.denuncias = response.data; 
+    }
+    console.log("denuncias :", this.denuncias);
+    
+  }
+
+  redirectTo(denuncia){
+    this.router.navigate(['/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}});
+  }
+
+  onClick(){
+    this.navCtrl.navigateBack('/');
+  }
 }

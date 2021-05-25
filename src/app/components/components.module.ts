@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { PopinfoComponent } from './popinfo/popinfo.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { SelectImageComponent } from './select-image/select-image.component';
 
 
 @NgModule({
@@ -13,8 +14,8 @@ import { PipesModule } from '../pipes/pipes.module';
     HeaderComponent,
     PopinfoComponent,
     MapaComponent,
-    AdminHeaderComponent
-
+    AdminHeaderComponent,
+    SelectImageComponent,
   
   ],
 
@@ -22,8 +23,8 @@ import { PipesModule } from '../pipes/pipes.module';
     HeaderComponent,
     PopinfoComponent,
     MapaComponent,
-    AdminHeaderComponent
-  
+    AdminHeaderComponent,
+    SelectImageComponent
 
   ],
   imports: [
