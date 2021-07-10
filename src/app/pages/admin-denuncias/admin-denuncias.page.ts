@@ -55,11 +55,11 @@ export class AdminDenunciasPage implements OnInit {
 
   
   redirectTo(denuncia) {
-    this.router.navigate(['/detalle-denuncia'], { queryParams: { denuncia: denuncia.id }})
+    this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: { denuncia: denuncia.id }})
   }
 
   detalle(denuncia) {
-    this.router.navigate(['/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}})
+    this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}})
   }
   
 

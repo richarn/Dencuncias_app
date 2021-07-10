@@ -7,14 +7,14 @@
         "loggedIn": false
     },
     {
-        "icon": "home",
+        "icon": "newspaper",
         "name": "Noticias",
         "redirectTo": "/publications",
         "admin": false,
         "loggedIn": false
     },
     {
-        "icon": "home",
+        "icon": "newspaper",
         "name": "Admin - noticias",
         "redirectTo": "/admin-noticias",
         "admin": true,
@@ -35,9 +35,30 @@
         "loggedIn": true
     },
     {
-        "icon": "home",
+        "icon": "person-add",
         "name": "Registrarse",
         "redirectTo": "/registro",
+        "admin": false,
+        "loggedIn": false
+    },
+    {
+        "icon": "analytics",
+        "name": "Misión",
+        "redirectTo": "/mision",
+        "admin": false,
+        "loggedIn": false
+    },
+    {
+        "icon": "eye",
+        "name": "Visión",
+        "redirectTo": "/vision",
+        "admin": false,
+        "loggedIn": false
+    },
+    {
+        "icon": "call",
+        "name": "Contacto",
+        "redirectTo": "/contacto",
         "admin": false,
         "loggedIn": false
     }

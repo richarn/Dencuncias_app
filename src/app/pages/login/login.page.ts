@@ -32,7 +32,7 @@ export class LoginPage implements OnInit {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
     if (this.user && this.user.id) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/tabs/home']);
     }
    }
 

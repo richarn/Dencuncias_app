@@ -123,11 +123,11 @@ export class InicioPage implements OnInit {
   }
 
   agregarDenuncia() {
-    this.router.navigate(['/denuncias'])
+    this.router.navigate(['/tabs/denuncias'])
   }
 
   redirectTo(noticia) {
-    this.router.navigate(['/detalle-noticia'], { queryParams: { noticia: noticia.id }})
+    this.router.navigate(['/tabs/detalle-noticia'], { queryParams: { noticia: noticia.id }})
   }
 
   onClick(){

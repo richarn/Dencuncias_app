@@ -1,85 +1,103 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-title>Registro</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
 
-  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
-    <ion-list>
-    
+  <div class="background-opacity"></div>
   
-      <ion-item>
-        <ion-label position="floating">Nombre y Apellido</ion-label>
-        <ion-input type="text" formControlName="name">
-        </ion-input>
-      </ion-item>
+  <div class="container">
 
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" 
-                   name="email"
-                   pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}"
-                   formControlName="email"
-                   required>
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">C.I</ion-label>
-        <ion-input type="text" formControlName="ci">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Teléfono</ion-label>
-        <ion-input type="text" formControlName="telefono">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Barrio</ion-label>
+    <div class="header-container">
+      <img src="assets/icon/white-icon.png" alt="Blue icon">
+      <h1>CENTRO DE DENUNCIAS</h1>
+    </div>
+  
+    <div class="form-container">
+      <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
         
-          
-          <ion-select formControlName="id_barrio">
-            <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
-          </ion-select>
-        
-      </ion-item>
+        <ion-list>
 
-      <!-- <ion-item *ngIf="es administrador">
-        <ion-label position="floating">Role</ion-label>
-        
-          
-          <ion-select formControlName="id_barrio">
-            <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
-          </ion-select>
-        
-      </ion-item> -->
-
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" formControlName="password">
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Confirmar Contraseña</ion-label>
-        <ion-input type="password" formControlName="password_confirmation">
-        </ion-input>
-      </ion-item>
+          <div class="icon-container">
+            <img src="assets/icon/blue-icon.png" alt="Blue icon">
+          </div>
       
-      <ion-button 
-                expand="full"
-                type="submit"
-                [disabled]="registroForm.invalid"
-                color="success">
-        Enviar
-      </ion-button>
+          <ion-item>
+            <ion-label position="floating">Nombre y Apellido</ion-label>
+            <ion-input type="text" formControlName="name">
+            </ion-input>
+          </ion-item>
 
-    </ion-list>
-  </form>
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" 
+                      name="email"
+                      pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}"
+                      formControlName="email"
+                      required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">C.I</ion-label>
+            <ion-input type="text" formControlName="ci">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Teléfono</ion-label>
+            <ion-input type="text" formControlName="telefono">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Barrio</ion-label>
+            
+              
+              <ion-select formControlName="id_barrio">
+                <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
+              </ion-select>
+            
+          </ion-item>
+
+          <!-- <ion-item *ngIf="es administrador">
+            <ion-label position="floating">Role</ion-label>
+            
+              
+              <ion-select formControlName="id_barrio">
+                <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
+              </ion-select>
+            
+          </ion-item> -->
+
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Confirmar Contraseña</ion-label>
+            <ion-input type="password" formControlName="password_confirmation">
+            </ion-input>
+          </ion-item>
+          
+          <div class="button-group">
+            <ion-button 
+              expand="block"
+              shape="round"
+              type="submit"
+              [disabled]="registroForm.invalid"
+              color="primary">
+              REGISTRARSE
+            </ion-button>
+          </div>
+
+          <div class="login-container">
+            Ya tienes una cuenta? <a [routerLink]="['/login']" routerLinkActive="router-link-active" >Iniciar Sesión</a>
+          </div>
+
+        </ion-list>
+      </form>
+    </div>
+  </div>
 </ion-content>
 
 

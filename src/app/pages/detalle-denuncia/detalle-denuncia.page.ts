@@ -162,7 +162,7 @@ export class DetalleDenunciaPage implements OnInit {
         
       }
     
-    this.router.navigate(['/user-denuncias']);
+    this.router.navigate(['/tabs/user-denuncias']);
   }
 
   async confirmarEliminacion(imagen) {

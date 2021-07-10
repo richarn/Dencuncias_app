@@ -1,38 +1,57 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <ion-list>
-    
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" 
-                   name="email"
-                   pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}"
-                   formControlName="email"
-                   required>
-        </ion-input>
-      </ion-item>
+  <div class="background-opacity"></div>
+  
+  <div class="container">
 
-      <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" formControlName="password">
-        </ion-input>
-      </ion-item>
+    <div class="header-container">
+      <img src="assets/icon/white-icon.png" alt="Blue icon">
+      <h1>CENTRO DE DENUNCIAS</h1>
+    </div>
+  
+    <div class="form-container">
       
-      <ion-button 
-                expand="full"
-                type="submit"
-                [disabled]="loginForm.invalid"
-                color="success">
-        Enviar
-      </ion-button>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <ion-list>
+          
+          <div class="icon-container">
+            <img src="assets/icon/blue-icon.png" alt="Blue icon">
+          </div>
+  
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" 
+                       name="email"
+                       pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}"
+                       formControlName="email"
+                       required>
+            </ion-input>
+          </ion-item>
+    
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password">
+            </ion-input>
+          </ion-item>
+          
+          <div class="button-group">
+            <ion-button 
+              expand="block"
+              shape="round"
+              type="submit"
+              [disabled]="loginForm.invalid"
+              color="primary">
+              INGRESAR
+            </ion-button>
+          </div>
 
-    </ion-list>
-  </form>
+          <div class="register-container">
+            <a [routerLink]="['/registro']" routerLinkActive="router-link-active" >Registrarse</a>
+          </div>
+    
+        </ion-list>
+      </form>
+    </div>
+  </div>
 </ion-content>

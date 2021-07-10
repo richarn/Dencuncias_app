@@ -73,12 +73,12 @@ export class UserService {
   }
   
   // Datos del usuario
-  async user(): Promise<boolean> {
+  async user(fromGuard = false): Promise<boolean> {
 
     const token = await this.storageService.get("token");
     console.log('token: ', token);
 
-    if (!token) {
+    if (!token && fromGuard) {
       this.navController.navigateRoot('/login');
       return Promise.resolve(false);
     }

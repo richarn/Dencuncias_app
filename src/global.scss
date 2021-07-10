@@ -28,3 +28,34 @@
 .hidden {
     display: none;
 }
+
+ion-item {
+    --border-color: transparent;
+
+    &.item-interactive.ion-invalid {
+        // --highlight-background: var(--highlight-color-invalid);
+        --highlight-background: transparent !important;
+
+        ion-input.ion-invalid.has-focus {
+            border-color: var(--highlight-color-invalid);
+        }
+    }
+
+    &.item-interactive.ion-valid {
+        // --highlight-background: var(--highlight-color-valid);
+        --highlight-background: transparent !important;
+
+        ion-input.ion-valid.has-focus {
+            border-color: var(--highlight-color-valid);
+        }
+    }
+}
+
+ion-input {
+    --color: #3B3E51 !important;
+    border: 1px solid #D1D1D1;
+    border-radius: 50px;
+    --padding-top: 0.8em !important;
+    --padding-bottom: 0.8em !important;
+    --padding-start: 1em !important;
+}

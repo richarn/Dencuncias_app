@@ -83,11 +83,11 @@ export class VerdenunciasPage {
   }
 
   redirectTo(denuncia) {
-    this.router.navigate(['/detalle-denuncia'], { queryParams: { denuncia: denuncia.id }});
+    this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: { denuncia: denuncia.id }});
   }
  
   userDenuncia(){
-    this.router.navigate(['/user-denuncias']);
+    this.router.navigate(['/tabs/user-denuncias']);
   }
   
   onClick(){

@@ -57,7 +57,7 @@ export class UserDenunciasPage implements OnInit {
   }
 
   detalle(denuncia) {
-    this.router.navigate(['/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}})
+    this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}})
   }
 
 }

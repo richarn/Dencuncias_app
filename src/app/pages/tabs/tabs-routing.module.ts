@@ -14,7 +14,7 @@ const routes: Routes = [
       },
       {
         path: 'denuncias',
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         loadChildren: () => import('../denuncias/denuncias.module').then(m => m.DenunciasPageModule)
       },
       {
@@ -50,14 +50,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('../admin-noticias/admin-noticias.module').then( m => m.AdminNoticiasPageModule)
       },
-      {
-        path: 'login',
-        loadChildren: () => import('../login/login.module').then( m => m.LoginPageModule)
-      },
-      {
-        path: 'registro',
-        loadChildren: () => import('../registro/registro.module').then( m => m.RegistroPageModule)
-      },
+      // {
+      //   path: 'login',
+      //   loadChildren: () => import('../login/login.module').then( m => m.LoginPageModule)
+      // },
+      // {
+      //   path: 'registro',
+      //   loadChildren: () => import('../registro/registro.module').then( m => m.RegistroPageModule)
+      // },
       {
         path: 'detalle-noticia',
         loadChildren: () => import('../detalle-noticia/detalle-noticia.module').then( m => m.DetalleNoticiaPageModule)
@@ -74,6 +74,7 @@ const routes: Routes = [
       },
       {
         path: 'admin-user',
+        canActivate: [AuthGuard],
         loadChildren: () => import('../admin-user/admin-user.module').then( m => m.AdminUserPageModule)
       },
       {
