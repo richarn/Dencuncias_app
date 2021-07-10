@@ -22,10 +22,14 @@ export class HeaderComponent implements OnInit {
 
    async ngOnInit() {
 
-     // obtener datos del usuario desde el servicio y asignar al formulario
-     this.user = await this.userService.getUser();
-     console.log('usuuu: ', this.user.id);
-    }
+    // obtener datos del usuario desde el servicio y asignar al formulario
+    this.user = await this.userService.getUser();
+
+    this.userService.updateUserInfo
+    .subscribe(user => {
+      this.user = user;
+    })
+  }
 
     
   back() {

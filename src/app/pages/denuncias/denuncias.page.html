@@ -1,59 +1,55 @@
-<app-header titulo="Agregar Denuncias">
+
+<ion-content>
   
-</app-header>
+  <app-header titulo="Agregar Denuncias"></app-header>
+  
+  <div class="form-container">
 
-<ion-content [fullscreen]="true">
-
-  <h2>Agregar Denuncias</h2>
-
-
-  <form [formGroup]="denunciaForm" (ngSubmit)="onSubmit()">
-    <ion-list>
-    
-      <app-mapa></app-mapa>
-
-      <ion-item>
-        <ion-label>Ubicación</ion-label>
-        <ion-spinner name="lines-small"
-        *ngIf="cargandoGeo"></ion-spinner>
-        <ion-toggle slot="end"
-                    [(ngModel)]="ubicacion.posicion"
-                    [ngModelOptions]="{standalone: true}"
-                    (ionChange)="getGeo()"></ion-toggle>
-                  </ion-item>
-                  
-      <ion-item>
+    <form [formGroup]="denunciaForm" (ngSubmit)="onSubmit()">
+      <ion-list>
+  
+        <div class="subheader">
+          <h2>Enviar Denuncia</h2>
+          <p>Para poder enviar su denuncia por favor complete los campos.</p>
+        </div>
+      
+        <!-- <app-mapa></app-mapa> -->
+                    
         <app-select-image (resultados)="imagenesSeleccionadas($event)"></app-select-image>
-
-      </ion-item>
-
-      <!-- <ion-item>
-        <ion-label>Pizza</ion-label>
-        <ion-select value="peperoni" multiple="true" placeholder="Select Pizza">
-          <ion-select-option value="peperoni">Peperoni</ion-select-option>
-          <ion-select-option value="hawaii">Hawaii</ion-select-option>
+  
+        <ion-select formControlName="id_barrio" placeholder="Barrio">
+          <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
         </ion-select>
-      </ion-item> -->
+  
+        <ion-item>
+          <ion-label position="floating">Descripción Denuncia</ion-label>
+          <ion-textarea placeholder="Descripción..." formControlName="descripcion_denuncia"></ion-textarea >
+        </ion-item>
 
-      <ion-select formControlName="id_barrio" placeholder="Barrio">
-        <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
-      </ion-select>
+        <ion-item>
+          <ion-label class="location-text">Enviar Ubicación</ion-label>
+          <ion-spinner *ngIf="cargandoGeo" name="lines-small" ></ion-spinner>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Descripción Denuncia</ion-label>
-        <ion-textarea formControlName="descripcion_denuncia"></ion-textarea >
-      </ion-item>
-                  
-      <ion-button 
-          expand="full"
-          type="submit"
-          [disabled]="denunciaForm.invalid"
-          color="success">
-          {{ denunciaForm.value.id ? 'Actualizar' : 'Enviar' }}
-      </ion-button>
+        <ion-item class="checkbox-item">
+          <ion-toggle
+            [(ngModel)]="ubicacion.posicion"
+            [ngModelOptions]="{standalone: true}"
+            (ionChange)="getGeo()">
+          </ion-toggle>
+        </ion-item>
+                    
+      </ion-list>
 
-      <!-- <div *ngIf="user && user.role.nivel == 1"></div> Comprobacion por rol de usuario -->
-
-    </ion-list>
-  </form>
+      <div class="button-group">
+        <ion-button
+            shape="round"
+            type="submit"
+            [disabled]="denunciaForm.invalid"
+            color="primary">
+            {{ denunciaForm.value.id ? 'Actualizar' : 'Enviar' }}
+        </ion-button>
+      </div>
+    </form>
+  </div>
 </ion-content>
