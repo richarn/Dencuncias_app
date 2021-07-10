@@ -8,6 +8,9 @@ import { CameraService } from 'src/app/services/camera.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { DenunciaService } from 'src/app/services/denuncia.service';
 import { LocationService } from 'src/app/services/location.service';
+import { GeneralService } from 'src/app/services/general.service';
+import { BarrioService } from 'src/app/services/barrio.service';
+
 import { Subscription } from 'rxjs';
 
 declare var window: any;
@@ -21,7 +24,7 @@ export class DenunciasPage {
 
   cargandoGeo = false;
 
-  tempImages: string[] = [];
+  barrios: any[] = [];
   imagenes: any[] = [];
 
   ubicacion = { 
@@ -42,10 +45,13 @@ export class DenunciasPage {
     private storageService: StorageService,
     private denunciaService: DenunciaService,
     private cameraService: CameraService,
+    private generalService: GeneralService,
+    private barrioService: BarrioService,
     private toastController: ToastController,
     private locationService: LocationService
   ) {
     this.createForm();
+    this.obtenerBarrios();
     // Si la url tiene id se obtiene obtiene la denuncia para actualizar
     // this.activeRoute.queryParams.subscribe(params => {
       // if (params.denuncia) {
@@ -82,11 +88,21 @@ export class DenunciasPage {
     
     this.denunciaForm = this.formBuilder.group({
       id: [''],
+      id_barrio: ['', Validators.required],
       descripcion_denuncia: ['', Validators.required],
       estado : [0, Validators.required],
       ubicacion : ['', Validators.required],
       id_user : ['', Validators.required],
     });
+  }
+
+  async obtenerBarrios() {
+    const response: any = await this.barrioService.barrios();
+    if (response.success) {
+      this.barrios = response.barrios;
+      console.log(this.barrios);
+      
+    }
   }
 
   async obtenerDenuncia() {
@@ -123,12 +139,17 @@ export class DenunciasPage {
         duration: 2000
       });
 
+      // this.denuncia = respuesta.data;
+
+      // await this.generalService.createQueue(this.imagenes, this.subirImagen.bind(this))
+
       this.imagenes = [];
-      this.tempImages = [];
+      this.ubicacion.posicion = false;
+      this.generalService.limpiarImagenes.emit();
       this.denunciaForm.reset();
 
       await toast.present();
-
+      this.createForm();
       this.router.navigate(['/']);
     }
   }
@@ -136,6 +157,13 @@ export class DenunciasPage {
   imagenesSeleccionadas(imagenes) {
     this.imagenes = imagenes;
   }
+
+  // async subirImagen(blob: Blob) {
+  //   const response: any = await this.denunciaService.uploadImage(this.denuncia.id, blob);
+  //   if (response.success) {
+  //     console.log('imagen subida')
+  //   }
+  // }
 
   async actualizarDenuncia() {
     const data = {...this.denunciaForm.value};
@@ -151,8 +179,12 @@ export class DenunciasPage {
         duration: 2000
       });
 
+      // this.denuncia = respuesta.data;
+      // await this.generalService.createQueue(this.imagenes, this.subirImagen.bind(this))
+
       this.imagenes = [];
-      this.tempImages = [];
+      this.ubicacion.posicion = false;
+      this.generalService.limpiarImagenes.emit();
       this.denunciaForm.reset();
 
       await toast.present();
@@ -173,33 +205,6 @@ export class DenunciasPage {
     this.cargandoGeo = true;
 
     this.locationService.requestPermissions();
-  }
-
-  // seccion camara
-
-  async camara() {
-    const imageData = await this.cameraService.abrirCamara();
-    this.procesarImagen(imageData);
-  }
-
-  async libreria() {
-    const imageData = await this.cameraService.abrirGaleria();
-    this.procesarImagen(imageData);
-  }
-
-  async procesarImagen(imageData) {
-    
-    const img = window.Ionic.WebView.convertFileSrc( imageData );
-    // Muestra la/s imagen/es
-    this.tempImages.push(img);
-
-    // obtiene la imagen
-    const response = await fetch(img);
-    // convierte a blob para enviar a la api
-    const blob = await response.blob();
-    this.imagenes.push(blob);
-    console.log('denuncias');
-    
   }
 
   onDestroy() {

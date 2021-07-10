@@ -10,7 +10,7 @@
   <form [formGroup]="denunciaForm" (ngSubmit)="onSubmit()">
     <ion-list>
     
-      <app-mapa [coords]="ubicacion.coords" [ngClass]="{'d-none': !ubicacion.posicion}"></app-mapa>
+      <app-mapa></app-mapa>
 
       <ion-item>
         <ion-label>Ubicación</ion-label>
@@ -26,6 +26,18 @@
         <app-select-image (resultados)="imagenesSeleccionadas($event)"></app-select-image>
 
       </ion-item>
+
+      <!-- <ion-item>
+        <ion-label>Pizza</ion-label>
+        <ion-select value="peperoni" multiple="true" placeholder="Select Pizza">
+          <ion-select-option value="peperoni">Peperoni</ion-select-option>
+          <ion-select-option value="hawaii">Hawaii</ion-select-option>
+        </ion-select>
+      </ion-item> -->
+
+      <ion-select formControlName="id_barrio" placeholder="Barrio">
+        <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
+      </ion-select>
 
       <ion-item>
         <ion-label position="floating">Descripción Denuncia</ion-label>

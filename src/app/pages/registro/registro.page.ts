@@ -5,6 +5,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { BarrioService } from 'src/app/services/barrio.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-registro',
@@ -22,7 +23,7 @@ export class RegistroPage implements OnInit {
     private userService: UserService,
     private storageService: StorageService,
     private barrioService: BarrioService,
-    private toastController: ToastController,
+    private generalService: GeneralService,
     private router: Router
   ) { 
     this.createForm();
@@ -30,7 +31,7 @@ export class RegistroPage implements OnInit {
   }
 
   async ngOnInit() {
-    this.usuario = await this.userService.user();
+    // this.usuario = await this.userService.user();
   }
 
   async obtenerBarrios() {
@@ -59,16 +60,10 @@ export class RegistroPage implements OnInit {
   async onSubmit() {
     const datoServicio: any = await this.userService.registro(this.registroForm.value);
     if (datoServicio.ok) {
-      this.toastController.create({
-        header: 'Usuario registrado correctamente',
-        duration: 3000
-      });
+      this.generalService.mostrarMensaje('Usuario registrado correctamente');
       this.router.navigate(['/login'])
     } else {
-      this.toastController.create({
-        header: 'Ha ocurrido un problema, ...',
-        duration: 3000
-      });
+      this.generalService.mostrarMensaje('Ha ocurrido un problema...');
     }
   }  
 

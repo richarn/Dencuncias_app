@@ -72,7 +72,7 @@ export class DenunciaService {
           }
         } else formData.append(key, data[key]);
       }
-      
+
       formData.append('_method', 'PUT');
       return new Promise(resolve => {
         this.http.post(`${API}/denuncias/${data.id}`, formData)
@@ -82,4 +82,40 @@ export class DenunciaService {
         );
       });
     }
+
+  // uploadImage(idDenuncia, blob: Blob) {
+  //   return new Promise(resolve => {
+  //     const url = `denuncias/${idDenuncia}/uploadImage`;
+
+  //     const formData = new FormData();
+  //     formData.append('_method', 'PUT');
+  //     formData.append('imagen', blob, 'denuncia');
+
+  //     this.http.post(`${API}/${url}`, formData)
+  //     .subscribe(
+  //       response => resolve(response),
+  //       error => resolve(error)
+  //     );
+  //   });
+  // }
+
+  eliminar(idDenuncia) {
+    return new Promise(resolve => {
+      this.http.delete(`${API}/denuncias/${idDenuncia}`)
+      .subscribe(
+        (response: any) => resolve(response),
+        error => resolve(error)
+      );
+    });
+  }
+
+  eliminarImagen(idDenuncia, idImagen) {
+    return new Promise(resolve => {
+      this.http.delete(`${API}/denuncias/${idDenuncia}/imagen/${idImagen}`, { observe: 'response' })
+      .subscribe(
+        (response: any) => resolve(response),
+        error => resolve(error)
+      );
+    });
+  }
 }

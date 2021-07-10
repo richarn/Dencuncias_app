@@ -7,6 +7,16 @@
   
   <ion-button color="primary" (click)="userDenuncia()">Mis denuncias</ion-button>
   
+  <ion-label>Filtros</ion-label>
+  <ion-label>Barrio:</ion-label>
+  <form [formGroup]="filterForm">
+    <ion-select formControlName="id_barrio" placeholder="Barrio" (ionChange)="filtrar($event)">
+      <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
+    </ion-select>
+
+    <ion-datetime displayFormat="YYYY-MM-DD" placeholder="Fecha" formControlName="fecha" (ionChange)="filtrar($event)"></ion-datetime>
+  </form>
+
   <ion-grid>
     <ion-row *ngFor="let denuncia of denuncias" (click)="redirectTo(denuncia)">
       

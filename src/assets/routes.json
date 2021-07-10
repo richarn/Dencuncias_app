@@ -1,0 +1,44 @@
+[
+    {
+        "icon": "home",
+        "name": "Inicio",
+        "redirectTo": "/main/home",
+        "admin": false,
+        "loggedIn": false
+    },
+    {
+        "icon": "home",
+        "name": "Noticias",
+        "redirectTo": "/publications",
+        "admin": false,
+        "loggedIn": false
+    },
+    {
+        "icon": "home",
+        "name": "Admin - noticias",
+        "redirectTo": "/admin-noticias",
+        "admin": true,
+        "loggedIn": true
+    },
+    {
+        "icon": "home",
+        "name": "Admin - denuncias",
+        "redirectTo": "/admin-denuncias",
+        "admin": true,
+        "loggedIn": true
+    },
+    {
+        "icon": "home",
+        "name": "Administrar - usuarios",
+        "redirectTo": "/admin-user",
+        "admin": true,
+        "loggedIn": true
+    },
+    {
+        "icon": "home",
+        "name": "Registrarse",
+        "redirectTo": "/registro",
+        "admin": false,
+        "loggedIn": false
+    }
+]

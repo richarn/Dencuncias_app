@@ -7,6 +7,8 @@ import { PopinfoComponent } from './popinfo/popinfo.component';
 import { MapaComponent } from './mapa/mapa.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { SelectImageComponent } from './select-image/select-image.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HeaderSolucionadaComponent } from './header-solucionada/header-solucionada.component';
 
 
 @NgModule({
@@ -16,6 +18,7 @@ import { SelectImageComponent } from './select-image/select-image.component';
     MapaComponent,
     AdminHeaderComponent,
     SelectImageComponent,
+    HeaderSolucionadaComponent
   
   ],
 
@@ -24,13 +27,16 @@ import { SelectImageComponent } from './select-image/select-image.component';
     PopinfoComponent,
     MapaComponent,
     AdminHeaderComponent,
-    SelectImageComponent
-
+    SelectImageComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    HeaderSolucionadaComponent
   ],
   imports: [
     CommonModule,
     IonicModule,
-    PipesModule
+    PipesModule,
+    ReactiveFormsModule,
   ]
 })
 export class ComponentsModule { }

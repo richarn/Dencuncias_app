@@ -1,6 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+
+import { GeneralService } from 'src/app/services/general.service';
 import { CameraService } from 'src/app/services/camera.service';
+
+import { Subscription } from 'rxjs';
 
 declare var window: any;
 
@@ -14,15 +18,39 @@ export class SelectImageComponent implements OnInit {
   tempImages: string[] = [];
   imagenes: any[] = [];
 
+  list : string[] = ["1","2","3","4"];
+  subscriptions: Subscription[] = [];
   @Output() resultados: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private alertController: AlertController,
+    private generalService: GeneralService,
     private cameraService: CameraService,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const limpiarImagenes = this.generalService.limpiarImagenes
+    .subscribe(() => {
+      this.imagenes = [];
+      this.tempImages = [];
+    });
 
+    this.subscriptions.push(limpiarImagenes);
+  }
+
+  async alertCantImg() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Cantidad imagen superada',
+      message: 'Solamente puedes agregar hasta tres imágenes.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  }
   async camara() {
     const imageData = await this.cameraService.abrirCamara();
     this.procesarImagen(imageData);
@@ -33,18 +61,24 @@ export class SelectImageComponent implements OnInit {
     this.procesarImagen(imageData);
   }
 
+
   async procesarImagen(imageData) {
     
     const img = window.Ionic.WebView.convertFileSrc( imageData );
     // Muestra la/s imagen/es
-    this.tempImages.push(img);
+    if (this.tempImages.length < 3) this.tempImages.push(img);
+    else {
+      this.alertCantImg();
+    }
+    console.log("temp", this.tempImages);
+    
 
     // obtiene la imagen
     const response = await fetch(img);
     // convierte a blob para enviar a la api
     const blob = await response.blob();
     this.imagenes.push(blob);
-    console.log('denuncias');
+    console.log('imagenes seleccionadas: ', this.imagenes);
     
     this.resultados.emit(this.imagenes);
   }
@@ -70,7 +104,13 @@ export class SelectImageComponent implements OnInit {
   }
 
   eliminar(index) {
-    this.imagenes.splice(index, 1);
+    this.tempImages.splice(index, 1);
+    console.log("index",index);
+    
+  }
+
+  onDestroy() {
+    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
 
 }

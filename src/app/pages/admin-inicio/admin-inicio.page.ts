@@ -15,7 +15,7 @@ export class AdminInicioPage implements OnInit {
   constructor( private dataService: DataService ) { }
 
   ngOnInit() {
-    this.componentes = this.dataService.getMenuOpts();
+    // this.componentes = this.dataService.getMenuOpts();
   }
 
 }

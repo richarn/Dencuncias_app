@@ -21,6 +21,8 @@ export class DetalleDenunciaPage implements OnInit {
   user;
   idDenuncia;
   denuncia;
+  imagenesPrevias = [];
+  imagenesSolucion = [];
   formulario: FormGroup;
 
   constructor(
@@ -62,6 +64,11 @@ export class DetalleDenunciaPage implements OnInit {
       console.log("data:",typeof response.data);
       
       this.denuncia = response.data;
+      this.imagenesPrevias = this.denuncia.imagenes;
+      this.imagenesSolucion = this.denuncia.imagenesSolucionadas;
+
+      this.imagenesPrevias = this.denuncia.imagenes.filter(imagen => imagen.estado == 1);
+      this.imagenesSolucion = this.denuncia.imagenes.filter(imagen => imagen.estado == 2);
       if (this.user && this.user.id == this.denuncia.id_user) {
         this.cargarFormulario();
       }
@@ -72,6 +79,7 @@ export class DetalleDenunciaPage implements OnInit {
   inicializarFormulario() {
     this.formulario = this.formBuilder.group({
       id: ['', Validators.required],
+      id_barrio: ['', Validators.required],
       descripcion_denuncia: ['', Validators.required],
       descripcion_solucion : ['', Validators.required],
       estado : [0, Validators.required],
@@ -88,6 +96,7 @@ export class DetalleDenunciaPage implements OnInit {
       descripcion_solucion : [this.denuncia.descripcion_solucion, Validators.required],
       estado : [this.denuncia.estado, Validators.required],
       ubicacion : [this.denuncia.ubicacion, Validators.required],
+      id_barrio : [this.denuncia.id_barrio, Validators.required],
       id_user : [this.denuncia.id_user, Validators.required]
       // completar campos
     })
@@ -154,6 +163,39 @@ export class DetalleDenunciaPage implements OnInit {
       }
     
     this.router.navigate(['/user-denuncias']);
+  }
+
+  async confirmarEliminacion(imagen) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar',
+      subHeader: '¿Estas seguro de eliminar la imagen?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {}
+        },
+        {
+          text: 'Aceptar',
+          handler: () => this.eliminar(imagen)
+        }
+      ]
+    })
+
+    return await alert.present();
+  }
+
+  async eliminar(imagen) {
+    const response: any = await this.denunciasService.eliminarImagen(this.denuncia.id, imagen.id);
+
+    if (response.ok) {
+      const index = this.denuncia.imagenes.findIndex(fimage => fimage.id == imagen.id);
+      if (index > -1) this.denuncia.imagenes.splice(index, 1);
+    }
+
+    this.toastController.create({
+      message: response.body.message
+    })
   }
 
 }

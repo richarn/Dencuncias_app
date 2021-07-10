@@ -14,7 +14,8 @@
   "server": {
     "allowNavigation": [
       "localhost:8101/*",
-      "localhost:8000/*"
+      "localhost:8000/*",
+      "yregua.com/*"
     ]
   }
 }

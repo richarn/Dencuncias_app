@@ -1,9 +1,24 @@
 <ion-header>
   <ion-toolbar>
 
+    <!-- <div *ngIf="user && user.id==1">
+      <ion-buttons slot=start>
+        <ion-back-button text="Regresar" defaultHref="/admin-denuncias"></ion-back-button>
+      </ion-buttons>    
+    </div>
+
+    <div *ngIf="user && user.id!=1">
+      <ion-buttons slot=start>
+        <ion-back-button text="Regresar" defaultHref="/verdenuncias"></ion-back-button>
+      </ion-buttons>    
+    </div> -->
+
     <ion-buttons slot=start>
-      <ion-back-button text="Regresar" defaultHref="/" ></ion-back-button>
-    </ion-buttons>
+      <!-- <ion-back-button text="Regresar" defaultHref="/" ></ion-back-button> -->
+      <ion-button (click)="back()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons> 
 
     <ion-title text-capitalize>{{ titulo }}</ion-title>  
   </ion-toolbar>

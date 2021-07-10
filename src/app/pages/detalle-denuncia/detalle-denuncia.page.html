@@ -6,31 +6,60 @@
 
   <ion-card mode="ios" *ngIf="user && denuncia && (user.id != denuncia.id_user)">
 
-    <ion-card-header>
-      <ion-card-title>{{denuncia.fecha_denuncia}}</ion-card-title>
-    </ion-card-header>
+    <ion-segment (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="previous" *ngIf="denuncia.estado == 1 || denuncia.estado == 2">
+        <ion-label *ngIf="denuncia.estado == 1">Ahora</ion-label>
+        <ion-label *ngIf="denuncia.estado == 2">Antes</ion-label>
 
-    <ion-item *ngFor="let imagen of denuncia.imagenes; let index = i;">
-      <img [src]="imagen | formatearImagen" class="">
-    </ion-item>
+        <ion-card-header>
+          <ion-card-title>{{denuncia.fecha_denuncia}}</ion-card-title>
+        </ion-card-header>
+    
+        <ion-item *ngFor="let imagen of imagenesPrevias; let index = i;">
+          <img [src]="imagen | formatearImagen" class="">
+        </ion-item>
+    
+        <app-mapa [coords]="denuncia.ubicacion"></app-mapa>
+    
+        <ion-card-content>
+          {{ denuncia.estado }}
+        </ion-card-content>
+    
+        <ion-card-content>
+          {{ denuncia.descripcion_denuncia }}
+        </ion-card-content>
+    
+        <ion-card-content>
+          {{ denuncia.id_user.nombre}}
+        </ion-card-content>
 
-    <app-mapa [coords]="denuncia.ubicacion"></app-mapa>
+      </ion-segment-button>
+      <ion-segment-button value="current" *ngIf="denuncia.estado == 2">
+        <ion-label>Ahora</ion-label>
 
-    <ion-card-content>
-      {{ denuncia.estado }}
-    </ion-card-content>
-
-    <ion-card-content *ngIf="denuncia.estado == 1">
-      {{ denuncia.descripcion_denuncia }}
-    </ion-card-content>
-
-    <ion-card-content *ngIf="denuncia.estado == 2">
-      {{ denuncia.descripcion_solucion }}
-    </ion-card-content>
-
-    <ion-card-content>
-      {{ denuncia.id_user.nombre}}
-    </ion-card-content>
+        <ion-card-header>
+          <ion-card-title>{{denuncia.fecha_solucion}}</ion-card-title>
+        </ion-card-header>
+    
+        <ion-item *ngFor="let imagen of imagenesSolucion; let index = i;">
+          <img [src]="imagen | formatearImagen" class="">
+        </ion-item>
+    
+        <app-mapa [coords]="denuncia.ubicacion"></app-mapa>
+    
+        <ion-card-content>
+          {{ denuncia.estado }}
+        </ion-card-content>
+    
+        <ion-card-content>
+          {{ denuncia.descripcion_solucion }}
+        </ion-card-content>
+    
+        <ion-card-content>
+          {{ denuncia.id_user.nombre}}
+        </ion-card-content>
+      </ion-segment-button>
+    </ion-segment>
 
   </ion-card>
 
@@ -41,6 +70,10 @@
           
           <app-select-image (resultados)="imagenesSeleccionadas($event)"></app-select-image>
           
+          <ion-item *ngFor="let imagen of denuncia.imagenes; let index = i;" (click)="confirmarEliminacion(imagen)">
+            <img [src]="imagen | formatearImagen" class="">
+          </ion-item>
+
           <!-- El que creo la denuncia para editar la denuncia en caso de errores-->
           <ion-item *ngIf="user.id_role != 1">
             <ion-label position="floating">Descripción Denuncia</ion-label><br><br>
@@ -55,7 +88,7 @@
             </ion-textarea>
           </ion-item>
           
-          <ion-item>
+          <ion-item *ngIf="user.id_role == 1">
             <ion-label position="floating">Estado</ion-label>
             <ion-select placeholder="Selecciona estado" formControlName="estado">
               <ion-select-option [value]="0">Pendiente</ion-select-option>
@@ -72,26 +105,28 @@
     <!---Seccion del formulario de resultado -->
     <div *ngIf="user && denuncia && (user.id == denuncia.id_user) && denuncia.estado == 2">
     
-      <ion-label>Denuncia Solucionada</ion-label>  
-   
-      <ion-card-header>
-        <ion-card-title>{{denuncia.fecha_solucion}}</ion-card-title>
-      </ion-card-header>
-
-      <ion-item *ngFor="let imagen of denuncia.imagenes; let index = i;">
-        <img [src]="imagen | formatearImagen" class="">
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Descripción Solución</ion-label><br><br>
-        <ion-textarea formControlName="descripcion_solucion" [value]="formulario.value.descripcion_solucion">
-        </ion-textarea>
-      </ion-item>
-      
-      <app-mapa [coords]="denuncia.ubicacion"></app-mapa>
-
-      <ion-card-content>
-        Responsable de la denuncia: {{ user.name}}
-      </ion-card-content>
+      <form [formGroup]="formulario">
+        <ion-label>Denuncia Solucionada</ion-label>  
+     
+        <ion-card-header>
+          <ion-card-title>{{denuncia.fecha_solucion}}</ion-card-title>
+        </ion-card-header>
+  
+        <ion-item *ngFor="let imagen of denuncia.imagenes; let index = i;" (click)="confirmarEliminacion(imagen)">
+          <img [src]="imagen | formatearImagen" class="">
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción Solución</ion-label><br><br>
+          <ion-textarea formControlName="descripcion_solucion" [value]="formulario.value.descripcion_solucion">
+          </ion-textarea>
+        </ion-item>
+        
+        <app-mapa [coords]="denuncia.ubicacion"></app-mapa>
+  
+        <ion-card-content>
+          Responsable de la denuncia: {{ user.name}}
+        </ion-card-content>
+      </form>
     </div>
 </ion-content>

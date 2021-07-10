@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+
 import { DenunciaService } from 'src/app/services/denuncia.service';
+import { BarrioService } from 'src/app/services/barrio.service';
 import { UserService } from 'src/app/services/user.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-verdenuncias',
@@ -11,16 +14,21 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class VerdenunciasPage {
 
-  idDenuncia;
   user;
+  idDenuncia;
+  barrios = [];
   denuncias = [];
+
+  filterForm: FormGroup;
 
   constructor(
     private denunciaService: DenunciaService,
+    private barrioService: BarrioService,
     private activeRoute: ActivatedRoute,
+    private userService: UserService,
+    private formBuilder: FormBuilder,
     private navCtrl: NavController,
     private router: Router,
-    private userService: UserService
   ) {
     
     this.activeRoute.queryParams.subscribe(params => {
@@ -30,11 +38,14 @@ export class VerdenunciasPage {
       }
     });
 
-    this.obtenerDenuncias();
+    this.createForm();
+    this.obtenerBarrios();
   }
 
 
   async ionViewWillEnter() {
+    this.obtenerDenuncias();
+    
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
    }
@@ -42,14 +53,33 @@ export class VerdenunciasPage {
   ngOnInit() {
   }
 
-  async obtenerDenuncias() {
-    const query = {estado: 1};
+  createForm() {
+    this.filterForm = this.formBuilder.group({
+      id_barrio: [''],
+      fecha: ['']
+    });
+  }
+
+  async obtenerDenuncias(query = {}) {
+    if (!query['estado']) query['estado'] = 1;
     const response: any = await this.denunciaService.GetDenuncia(query);
     if (response.success) {
       this.denuncias = response.data;
     }
     console.log("denuncias:", this.denuncias);
     
+  }
+
+  async obtenerBarrios() {
+    const response: any = await this.barrioService.barrios();
+    if (response.success) {
+      this.barrios = response.barrios;
+    }
+  }
+
+  filtrar(event) {
+    console.log(event, this.filterForm.value);
+    this.obtenerDenuncias(this.filterForm.value);
   }
 
   redirectTo(denuncia) {

@@ -26,6 +26,8 @@ export class MapaComponent implements OnInit, OnChanges {
     this.locationService.coordinates
     .subscribe(coordenadas => {
       console.log('coordenadas mapa component: ', coordenadas);
+      this.coords = `${coordenadas.latitude};${coordenadas.longitude}`;
+      this.cargarMapa();
     });
   }
 

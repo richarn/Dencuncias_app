@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
+  user;
   loginForm: FormGroup;
 
   constructor(
@@ -26,6 +27,14 @@ export class LoginPage implements OnInit {
 
   async ngOnInit() {
   }
+
+  async ionViewWillEnter() {
+    // obtener datos del usuario desde el servicio y asignar al formulario
+    this.user = await this.userService.getUser();
+    if (this.user && this.user.id) {
+      this.router.navigate(['/home']);
+    }
+   }
 
   createForm() {
     this.loginForm = this.formBuilder.group({

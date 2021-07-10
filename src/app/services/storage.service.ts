@@ -47,4 +47,8 @@ export class StorageService {
       return false;
     }
   }
+
+  async clear() {
+    await this.storage.clear();
+  }
 }

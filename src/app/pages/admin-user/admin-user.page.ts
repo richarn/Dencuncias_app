@@ -5,20 +5,16 @@ import { AlertController, NavController, PopoverController, ToastController } fr
 import { DenunciaService } from 'src/app/services/denuncia.service';
 import { UserService } from 'src/app/services/user.service';
 
-
 @Component({
-  selector: 'app-admin-denuncias',
-  templateUrl: './admin-denuncias.page.html',
-  styleUrls: ['./admin-denuncias.page.scss'],
+  selector: 'app-admin-user',
+  templateUrl: './admin-user.page.html',
+  styleUrls: ['./admin-user.page.scss'],
 })
-export class AdminDenunciasPage implements OnInit {
-
+export class AdminUserPage implements OnInit {
   user;
-  denuncias = [];
-  denuncia;
-  idDenuncia;
-
-  recargaForm: FormGroup;
+  usuario;
+  usuarios: any[] = [];
+  idUsuario;
   constructor(
     private popoverCtrl: PopoverController,
     private denunciaService: DenunciaService,
@@ -28,43 +24,33 @@ export class AdminDenunciasPage implements OnInit {
     private router: Router,
     private alertController: AlertController,
     private toastController: ToastController
-  ) {
+  ) { 
 
-    
+    this.obtenerUsuario();
   }
+
   
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
-    this.obtenerDenuncias();
-    
+    this.obtenerUsuario();
   }
-
+  
   ngOnInit() {
-    this.obtenerDenuncias();
+    this.obtenerUsuario();
   }
 
-  async obtenerDenuncias() {
-    const response: any = await this.denunciaService.GetDenuncia();
-
+  async obtenerUsuario() {
+    const response: any = await this.userService.GetUser();
     if (response.success) {
-      this.denuncias = response.data;
+      this.usuarios = response.usuarios;
+      console.log(this.usuarios);
+      
     }
-    
   }
 
-  
-  redirectTo(denuncia) {
-    this.router.navigate(['/detalle-denuncia'], { queryParams: { denuncia: denuncia.id }})
-  }
 
-  detalle(denuncia) {
-    this.router.navigate(['/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}})
-  }
-  
-
-
-  async confirmarEliminacion(denuncia) {
+  async confirmarEliminacion(usuario) {
     
     const alert = this.alertController.create({
       header: 'Confirmar eliminacion',
@@ -72,7 +58,7 @@ export class AdminDenunciasPage implements OnInit {
       buttons: [
         {
           text: 'Aceptar',
-          handler: () => this.eliminar(denuncia)
+          handler: () => this.eliminar(usuario)
         },
         {
           text: 'Cancelar',
@@ -85,23 +71,22 @@ export class AdminDenunciasPage implements OnInit {
     return (await alert).present();    
   }
 
-
-
-  async eliminar(denuncia) {
+  async eliminar(usuario) {
     
     // petición get id de denuncia para eliminar la denuncia  
-    const response: any = await this.denunciaService.eliminar(denuncia.id);
+    const response: any = await this.userService.eliminar(usuario.id);
     
     console.log("this: ", response);
     
     if (response) {
       const toast = await this.toastController.create({
-        message: 'Denuncia eliminada correctamente',
+        message: 'Usuario eliminado correctamente',
         duration: 2000
       });
       await toast.present();
-      this.obtenerDenuncias();
+      this.obtenerUsuario();
     }
   }
+
 
 }

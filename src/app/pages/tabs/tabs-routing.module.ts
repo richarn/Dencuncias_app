@@ -9,7 +9,7 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: '',
+        path: 'home',
         loadChildren: () => import('../inicio/inicio.module').then(m => m.InicioPageModule)
       },
       {
@@ -73,15 +73,19 @@ const routes: Routes = [
         loadChildren: () => import('../user-denuncias/user-denuncias.module').then( m => m.UserDenunciasPageModule)
       },
       {
+        path: 'admin-user',
+        loadChildren: () => import('../admin-user/admin-user.module').then( m => m.AdminUserPageModule)
+      },
+      {
         path: '',
-        redirectTo: '/',
+        redirectTo: '/home',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '**',
-    redirectTo: '/',
+    redirectTo: '/home',
     pathMatch: 'full'
   }
 ];

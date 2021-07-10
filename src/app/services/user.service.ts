@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
@@ -13,6 +13,8 @@ const API = environment.api;
 export class UserService {
   key: any;
   token: any;
+
+  @Output() updateUserInfo: EventEmitter<any> = new EventEmitter();
 
   protected userInfo;
 
@@ -60,6 +62,16 @@ export class UserService {
     return { ...this.userInfo };
   }
 
+  GetUser(){
+    return new Promise(resolve => {
+      this.http.get(`${API}/usuarios`)
+        .subscribe(
+          (response: any) => resolve(response),
+          error => resolve(error)
+        );
+    });
+  }
+  
   // Datos del usuario
   async user(): Promise<boolean> {
 
@@ -78,6 +90,7 @@ export class UserService {
           (response: any) => {
             if (response.ok) {
               this.userInfo = response.body;
+              this.updateUserInfo.emit(this.userInfo);
               return resolve(true);
             }
 
@@ -87,4 +100,25 @@ export class UserService {
         );
     });
   }
+
+  async logout() {
+    this.token = null;
+    this.userInfo = null;
+    this.storageService.clear();
+    await this.getUser();
+    this.updateUserInfo.emit(this.user);
+    // this.navCtrl.navigateRoot('/main/home', {animated: true});
+  }
+
+  eliminar(idUsuario) {
+    return new Promise(resolve => {
+      this.http.delete(`${API}/usuarios/${idUsuario}`)
+      .subscribe(
+        (response: any) => resolve(response),
+        error => resolve(error)
+      );
+    });
+  }
+
+
 }
