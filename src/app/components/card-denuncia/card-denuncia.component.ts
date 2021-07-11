@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-denuncia',
@@ -11,8 +12,14 @@ export class CardDenunciaComponent implements OnInit {
   @Input() estado: string;
 
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() { }
+
+  redirectTo(denuncia) {
+    this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: { denuncia: denuncia.id } });
+  }
 
 }

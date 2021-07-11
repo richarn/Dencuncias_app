@@ -1,36 +1,46 @@
-<app-admin-header titulo="Denuncias Admin">
+<ion-content class="main">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Suelta para actualizar el listado" refreshingSpinner="circles" refreshingText="Actualizando..."></ion-refresher-content>
+  </ion-refresher>
 
-</app-admin-header>
+  <div class="background-opacity"></div>
 
+  <div class="container">
+      <app-header titulo="Listado de denuncias"></app-header>
 
-<ion-content class="center">
+      <div class="header-container">
+        <img src="assets/icon/white-icon.png" alt="Blue icon">
+      </div>
 
-
-    <h2 class="title-resultado">Listado de Denuncias</h2>
-    
-    <ion-list *ngFor="let denuncia of denuncias">
-      <ion-list-header>
-        Denuncias realizadas
-      </ion-list-header>
-
+      <div class="form-container">
+          <div class="page-container">
+              <ion-grid>
+                  <ion-row class="sincronizar">
+                      <ion-col size="12">
+                        <ion-searchbar placeholder="Buscar"></ion-searchbar>
+                      </ion-col>
+                  </ion-row>
+              </ion-grid>
       
-      <ion-item-sliding>
-        
-        <ion-item (click)="redirectTo(denuncia)">
-          <ion-label>
-            <h2>{{ denuncia.descripcion_denuncia }}</h2>
-            <h3>{{ denuncia.fecha_denuncia }} </h3>
-          </ion-label>
-        </ion-item>
- 
-        
-        <ion-item-options side="end">
-          <ion-item-option color="success" (click)="redirectTo(denuncia)">Editar</ion-item-option>
-          <ion-item-option (click)="confirmarEliminacion(denuncia)" color="danger">Eliminar</ion-item-option>
-        </ion-item-options>
-         
-      </ion-item-sliding>
+              <ion-grid *ngIf="denuncias.length">
+                  <ion-row *ngFor="let denuncia of denuncias" (click)="detalle(denuncia)">
+                    <app-card-denuncia [denuncia]="denuncia" [estado]="denuncia.estado" style="width: 90%;"></app-card-denuncia>
+                  </ion-row>
       
-    </ion-list>
-  
-  </ion-content>
+                  <ion-infinite-scroll [disabled]="infScrollDisabled" threshold="150px" (ionInfinite)="scrolling = true; obtenerDenuncias($event)">
+                    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando..."></ion-infinite-scroll-content>
+                  </ion-infinite-scroll>
+              </ion-grid>
+
+              <ion-grid *ngIf="!denuncias.length" class="no-results">
+                  <ion-row>
+                      <ion-col size="12">
+                        <h4>No hay denuncias realizadas</h4>
+                      </ion-col>
+                  </ion-row>
+              </ion-grid>
+          </div>
+      </div>
+  </div>
+
+</ion-content>

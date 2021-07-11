@@ -44,7 +44,7 @@
           <div class="selected-news" [style.background-image]="'url(' + (noticia.imagenes | comprobarImagen) + ')'">
             <div class="info">
               <div class="title">{{ noticia.titulo }}</div>
-              <div class="description">{{ noticia.descripcion.slice(0, 100) }}...</div>
+              <div class="description">{{ noticia.descripcion.slice(0, 30) }}...</div>
               <div class="date">{{ noticia.created_at | formatDate }}...</div>
             </div>
           </div>

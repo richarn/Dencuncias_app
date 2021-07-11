@@ -14,7 +14,10 @@ export class UserDenunciasPage implements OnInit {
 
   user;
   idDenuncia;
-  denuncias;
+  denuncias = [];
+
+  scrolling = false;
+  infScrollDisabled: boolean = false;
 
   constructor(
     private denunciasService: DenunciaService,
@@ -35,29 +38,38 @@ export class UserDenunciasPage implements OnInit {
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
-    this.obtenerDenuncias();
-    console.log('usuario: ', this.user);
-    
+    this.obtenerDenuncias(null, {}, true);
    }
 
   ngOnInit() {
   }
 
-  async obtenerDenuncias() {
-    const query = {};
+  async obtenerDenuncias(event, query = {}, pull: boolean = false) {
     if (this.user) query['usuario'] = this.user.id;
-    console.log('query', query);
-    this.denunciasService.GetDenuncia(query);
+
     const response: any = await this.denunciasService.GetDenuncia(query);
     if (response.success) {
       this.denuncias = response.data;
     }
-    console.log("denuncias:", this.denuncias);
+
+    if (event) {
+      event.target.complete();
+
+      if (response.data.length === 0) { this.infScrollDisabled = true; }
+    }
+
+    this.scrolling = false;
     
   }
 
   detalle(denuncia) {
     this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}})
+  }
+
+  refresh(event) {
+    this.denuncias = [];
+    this.infScrollDisabled = false;
+    this.obtenerDenuncias(event, {}, true);
   }
 
 }

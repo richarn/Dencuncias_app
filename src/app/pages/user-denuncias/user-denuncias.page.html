@@ -1,59 +1,52 @@
-<app-header titulo="Denuncias">
-  
-</app-header>
+<ion-content class="main">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+      <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Suelta para actualizar el listado" refreshingSpinner="circles" refreshingText="Actualizando..."></ion-refresher-content>
+  </ion-refresher>
 
-<ion-content class="center">
+  <div class="background-opacity"></div>
 
-      <ion-card mode="ios" *ngFor="let denuncia of denuncias" (click)="detalle(denuncia)"> 
-        
-        
-        <ion-card-header>
-          <ion-card-title>{{denuncia.fecha_denuncia}}</ion-card-title>
-        </ion-card-header>
-     
-        <ion-item *ngFor="let imagen of denuncia.imagenes">
+  <div class="container">
+      <app-header titulo="Mis Denuncias"></app-header>
 
-          <img [src]="imagen | formatearImagen" class="">
-          
-        </ion-item>
-        <app-mapa [coords]="denuncia.ubicacion"></app-mapa>
-        
-        <ion-card-content>
-          {{ denuncia.ubicacion}}
-        </ion-card-content>
-        
-        <ion-card-content>
-          {{ denuncia.estado }}
-        </ion-card-content>
-        
-        <ion-card-content>
-          {{ denuncia.descripcion_denuncia }}
-        </ion-card-content>
-        
-        <ion-card-content>
-         <!--  {{ denuncia.id_user.nombre}} -->
-        </ion-card-content>
+      <div class="header-container">
+          <img src="assets/icon/white-icon.png" alt="Blue icon">
+      </div>
 
-        <!--- Comprueba que el rol sea del administrador para mostrar el boton de confirmacion -->
-        <!---  1 -> administrador
-        2 -> encargado
-        3 -> usuario que denuncio
-        <div *ngIf="user && [1, 2].includes(user.role.nivel)"> -->
+      <div class="form-container">
+          <div class="page-container">
+              <ion-grid>
+                  <ion-row class="sincronizar">
+                      <ion-col size="12">
+                          <ion-searchbar placeholder="Buscar"></ion-searchbar>
+                      </ion-col>
+                  </ion-row>
+              </ion-grid>
+      
+              <ion-grid *ngIf="denuncias.length">
+                  <ion-row *ngFor="let denuncia of denuncias" (click)="detalle(denuncia)">
+                      <app-card-denuncia [denuncia]="denuncia" [estado]="denuncia.estado" style="width: 90%;"></app-card-denuncia>
+                  </ion-row>
+      
+                  <ion-infinite-scroll [disabled]="infScrollDisabled" threshold="150px" (ionInfinite)="scrolling = true; obtenerDenuncias($event)">
+                      <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando..."></ion-infinite-scroll-content>
+                  </ion-infinite-scroll>
+              </ion-grid>
 
-      </ion-card>
-      <!--
-      <ion-list>
-        
-        <ion-item *ngIf="noticia">
-          <ion-label>{{ noticia.titulo }}</ion-label>
+              <ion-grid *ngIf="!denuncias.length" class="no-results">
+                  <ion-row>
+                      <ion-col size="12">
+                          <h4>No hay denuncias realizadas</h4>
+                      </ion-col>
+                  </ion-row>
+              </ion-grid>
+          </div>
+      </div>
+  </div>
 
-          <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
-          
-          <ion-label>{{ noticia.descripcion.slice(0, 100) }}...</ion-label>
-       
-        </ion-item>
-
-      </ion-list>
-    -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="agregarDenuncia()" color="primary">
+          <ion-icon name="paper-plane"></ion-icon>
+      </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

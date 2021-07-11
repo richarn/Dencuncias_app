@@ -41,7 +41,6 @@ export class VerdenunciasPage {
 
   }
 
-
   async ionViewWillEnter() {
     this.obtenerDenuncias(null, {}, true);
 
@@ -61,6 +60,7 @@ export class VerdenunciasPage {
 
   async obtenerDenuncias(event, query = {}, pull: boolean = false) {
     if (!query['estado']) query['estado'] = 1;
+
     const response: any = await this.denunciaService.GetDenuncia(query, pull);
     if (response.success) {
       this.denuncias = response.data;

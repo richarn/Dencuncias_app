@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
 import { DenunciaService } from 'src/app/services/denuncia.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -19,37 +19,43 @@ export class AdminDenunciasPage implements OnInit {
   idDenuncia;
 
   recargaForm: FormGroup;
+  scrolling: boolean = false;
+  infScrollDisabled: boolean = false;
+
   constructor(
-    private popoverCtrl: PopoverController,
+    private actionSheetController: ActionSheetController,
     private denunciaService: DenunciaService,
-    private userService: UserService,
+    private alertController: AlertController,
+    private toastController: ToastController,
+    private popoverCtrl: PopoverController,
     private activeRoute: ActivatedRoute,
+    private userService: UserService,
     private navCtrl: NavController,
     private router: Router,
-    private alertController: AlertController,
-    private toastController: ToastController
-  ) {
-
-    
-  }
+  ) {}
   
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
-    this.obtenerDenuncias();
-    
+    this.obtenerDenuncias(null, {}, true);
   }
 
-  ngOnInit() {
-    this.obtenerDenuncias();
-  }
+  ngOnInit() {}
 
-  async obtenerDenuncias() {
-    const response: any = await this.denunciaService.GetDenuncia();
+  async obtenerDenuncias(event, query = {}, pull: boolean = false) {
+    const response: any = await this.denunciaService.GetDenuncia(query, pull);
 
     if (response.success) {
       this.denuncias = response.data;
     }
+
+    if (event) {
+      event.target.complete();
+
+      if (response.data.length === 0) { this.infScrollDisabled = true; }
+    }
+
+    this.scrolling = false;
     
   }
 
@@ -62,7 +68,24 @@ export class AdminDenunciasPage implements OnInit {
     this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}})
   }
   
+  async showOptions(denuncia) {
+    const actionSheet = await this.actionSheetController.create({
+      buttons: [
+        {
+          icon: "pencil",
+          text: "Editar",
+          handler: () => this.redirectTo(denuncia)
+        },
+        {
+          icon: "trash",
+          text: "Eliminar",
+          handler: () => this.confirmarEliminacion(denuncia)
+        }
+      ]
+    })
 
+    await actionSheet.present();
+  }
 
   async confirmarEliminacion(denuncia) {
     
@@ -92,16 +115,20 @@ export class AdminDenunciasPage implements OnInit {
     // petición get id de denuncia para eliminar la denuncia  
     const response: any = await this.denunciaService.eliminar(denuncia.id);
     
-    console.log("this: ", response);
-    
     if (response) {
       const toast = await this.toastController.create({
         message: 'Denuncia eliminada correctamente',
         duration: 2000
       });
       await toast.present();
-      this.obtenerDenuncias();
+      this.obtenerDenuncias(null, {}, true);
     }
+  }
+
+  refresh(event) {
+    this.denuncias = [];
+    this.infScrollDisabled = false;
+    this.obtenerDenuncias(event, {}, true);
   }
 
 }

@@ -17,6 +17,26 @@ export class InicioPage implements OnInit {
     speed: 200,
     autoplay:true,
     slidesPerView: 5,
+    breakpoints: {
+      0: {
+        slidesPerView: 5,
+      },
+      320: {
+        slidesPerView: 5,
+      },
+      480: {
+        slidesPerView: 5,
+      },
+      640: {
+        slidesPerView: 5,
+      },
+      767: {
+        slidesPerView: 5,
+      },
+      1024: {
+        slidesPerView: 5,
+      }
+    }
   };
 
   noticia;
