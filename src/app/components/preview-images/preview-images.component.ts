@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
-import { DenunciaService } from 'src/app/services/denuncia.service';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-preview-images',
@@ -14,7 +14,7 @@ export class PreviewImagesComponent implements OnInit {
 
   constructor(
     private alertController: AlertController,
-    private denunciaService: DenunciaService,
+    private generalService: GeneralService,
   ) { }
 
   ngOnInit() {}
@@ -41,7 +41,7 @@ export class PreviewImagesComponent implements OnInit {
 
   eliminar(index) {
     this.previewImages.splice(index, 1);
-    this.denunciaService.removeImage.emit(index);
+    this.generalService.removeImage.emit(index);
   }
 
 }

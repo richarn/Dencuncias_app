@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
 
 import { Subscription } from 'rxjs';
 import { NoticiaService } from 'src/app/services/noticia.service';
+import { GeneralService } from 'src/app/services/general.service';
 
 declare var window: any;
 @Component({
@@ -19,7 +20,7 @@ declare var window: any;
 export class AdminNoticiasPage implements OnInit {
 
   imagenes: any[]=[];
-  tempImages: string[] = [];
+  previewImages: string[] = [];
 
   user;
   noticias;
@@ -32,13 +33,12 @@ export class AdminNoticiasPage implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private storageService: StorageService,
-    private cameraService: CameraService,
-    private toastController: ToastController,
+    private generalService: GeneralService,
     private noticiaService: NoticiaService,
+    private toastController: ToastController,
 
   ){
-      this.createForm();
+    this.createForm();
   }
 
   async ionViewWillEnter(){
@@ -48,7 +48,14 @@ export class AdminNoticiasPage implements OnInit {
   }
 
 
-  ngOnInit() {}
+  ngOnInit() {
+    const removeImage = this.generalService.removeImage
+    .subscribe(index => {
+      if (this.imagenes[index]) this.imagenes.splice(index, 1);
+    });
+
+    this.subscriptions.push(removeImage)
+  }
 
   createForm() {
     console.log('createForm: asdf');
@@ -83,7 +90,7 @@ export class AdminNoticiasPage implements OnInit {
     });
 
       this.imagenes = [];
-      this.tempImages = [];
+      this.previewImages = [];
       // this.noticiasForm.reset();
 
       await toast.present();
@@ -92,31 +99,9 @@ export class AdminNoticiasPage implements OnInit {
     }   
   }  
  
-  // seccion camara
-
-  async camara() {
-    const imageData = await this.cameraService.abrirCamara();
-    this.procesarImagen(imageData);
-  }
-
-  async libreria() {
-    const imageData = await this.cameraService.abrirGaleria();
-    this.procesarImagen(imageData);
-  }
-
-  async procesarImagen(imageData) {
-    
-    const img = window.Ionic.WebView.convertFileSrc( imageData );
-    // Muestra la/s imagen/es
-    this.tempImages.push(img);
-
-    // obtiene la imagen
-    const response = await fetch(img);
-    // convierte a blob para enviar a la api
-    const blob = await response.blob();
-    this.imagenes.push(blob);
-    console.log('noticia');
-    
+  imagenesSeleccionadas(event) {
+    this.imagenes = event.imagenes;
+    this.previewImages = event.preview;
   }
 
   onDestroy() {

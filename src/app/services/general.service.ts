@@ -11,6 +11,7 @@ const API = environment.api;
 })
 export class GeneralService {
   
+  @Output() removeImage: EventEmitter<any> = new EventEmitter();
   @Output() limpiarImagenes: EventEmitter<any> = new EventEmitter();
 
   constructor(

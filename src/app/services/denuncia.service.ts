@@ -11,8 +11,6 @@ const API = environment.api;
 })
 export class DenunciaService {
 
-  @Output() removeImage: EventEmitter<any> = new EventEmitter();
-
   constructor(
     private http: HttpClient,
     private storageService: StorageService

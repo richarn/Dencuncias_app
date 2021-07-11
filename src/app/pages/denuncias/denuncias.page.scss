@@ -51,6 +51,7 @@ ion-content {
                 ion-textarea {
                     --background: #F6F6F6;
                     --border-radius: 20px;
+                    border-radius: 20px;
                     
                     &::placeholder {
                         --color: rgba(59, 62, 81, 1);

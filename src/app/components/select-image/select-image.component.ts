@@ -5,7 +5,6 @@ import { GeneralService } from 'src/app/services/general.service';
 import { CameraService } from 'src/app/services/camera.service';
 
 import { Subscription } from 'rxjs';
-import { DenunciaService } from 'src/app/services/denuncia.service';
 
 declare var window: any;
 
@@ -25,7 +24,6 @@ export class SelectImageComponent implements OnInit {
 
   constructor(
     private alertController: AlertController,
-    private denunciaService: DenunciaService,
     private generalService: GeneralService,
     private cameraService: CameraService,
   ) { }
@@ -37,7 +35,7 @@ export class SelectImageComponent implements OnInit {
       this.tempImages = [];
     });
 
-    const removeImage = this.denunciaService.removeImage
+    const removeImage = this.generalService.removeImage
     .subscribe(index => {
       if (this.imagenes[index]) this.imagenes.splice(index, 1);
     });

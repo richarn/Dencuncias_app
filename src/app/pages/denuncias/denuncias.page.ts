@@ -43,9 +43,7 @@ export class DenunciasPage {
     private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private storageService: StorageService,
     private denunciaService: DenunciaService,
-    private cameraService: CameraService,
     private generalService: GeneralService,
     private barrioService: BarrioService,
     private toastController: ToastController,
@@ -82,11 +80,16 @@ export class DenunciasPage {
     this.subscriptions.push(location);
   }
 
-  async ngOnInit() { }
+  async ngOnInit() {
+    const removeImage = this.generalService.removeImage
+    .subscribe(index => {
+      if (this.imagenes[index]) this.imagenes.splice(index, 1);
+    });
+
+    this.subscriptions.push(removeImage)
+  }
 
   createForm() {
-    console.log('createForm');
-    
     this.denunciaForm = this.formBuilder.group({
       id: [''],
       id_barrio: ['', Validators.required],
