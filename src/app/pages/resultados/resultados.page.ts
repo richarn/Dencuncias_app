@@ -22,6 +22,10 @@ export class ResultadosPage {
     { fecha_denuncia: '11/07/2021 21:45', barrio: 'Costa Puku', estado:'finalizado',descripcion: 'Denuncia 6' },
   ];
 
+  scrolling: boolean = false;
+  infScrollDisabled: boolean = false;
+  
+
   constructor(
     private denunciaService: DenunciaService,
     private activeRoute: ActivatedRoute,
@@ -40,18 +44,26 @@ export class ResultadosPage {
 
   async ionViewWillEnter() {
     this.user = await this.userService.getUser();
-   // this.obtenerDenuncia();
+    // this.obtenerDenuncia(null, {}, true);
   }
 
   ngOnInit() {
   }
 
-  async obtenerDenuncia() {
-    const query = { estado: 2 }
-    const response: any = await this.denunciaService.GetDenuncia(query);
+  async obtenerDenuncia(event, query = {}, pull: boolean = false) {
+    if (!query['estado']) query['estado'] = 2;
+    const response: any = await this.denunciaService.GetDenuncia(query, pull);
     if (response.success) {
       this.denuncias = response.data;
     }
+
+    if (event) {
+      event.target.complete();
+
+      if (response.data.length === 0) { this.infScrollDisabled = true; }
+    }
+
+    this.scrolling = false;
   }
 
   redirectTo(denuncia) {
@@ -60,5 +72,11 @@ export class ResultadosPage {
 
   onClick() {
     this.navCtrl.navigateBack('/');
+  }
+
+  refresh(event) {
+    this.denuncias = [];
+    this.infScrollDisabled = false;
+    this.obtenerDenuncia(event, {}, true);
   }
 }

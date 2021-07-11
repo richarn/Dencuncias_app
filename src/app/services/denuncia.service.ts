@@ -11,6 +11,8 @@ const API = environment.api;
 })
 export class DenunciaService {
 
+  page = 0;
+
   constructor(
     private http: HttpClient,
     private storageService: StorageService
@@ -37,8 +39,11 @@ export class DenunciaService {
     });
   }
 
-  GetDenuncia(query?) {
+  GetDenuncia(query?, pull: boolean = false) {
     return new Promise(resolve => {
+      if (pull) { this.page = 0; }
+      this.page++;
+      query['page'] = this.page;
 
       const parametros = new HttpParams({ fromObject: query })
 

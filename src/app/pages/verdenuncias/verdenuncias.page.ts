@@ -17,16 +17,11 @@ export class VerdenunciasPage {
   user;
   idDenuncia;
   barrios = [];
-  denuncias = [
-    { fecha_denuncia: '06/07/2021 08:50', barrio: 'Kennedy', descripcion: 'Denuncia 1' },
-    { fecha_denuncia: '07/07/2021 15:13', barrio: 'Loma', descripcion: 'Denuncia 2' },
-    { fecha_denuncia: '08/07/2021 10:40', barrio: 'Azcurra', descripcion: 'Denuncia 3' },
-    { fecha_denuncia: '09/07/2021 12:07', barrio: 'Alegre', descripcion: 'Denuncia 4' },
-    { fecha_denuncia: '10/07/2021 16:14', barrio: 'Cerro Real', descripcion: 'Denuncia 5' },
-    { fecha_denuncia: '11/07/2021 21:45', barrio: 'Costa Puku', descripcion: 'Denuncia 6' },
-  ];
+  denuncias = [];
 
+  scrolling = false;
   filterForm: FormGroup;
+  infScrollDisabled: boolean = false;
 
   constructor(
     private denunciaService: DenunciaService,
@@ -48,7 +43,7 @@ export class VerdenunciasPage {
 
 
   async ionViewWillEnter() {
-    // this.obtenerDenuncias();
+    this.obtenerDenuncias(null, {}, true);
 
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
@@ -64,12 +59,20 @@ export class VerdenunciasPage {
     });
   }
 
-  async obtenerDenuncias(query = {}) {
+  async obtenerDenuncias(event, query = {}, pull: boolean = false) {
     if (!query['estado']) query['estado'] = 1;
-    const response: any = await this.denunciaService.GetDenuncia(query);
+    const response: any = await this.denunciaService.GetDenuncia(query, pull);
     if (response.success) {
       this.denuncias = response.data;
     }
+      
+    if (event) {
+      event.target.complete();
+
+      if (response.data.length === 0) { this.infScrollDisabled = true; }
+    }
+
+    this.scrolling = false;
   }
 
   async obtenerBarrios() {
@@ -90,6 +93,12 @@ export class VerdenunciasPage {
 
   agregarDenuncia() {
     this.router.navigate(['/tabs/denuncias'])
+  }
+
+  refresh(event) {
+    this.denuncias = [];
+    this.infScrollDisabled = false;
+    this.obtenerDenuncias(event, {}, true);
   }
 
 }

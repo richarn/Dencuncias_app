@@ -1,29 +1,36 @@
 .card-denuncia {
     width: 100%;
-    --background: #F6F6F6;
+    --background: #f6f6f6;
     box-shadow: none;
     margin-bottom: 0px;
+
     ion-card-content {
         padding: 0px;
     }
+
+    ion-text {
+        display: flex;
+        align-items: center;
+    }
+
     h2 {
         margin: 0px;
     }
-    ion-fab-button {
-        width: 30px;
-        height: 30px;
-        font-size: 15px;
+
+    ion-button {
+        --padding-start: 0.7em;
+        --padding-end: 0.7em;
+        --border-color: transparent;
     }
-    .fab-horizontal-center {
-        margin-left: unset;
-        margin-inline-start: -50px !important;
-    }
+
     ion-icon {
         font-size: 15px;
     }
+
     .fecha-denuncia {
         font-size: 11px;
     }
+
     .denuncia-title {
         font-size: 20px;
     }

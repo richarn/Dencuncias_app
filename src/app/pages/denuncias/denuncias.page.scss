@@ -10,7 +10,7 @@ ion-content {
         background-image: url("/assets/images/waves.svg");
         background-repeat: no-repeat;
         background-position: center;
-        height: 100vh;
+        height: 90vh;
         opacity: 0.1;
         width: 100%;
     }
@@ -18,7 +18,7 @@ ion-content {
     .container {
         top: 0;
         width: 100%;
-        height: 100vh;
+        height: 90vh;
         // padding-top: 2em;
         position: absolute;
 
@@ -51,6 +51,8 @@ ion-content {
                 ion-textarea {
                     --background: #F6F6F6;
                     --border-radius: 20px;
+                    --padding-start: 0.8em;
+                    --padding-end: 0.8em;
                     border-radius: 20px;
                     
                     &::placeholder {

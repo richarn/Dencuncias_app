@@ -1,44 +1,57 @@
 <ion-content class="main">
 
+    <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+        <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Suelta para actualizar el listado" refreshingSpinner="circles" refreshingText="Actualizando..."></ion-refresher-content>
+    </ion-refresher>
+
     <div class="background-opacity"></div>
 
     <div class="container">
         <app-header titulo="Resultados"></app-header>
 
-        <ion-grid fixed class="page-container">
+        <div class="header-container">
+            <img src="assets/icon/white-icon.png" alt="Blue icon">
+        </div>
 
-            <ion-grid>
-                <ion-row class="sincronizar">
-                    <ion-col size="12">
-                        <ion-searchbar placeholder="Buscar"></ion-searchbar>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
+        <div class="form-container">
+            <div class="page-container">
+    
+                <ion-grid>
+                    <ion-row class="sincronizar">
+                        <ion-col size="12">
+                            <ion-searchbar placeholder="Buscar"></ion-searchbar>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+    
+                <ion-grid>
+                    <ion-row class="sincronizar">
+                        <ion-col size="12" class="estados">
+                            <ion-label color="primary">Pendiente
+                                <div class="box bg-danger"></div>
+                            </ion-label>
+                            <ion-label color="primary">En proceso
+                                <div class="box bg-warning"></div>
+                            </ion-label>
+                            <ion-label color="primary">Finalizado
+                                <div class="box bg-success"></div>
+                            </ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+    
+                <ion-grid>
+                    <ion-row *ngFor="let denuncia of denuncias" (click)="redirectTo(denuncia)">
+                        <app-card-denuncia [denuncia]="denuncia" [estado]="denuncia.estado" style="width: 90%;"></app-card-denuncia>
+                    </ion-row>
 
-            <ion-grid>
-                <ion-row class="sincronizar">
-                    <ion-col size="12" class="estados">
-                        <ion-label color="primary">Pendiente
-                            <div class="box bg-danger"></div>
-                        </ion-label>
-                        <ion-label color="primary">En proceso
-                            <div class="box bg-warning"></div>
-                        </ion-label>
-                        <ion-label color="primary">Finalizado
-                            <div class="box bg-success"></div>
-                        </ion-label>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-
-            <ion-grid>
-                <ion-row *ngFor="let denuncia of denuncias" (click)="redirectTo(denuncia)">
-                    <app-card-denuncia [denuncia]="denuncia" [estado]="denuncia.estado" style="width: 90%;">
-                    </app-card-denuncia>
-                </ion-row>
-            </ion-grid>
-
-        </ion-grid>
+                    <ion-infinite-scroll [disabled]="infScrollDisabled" threshold="150px" (ionInfinite)="scrolling = true; obtenerDenuncia($event)">
+                        <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando..."></ion-infinite-scroll-content>
+                    </ion-infinite-scroll>
+                </ion-grid>
+    
+            </div>
+        </div>
 
     </div>
 

@@ -7,7 +7,7 @@
         "loggedIn": false
     },
     {
-        "icon": "warning-outline",
+        "icon": "alert-circle-outline",
         "name": "Denuncias",
         "redirectTo": "/tabs/verdenuncias",
         "admin": false,
@@ -25,7 +25,7 @@
                 "loggedIn": true
             },
             {
-                "icon": "warning-outline",
+                "icon": "alert-circle-outline",
                 "name": "Denuncias",
                 "redirectTo": "/tabs/admin-denuncias",
                 "admin": true,
@@ -43,6 +43,14 @@
     {
         "name": "Cuenta",
         "children": [
+            {
+                "icon": "alert-circle-outline",
+                "name": "Mis denuncias",
+                "redirectTo": "/tabs/user-denuncias",
+                "admin": false,
+                "loggedIn": true,
+                "hideLoggedIn": false
+            },
             {
                 "icon": "log-in",
                 "name": "Iniciar sesión",
