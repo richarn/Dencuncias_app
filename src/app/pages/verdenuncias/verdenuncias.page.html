@@ -1,42 +1,59 @@
-<app-header titulo="Ver Denuncias"></app-header>
+<ion-content class="main">
 
-<ion-content class="center">
+    <div class="background-opacity"></div>
+
+    <div class="container">
+        <app-header titulo="Mis Denuncias"></app-header>
+
+        <ion-grid fixed class="page-container">
+
+            <ion-grid>
+                <ion-row class="sincronizar">
+                    <ion-col size="12">
+                        <ion-searchbar [placeholder]="Buscar"></ion-searchbar>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
 
 
-  <h2 class="title-denuncia">Denuncias realizadas</h2>
-  
-  <ion-button color="primary" (click)="userDenuncia()">Mis denuncias</ion-button>
-  
-  <ion-label>Filtros</ion-label>
-  <ion-label>Barrio:</ion-label>
-  <form [formGroup]="filterForm">
-    <ion-select formControlName="id_barrio" placeholder="Barrio" (ionChange)="filtrar($event)">
-      <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
-    </ion-select>
+            <ion-grid>
+                <ion-row *ngFor="let denuncia of denuncias" (click)="redirectTo(denuncia)">
 
-    <ion-datetime displayFormat="YYYY-MM-DD" placeholder="Fecha" formControlName="fecha" (ionChange)="filtrar($event)"></ion-datetime>
-  </form>
+                    <ion-card class="card card-denuncia">
+                        <ion-card-content>
+                            <ion-grid fixed>
+                                <ion-row>
+                                    <ion-col size="10">
+                                        <ion-text color="primary">
+                                            <h2 class="denuncia-title">{{ denuncia.barrio }}</h2>
+                                        </ion-text>
+                                        <ion-label class="text-muted fecha-denuncia">
+                                            {{ denuncia.fecha_denuncia }}
+                                        </ion-label>
+                                    </ion-col>
+                                    <ion-col size="2" class="btn-mas">
+                                        <ion-fab vertical="bottom" horizontal="end">
+                                            <ion-fab-button (click)="redirectTo(denuncia)" color="primary">
+                                                <ion-icon name="ellipsis-vertical"></ion-icon>
+                                            </ion-fab-button>
+                                        </ion-fab>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+                        </ion-card-content>
+                    </ion-card>
 
-  <ion-grid>
-    <ion-row *ngFor="let denuncia of denuncias" (click)="redirectTo(denuncia)">
-      
-        <ion-card class="card_w">
-          <ion-card-header>
-            <ion-card-title>Denuncia Realizada</ion-card-title>
-            <ion-card-subtitle>{{ denuncia.fecha_denuncia }}</ion-card-subtitle>
-          </ion-card-header>
-          
-          <img [src]="denuncia.imagenes | comprobarImagen" class="slide-image" width="50%" >
+                </ion-row>
+            </ion-grid>
 
-          <ion-card-content>
-            {{ denuncia.descripcion_denuncia }}
-          </ion-card-content>
-      </ion-card>
-      
-    </ion-row>
-  </ion-grid>
+        </ion-grid>
+
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="agregarDenuncia()" color="primary">
+            <ion-icon name="paper-plane"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
 </ion-content>
-
-
-

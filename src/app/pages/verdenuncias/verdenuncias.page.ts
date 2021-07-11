@@ -17,7 +17,14 @@ export class VerdenunciasPage {
   user;
   idDenuncia;
   barrios = [];
-  denuncias = [];
+  denuncias = [
+    { fecha_denuncia: '06/07/2021 08:50', barrio: 'Kennedy', descripcion: 'Denuncia 1' },
+    { fecha_denuncia: '07/07/2021 15:13', barrio: 'Loma', descripcion: 'Denuncia 2' },
+    { fecha_denuncia: '08/07/2021 10:40', barrio: 'Azcurra', descripcion: 'Denuncia 3' },
+    { fecha_denuncia: '09/07/2021 12:07', barrio: 'Alegre', descripcion: 'Denuncia 4' },
+    { fecha_denuncia: '10/07/2021 16:14', barrio: 'Cerro Real', descripcion: 'Denuncia 5' },
+    { fecha_denuncia: '11/07/2021 21:45', barrio: 'Costa Puku', descripcion: 'Denuncia 6' },
+  ];
 
   filterForm: FormGroup;
 
@@ -30,25 +37,22 @@ export class VerdenunciasPage {
     private navCtrl: NavController,
     private router: Router,
   ) {
-    
+
     this.activeRoute.queryParams.subscribe(params => {
-      console.log(params);
       if (params.denuncia) {
         this.idDenuncia = params.denuncia;
       }
     });
 
-    this.createForm();
-    this.obtenerBarrios();
   }
 
 
   async ionViewWillEnter() {
-    this.obtenerDenuncias();
-    
+    // this.obtenerDenuncias();
+
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
-   }
+  }
 
   ngOnInit() {
   }
@@ -66,8 +70,6 @@ export class VerdenunciasPage {
     if (response.success) {
       this.denuncias = response.data;
     }
-    console.log("denuncias:", this.denuncias);
-    
   }
 
   async obtenerBarrios() {
@@ -83,15 +85,11 @@ export class VerdenunciasPage {
   }
 
   redirectTo(denuncia) {
-    this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: { denuncia: denuncia.id }});
+    this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: { denuncia: denuncia.id } });
   }
- 
-  userDenuncia(){
-    this.router.navigate(['/tabs/user-denuncias']);
-  }
-  
-  onClick(){
-    this.navCtrl.navigateBack('/');
+
+  agregarDenuncia() {
+    this.router.navigate(['/tabs/denuncias'])
   }
 
 }
