@@ -39,26 +39,23 @@ export class MapaComponent implements OnInit, OnChanges {
   }
 
   cargarMapa() {
-    if (this.coords) {
-      
-      const latLng = this.coords.split(';');
-      console.log('latLng: ', latLng);
-      
-      const lat = Number(latLng[0]);
-      const lng = Number(latLng[1]);
+    this.coords = this.coords ? this.coords : environment.mapbox.defaultCoords;
+    const latLng = this.coords.split(';');
+    
+    const lat = Number(latLng[0]);
+    const lng = Number(latLng[1]);
 
-      mapboxgl.accessToken = environment.mapbox.apiKey;
-      const map = new mapboxgl.Map({
-        container: this.mapa.nativeElement,
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [ lng, lat ],
-        zoom: 15
-      }); 
-  
-      const marker = new mapboxgl.Marker()
-      .setLngLat( [ lng, lat ] )
-      .addTo( map );
-    }
+    mapboxgl.accessToken = environment.mapbox.apiKey;
+    const map = new mapboxgl.Map({
+      container: this.mapa.nativeElement,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [ lng, lat ],
+      zoom: 15
+    }); 
+
+    const marker = new mapboxgl.Marker()
+    .setLngLat( [ lng, lat ] )
+    .addTo( map );
   }
 
 }

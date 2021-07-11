@@ -9,7 +9,8 @@ export const environment = {
   host: 'http://yregua.com/',
   api: 'http://yregua.com/api',
   mapbox: {
-    apiKey: 'pk.eyJ1IjoicmljaDk3IiwiYSI6ImNrazhibTZkZjA1dW4yb29icmpvemV6MTYifQ.6Rl26zo_E9S3T2SYRe0I-w'
+    apiKey: 'pk.eyJ1IjoicmljaDk3IiwiYSI6ImNrazhibTZkZjA1dW4yb29icmpvemV6MTYifQ.6Rl26zo_E9S3T2SYRe0I-w',
+    defaultCoords: '-25.3868613;-57.1388446'
   }
 };
 

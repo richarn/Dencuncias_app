@@ -68,6 +68,22 @@ ion-content {
                     margin-left: 34%;
                 }
             }
+
+            .images-container,
+            .map-container {
+                background: white;
+                border-radius: 30px;
+                padding: 2em;
+                margin-top: 20px;
+
+                .subheader {
+                    h2 {
+                        color: var(--ion-color-primary);
+                        font-weight: bold;
+                        margin: 0 0 10px 0;
+                    }
+                }
+            }
     
             .button-group {
                 margin-top: 30px;

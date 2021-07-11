@@ -5,6 +5,7 @@ import { GeneralService } from 'src/app/services/general.service';
 import { CameraService } from 'src/app/services/camera.service';
 
 import { Subscription } from 'rxjs';
+import { DenunciaService } from 'src/app/services/denuncia.service';
 
 declare var window: any;
 
@@ -24,6 +25,7 @@ export class SelectImageComponent implements OnInit {
 
   constructor(
     private alertController: AlertController,
+    private denunciaService: DenunciaService,
     private generalService: GeneralService,
     private cameraService: CameraService,
   ) { }
@@ -35,6 +37,12 @@ export class SelectImageComponent implements OnInit {
       this.tempImages = [];
     });
 
+    const removeImage = this.denunciaService.removeImage
+    .subscribe(index => {
+      if (this.imagenes[index]) this.imagenes.splice(index, 1);
+    });
+
+    this.subscriptions.push(removeImage);
     this.subscriptions.push(limpiarImagenes);
   }
 
@@ -70,8 +78,6 @@ export class SelectImageComponent implements OnInit {
     else {
       this.alertCantImg();
     }
-    console.log("temp", this.tempImages);
-    
 
     // obtiene la imagen
     const response = await fetch(img);
@@ -80,33 +86,7 @@ export class SelectImageComponent implements OnInit {
     this.imagenes.push(blob);
     console.log('imagenes seleccionadas: ', this.imagenes);
     
-    this.resultados.emit(this.imagenes);
-  }
-
-  async confirmarEliminacion(index) {
-    const alert = await this.alertController.create({
-      header: 'Eliminar',
-      subHeader: '¿Estas seguro de eliminar la imagen?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {}
-        },
-        {
-          text: 'Aceptar',
-          handler: () => this.eliminar(index)
-        }
-      ]
-    })
-
-    return await alert.present();
-  }
-
-  eliminar(index) {
-    this.tempImages.splice(index, 1);
-    console.log("index",index);
-    
+    this.resultados.emit({ imagenes: this.imagenes, preview: this.tempImages });
   }
 
   onDestroy() {

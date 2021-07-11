@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { StorageService } from './storage.service';
 
@@ -10,6 +10,8 @@ const API = environment.api;
   providedIn: 'root'
 })
 export class DenunciaService {
+
+  @Output() removeImage: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private http: HttpClient,

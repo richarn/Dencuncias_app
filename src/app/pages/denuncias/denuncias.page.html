@@ -19,8 +19,6 @@
             <h2>Enviar Denuncia</h2>
             <p>Para poder enviar su denuncia por favor complete los campos.</p>
           </div>
-        
-          <!-- <app-mapa></app-mapa> -->
                       
           <app-select-image (resultados)="imagenesSeleccionadas($event)"></app-select-image>
     
@@ -47,6 +45,24 @@
           </ion-item>
                       
         </ion-list>
+
+        <div class="images-container">
+          <div class="subheader">
+            <h2>Imagenes seleccionadas</h2>
+            <p *ngIf="!previewImages.length">No hay imagenes seleccionadas</p>
+            <p *ngIf="previewImages.length">Toca la imagen para eliminar</p>
+          </div>
+
+          <app-preview-images [previewImages]="previewImages"></app-preview-images>
+        </div>
+
+        <div class="map-container">
+          <div class="subheader">
+            <h2>Ubicación</h2>
+          </div>
+
+          <app-mapa></app-mapa>
+        </div>
   
         <div class="button-group">
           <ion-button

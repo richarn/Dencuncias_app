@@ -26,6 +26,7 @@ export class DenunciasPage {
 
   barrios: any[] = [];
   imagenes: any[] = [];
+  previewImages: any[] = [];
 
   ubicacion = { 
     coords: null,
@@ -154,8 +155,9 @@ export class DenunciasPage {
     }
   }
 
-  imagenesSeleccionadas(imagenes) {
-    this.imagenes = imagenes;
+  imagenesSeleccionadas(event) {
+    this.imagenes = event.imagenes;
+    this.previewImages = event.preview;
   }
 
   // async subirImagen(blob: Blob) {
