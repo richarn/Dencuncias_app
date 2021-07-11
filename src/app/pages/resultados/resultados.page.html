@@ -1,27 +1,51 @@
-<app-header titulo="Ver Resultados"></app-header>
+<ion-content class="main">
 
-<ion-content class="center">
+    <div class="background-opacity"></div>
 
+    <div class="container">
+        <app-header titulo="Resultados"></app-header>
 
-  <h2 class="title-resultado">Resultados de Obras</h2>
+        <ion-grid fixed class="page-container">
 
-  <ion-grid>
-    <ion-row *ngFor="let denuncia of denuncias" (click)="redirectTo(denuncia)">
-      
-        <ion-card class="card_w">
-          <ion-card-header>
-            <ion-card-title>Denuncia Solucionada</ion-card-title>
-            <ion-card-subtitle>{{ denuncia.fecha_denuncia }}</ion-card-subtitle>
-          </ion-card-header>
-          
-          <img [src]="denuncia.imagenes | comprobarImagen" class="slide-image" width="50%" >
+            <ion-grid>
+                <ion-row class="sincronizar">
+                    <ion-col size="12">
+                        <ion-searchbar placeholder="Buscar"></ion-searchbar>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
 
-          <ion-card-content>
-            {{ denuncia.descripcion_solucion }}
-          </ion-card-content>
-      </ion-card>
-      
-    </ion-row>
-  </ion-grid>
+            <ion-grid>
+                <ion-row class="sincronizar">
+                    <ion-col size="12" class="estados">
+                        <ion-label color="primary">Pendiente
+                            <div class="box bg-danger"></div>
+                        </ion-label>
+                        <ion-label color="primary">En proceso
+                            <div class="box bg-warning"></div>
+                        </ion-label>
+                        <ion-label color="primary">Finalizado
+                            <div class="box bg-success"></div>
+                        </ion-label>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+            <ion-grid>
+                <ion-row *ngFor="let denuncia of denuncias" (click)="redirectTo(denuncia)">
+                    <app-card-denuncia [denuncia]="denuncia" [estado]="denuncia.estado" style="width: 90%;">
+                    </app-card-denuncia>
+                </ion-row>
+            </ion-grid>
+
+        </ion-grid>
+
+    </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="agregarDenuncia()" color="primary">
+            <ion-icon name="paper-plane"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
 </ion-content>

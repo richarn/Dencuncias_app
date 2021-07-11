@@ -9,22 +9,25 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
+
 /* Core CSS required for Ionic components to work properly */
+
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
+
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
 @import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
+
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-
 .hidden {
     display: none;
 }
@@ -35,20 +38,16 @@ body {
 
 ion-item {
     --border-color: transparent;
-
     &.item-interactive.ion-invalid {
         // --highlight-background: var(--highlight-color-invalid);
         --highlight-background: transparent !important;
-
         ion-input.ion-invalid.has-focus {
             border-color: var(--highlight-color-invalid);
         }
     }
-
     &.item-interactive.ion-valid {
         // --highlight-background: var(--highlight-color-valid);
         --highlight-background: transparent !important;
-
         ion-input.ion-valid.has-focus {
             border-color: var(--highlight-color-valid);
         }
@@ -71,4 +70,28 @@ ion-input {
     --padding-top: 0.8em !important;
     --padding-bottom: 0.8em !important;
     --padding-start: 1em !important;
+}
+
+.bg-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.bg-warning {
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+
+.bg-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+ion-searchbar {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.searchbar-input.sc-ion-searchbar-md {
+    border-radius: 15px;
 }

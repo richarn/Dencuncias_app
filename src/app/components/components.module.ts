@@ -10,6 +10,7 @@ import { SelectImageComponent } from './select-image/select-image.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderSolucionadaComponent } from './header-solucionada/header-solucionada.component';
 import { PreviewImagesComponent } from './preview-images/preview-images.component';
+import { CardDenunciaComponent } from './card-denuncia/card-denuncia.component';
 
 
 @NgModule({
@@ -20,9 +21,9 @@ import { PreviewImagesComponent } from './preview-images/preview-images.componen
     AdminHeaderComponent,
     SelectImageComponent,
     PreviewImagesComponent,
-    HeaderSolucionadaComponent
+    HeaderSolucionadaComponent,
+    CardDenunciaComponent
   ],
-
   exports: [
     HeaderComponent,
     PopinfoComponent,
@@ -30,7 +31,8 @@ import { PreviewImagesComponent } from './preview-images/preview-images.componen
     AdminHeaderComponent,
     SelectImageComponent,
     PreviewImagesComponent,
-    HeaderSolucionadaComponent
+    HeaderSolucionadaComponent,
+    CardDenunciaComponent
   ],
   imports: [
     CommonModule,

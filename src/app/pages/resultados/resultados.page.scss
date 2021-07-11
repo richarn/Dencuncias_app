@@ -1,9 +1,98 @@
-.title-resultado{
-    font-family: "Helvetica Neue", Roboto;
-    font-size: 30px;
-    color: #3CB371;
-    font-weight: bold;
+ion-content {
+    --background: linear-gradient(180deg, rgba(72, 159, 181, 1) 0%, rgba(237, 231, 227, 1) 100%);
+    .background-opacity {
+        background-image: url("/assets/images/waves.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100vh;
+        opacity: 0.1;
+        width: 100%;
+    }
+    .container {
+        top: 0;
+        width: 100%;
+        height: 100vh;
+        // padding-top: 2em;
+        position: absolute;
+        .header-container {
+            text-align: center;
+            img {
+                width: 64px;
+            }
+        }
+        .form-container {
+            padding: 2em;
+            .subheader {
+                h2 {
+                    color: var(--ion-color-primary);
+                    font-weight: bold;
+                }
+                p {
+                    color: rgba(59, 62, 81, 1);
+                }
+            }
+            ion-list {
+                border-radius: 30px;
+                padding: 2em;
+                ion-textarea {
+                    --background: #F6F6F6;
+                    --border-radius: 20px;
+                    &::placeholder {
+                        --color: rgba(59, 62, 81, 1);
+                    }
+                }
+                .location-text {
+                    width: 100%;
+                    color: var(--ion-color-primary);
+                    text-align: center;
+                    font-weight: bold;
+                }
+                .checkbox-item ion-toggle {
+                    margin-left: 34%;
+                }
+            }
+            .button-group {
+                margin-top: 30px;
+                text-align: center;
+                ion-button {
+                    width: 80%;
+                    --padding-start: 1em;
+                    --padding-end: 1em;
+                    --padding-top: 1.8em;
+                    --padding-bottom: 1.8em;
+                }
+            }
+        }
+    }
 }
-ion-col {
-    border: 2px solid #aeb7ca;
-  }
+
+.page-container {
+    width: 100%;
+    background-color: white;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    bottom: 0;
+    position: absolute;
+    height: calc(100% - 7em);
+    color: black;
+    overflow: scroll;
+    padding-bottom: 55px;
+    width: 86vw;
+    margin-left: 7vw;
+    padding-top: 7px;
+}
+
+.estados {
+    display: flex;
+    justify-content: space-between;
+    ion-label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .box {
+        width: 10px;
+        height: 10px;
+        margin-left: 8px;
+    }
+}

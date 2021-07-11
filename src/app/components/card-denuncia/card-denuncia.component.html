@@ -1,0 +1,23 @@
+<ion-card class="card card-denuncia" [ngClass]="{'bg-danger': estado == 'pendiente','bg-warning': estado == 'en proceso','bg-success': estado == 'finalizado'}">
+    <ion-card-content>
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col size="10">
+                    <ion-text color="primary">
+                        <h2 class="denuncia-title">{{ denuncia.barrio }}</h2>
+                    </ion-text>
+                    <ion-label class="text-muted fecha-denuncia">
+                        {{ denuncia.fecha_denuncia }}
+                    </ion-label>
+                </ion-col>
+                <ion-col size="2" class="btn-mas">
+                    <ion-fab vertical="bottom" horizontal="end">
+                        <ion-fab-button (click)="redirectTo(denuncia)" color="primary">
+                            <ion-icon name="ellipsis-vertical"></ion-icon>
+                        </ion-fab-button>
+                    </ion-fab>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card-content>
+</ion-card>
