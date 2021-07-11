@@ -13,14 +13,7 @@ export class ResultadosPage {
 
   idDenuncia;
   user;
-  denuncias = [
-    { fecha_denuncia: '06/07/2021 08:50', barrio: 'Kennedy', estado:'pendiente',descripcion: 'Denuncia 1' },
-    { fecha_denuncia: '07/07/2021 15:13', barrio: 'Loma', estado:'en proceso',descripcion: 'Denuncia 2' },
-    { fecha_denuncia: '08/07/2021 10:40', barrio: 'Azcurra', estado:'en proceso',descripcion: 'Denuncia 3' },
-    { fecha_denuncia: '09/07/2021 12:07', barrio: 'Alegre', estado:'finalizado',descripcion: 'Denuncia 4' },
-    { fecha_denuncia: '10/07/2021 16:14', barrio: 'Cerro Real', estado:'finalizado',descripcion: 'Denuncia 5' },
-    { fecha_denuncia: '11/07/2021 21:45', barrio: 'Costa Puku', estado:'finalizado',descripcion: 'Denuncia 6' },
-  ];
+  denuncias = [];
 
   scrolling: boolean = false;
   infScrollDisabled: boolean = false;
@@ -44,7 +37,7 @@ export class ResultadosPage {
 
   async ionViewWillEnter() {
     this.user = await this.userService.getUser();
-    // this.obtenerDenuncia(null, {}, true);
+    this.obtenerDenuncia(null, {}, true);
   }
 
   ngOnInit() {
