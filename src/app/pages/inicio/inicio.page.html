@@ -33,28 +33,34 @@
       <img src="assets/icon/white-icon.png" alt="Blue icon">
     </div>
   
-    <ion-slides pager="true" class="slide-full" [options]="slideOpts">
+    <div class="form-container">
+      <ion-searchbar placeholder="Buscar noticias" type="text" (ionChange)="onSearchChange($event)" [debounce]="250"></ion-searchbar>
+  
+      <div class="trending">
 
-      <ion-slide *ngFor="let noticia of noticias" (click)="redirectTo(noticia)">
+        <h3>DESTACADOS</h3>
 
-        <ion-card mode="ios"> 
-          
-          <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
+        <div class="news-container" *ngIf="noticia">
+          <div class="selected-news" [style.background-image]="'url(' + (noticia.imagenes | comprobarImagen) + ')'">
+            <div class="info">
+              <div class="title">{{ noticia.titulo }}</div>
+              <div class="description">{{ noticia.descripcion.slice(0, 100) }}...</div>
+              <div class="date">{{ noticia.created_at | formatDate }}...</div>
+            </div>
+          </div>
+  
+          <ion-slides pager="true" class="slide-full" [options]="slideOpts">
+            <ion-slide *ngFor="let noticia of noticias" (click)="redirectTo(noticia)">
+              <div class="image" [style.background-image]="'url(' + (noticia.imagenes | comprobarImagen) + ')'"></div>
+            </ion-slide>
+          </ion-slides>
+        </div>
 
-          <ion-card-header>
-            <ion-card-title>{{ noticia.titulo }}</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            {{ noticia.descripcion.slice(0, 100) }}...
-          </ion-card-content>
-
-        </ion-card>
-
-      </ion-slide>
-
-    </ion-slides>
-    
+        <div class="news-container" *ngIf="!noticia">
+          <h4>No hay noticias recientes</h4>
+        </div>
+      </div>
+    </div>
   </div>
   
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">

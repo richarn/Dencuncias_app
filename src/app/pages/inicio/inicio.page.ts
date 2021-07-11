@@ -12,38 +12,16 @@ import { NoticiaService } from 'src/app/services/noticia.service';
 })
 export class InicioPage implements OnInit {
 
-  idNoticia;
   slideOpts = {
     initialSlide: 0,
     speed: 200,
-    autoplay:true
+    autoplay:true,
+    slidesPerView: 5,
   };
 
+  noticia;
   noticias = [];
-
-  slides: { img: string, titulo: string, desc: string }[] = [
-    {
-      img: '/assets/slides/photos.svg',
-      titulo: 'Comparte Fotos',
-      desc: 'Mira y comparte increíbles fotos de todo el mundo'
-    },
-    {
-      img: '/assets/slides/music-player-2.svg',
-      titulo: 'Escucha Música',
-      desc: 'Toda tu música favorita está aquí'
-    },
-    {
-      img: '/assets/slides/calendar.svg',
-      titulo: 'Nunca olvides nada',
-      desc: 'El mejor calendario del mundo a tu disposición'
-    },
-    {
-      img: '/assets/slides/placeholder-1.svg',
-      titulo: 'Tu ubicación',
-      desc: 'Siempre sabremos donde estás!'
-    }
-  ];  
-
+  slideNoticias = [];
 
   constructor(
     private popoverCtrl: PopoverController,
@@ -52,25 +30,35 @@ export class InicioPage implements OnInit {
     private navCtrl: NavController,
     private router: Router,
   ) {
-
-    this.activeRoute.queryParams.subscribe(params => {
-      console.log(params);
-      if (params.noticia) {
-        this.idNoticia = params.noticia;
-      }
-    });
-
     this.obtenerNoticias();
   }
 
   ngOnInit() {
   }
 
-  async obtenerNoticias() {
-    const query = {estado: 1};
+  async obtenerNoticias(query = {}) {
+    if (!query['estado']) query['estado'] = 1;
+
     const response: any = await this.noticiasService.listar(query);
     if (response.success) {
       this.noticias = response.data;
+      this.slideNoticias = response.data;
+
+      if (this.noticias.length) {
+        this.noticia = this.noticias[0];
+        this.slideNoticias.splice(0, 1);
+      }
+
+    }
+  }
+
+  onSearchChange(event) {
+    const search = event.detail.value;
+
+    if (search && search.length > 3) {
+      this.obtenerNoticias({ search });
+    } else if (search == '') {
+      this.obtenerNoticias();
     }
   }
 
@@ -83,8 +71,6 @@ export class InicioPage implements OnInit {
         titulo: "Visión",
         descripcion: "Esto es la descripcion Visión"   
       }
-
-      
     });
 
     await popover.present(); 
@@ -99,8 +85,6 @@ export class InicioPage implements OnInit {
         titulo: "Misión",
         descripcion: "Esto es la descripcion de Misión"   
       }
-
-      
     });
 
     await popover.present(); 

@@ -39,7 +39,7 @@ export class DenunciaService {
     });
   }
 
-  GetDenuncia(query?, pull: boolean = false) {
+  GetDenuncia(query = {}, pull: boolean = false) {
     return new Promise(resolve => {
       if (pull) { this.page = 0; }
       this.page++;

@@ -28,7 +28,6 @@ export class ResultadosPage {
 
   ) {
     this.activeRoute.queryParams.subscribe(params => {
-      console.log(params);
       if (params.denuncia) {
         this.idDenuncia = params.denuncia;
       }

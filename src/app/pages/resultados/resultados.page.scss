@@ -5,7 +5,7 @@ ion-content {
         background-image: url("/assets/images/waves.svg");
         background-repeat: no-repeat;
         background-position: center;
-        height: 100vh;
+        height: 90vh;
         opacity: 0.1;
         width: 100%;
     }
@@ -13,7 +13,7 @@ ion-content {
     .container {
         top: 0;
         width: 100%;
-        height: 100vh;
+        height: 90vh;
         // padding-top: 2em;
         position: absolute;
 
@@ -39,40 +39,12 @@ ion-content {
                 }
             }
 
-            ion-list {
-                border-radius: 30px;
-                padding: 2em;
+            ion-searchbar {
+                --box-shadow: none;
 
-                ion-textarea {
-                    --background: #F6F6F6;
-                    --border-radius: 20px;
-                    &::placeholder {
-                        --color: rgba(59, 62, 81, 1);
-                    }
-                }
-
-                .location-text {
-                    width: 100%;
-                    color: var(--ion-color-primary);
-                    text-align: center;
-                    font-weight: bold;
-                }
-
-                .checkbox-item ion-toggle {
-                    margin-left: 34%;
-                }
-            }
-
-            .button-group {
-                margin-top: 30px;
-                text-align: center;
-
-                ion-button {
-                    width: 80%;
-                    --padding-start: 1em;
-                    --padding-end: 1em;
-                    --padding-top: 1.8em;
-                    --padding-bottom: 1.8em;
+                :host ion-icon {
+                    right: 16px !important;
+                    left: auto !important;
                 }
             }
         }
@@ -83,6 +55,13 @@ ion-content {
     background-color: white;
     border-radius: 30px;
     border-radius: 30px;
+
+    .no-results h4 {
+        margin: 0;
+        text-align: center;
+        padding-bottom: 1em;
+        color: rgba(59, 62, 81, 1);
+    }
 }
 
 .estados {

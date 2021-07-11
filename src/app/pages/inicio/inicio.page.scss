@@ -109,42 +109,54 @@ ion-content {
                     color: rgba(59, 62, 81, 1);
                 }
             }
-    
-            ion-list {
-                border-radius: 30px;
-                padding: 2em;
-    
-                ion-textarea {
-                    --background: #F6F6F6;
-                    --border-radius: 20px;
-                    
-                    &::placeholder {
-                        --color: rgba(59, 62, 81, 1);
-                    }
-                }
-    
-                .location-text {
-                    width: 100%;
-                    color: var(--ion-color-primary);
-                    text-align: center;
+
+            ion-searchbar {
+                --box-shadow: none;
+            }
+
+            .trending {
+
+                h3 {
+                    color: white;
                     font-weight: bold;
                 }
-    
-                .checkbox-item ion-toggle {
-                    margin-left: 34%;
+
+                .selected-news {
+                    display: flex;
+                    align-items: flex-end;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: cover;
+                    height: 220px;
+                    border-radius: 10px;
+                    margin-bottom: 10px;
+
+                    .info {
+                        color: white;
+                        padding: 1em;
+                        text-shadow: -3px 0 rgba(0, 0, 0, 0.7);
+
+                        .title {
+                            font-weight: bold;
+                            font-size: 26px;
+                        }
+
+                        .description {
+                            font-size: 18px;
+                        }
+                    }
                 }
-            }
-    
-            .button-group {
-                margin-top: 30px;
-                text-align: center;
-    
-                ion-button {
-                    width: 80%;
-                    --padding-start: 1em;
-                    --padding-end: 1em;
-                    --padding-top: 1.8em;
-                    --padding-bottom: 1.8em;
+
+                ion-slide {
+
+                    .image {
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-size: cover;
+                        border-radius: 50%;
+                        width: 80px;
+                        height: 68px;
+                    }
                 }
             }
         }
