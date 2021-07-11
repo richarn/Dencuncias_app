@@ -23,10 +23,14 @@ ion-content {
             z-index: 100;
             padding: 1em;
             text-align: center;
+
+            img {
+                width: 84px;
+            }
     
             h1 {
                 color: white;
-                margin: 0;
+                margin: 8px 0 0 0;
                 font-weight: bold;
             }
         }
@@ -41,6 +45,10 @@ ion-content {
                 .icon-container {
                     padding: 0 1em;
                     text-align: center;
+
+                    img {
+                        width: 56px;
+                    }
                 }
     
                 ion-label {

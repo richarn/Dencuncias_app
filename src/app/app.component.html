@@ -7,7 +7,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list>
+        <!-- <ion-list>
   
           <ion-menu-toggle autoHide="false">
             <ion-item *ngFor="let item of menuItems | async" [routerLink]="item.redirectTo" [ngClass]="{'hidden': (item.loggedIn && !logged || (logged && item.admin && user && user.role && user.role.nivel != 1))}">
@@ -20,7 +20,30 @@
             </ion-item>
           </ion-menu-toggle>
   
-        </ion-list>
+        </ion-list> -->
+        <div *ngFor="let item of menuItems | async">
+
+          <ion-menu-toggle autoHide="false" *ngIf="item.redirectTo" [ngClass]="{'hidden': item.loggedIn && !logged}" mode="md">
+            <ion-item [routerLink]="item.redirectTo" routerLinkActive="active" lines="none">
+              <ion-icon slot="start" [name]="item.icon" color="primary"></ion-icon>
+              <ion-label>{{ item.name }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+    
+          <ion-item-group>
+            <ion-item-divider *ngIf="item.children?.length" mode="md" [sticky]="true">
+              <ion-label>{{ item.name }}</ion-label>
+            </ion-item-divider>
+            
+              <ion-menu-toggle autoHide="false"> 
+                <ion-item *ngFor="let sub of item.children" (click)="(sub.icon == 'exit') ? logout() : false;" [routerLink]="sub.redirectTo" routerLinkActive="active" [ngClass]="{'hidden': (sub.loggedIn && !logged) || (sub.hideLoggedIn && logged)}" lines="none" mode="md">
+                  <ion-icon slot="start" [name]="sub.icon" color="primary"></ion-icon>
+                  <ion-label>{{ sub.name }}</ion-label>
+                </ion-item>
+              </ion-menu-toggle>
+          </ion-item-group>
+    
+        </div>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main"></ion-router-outlet>

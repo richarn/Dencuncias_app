@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private locationService: LocationService,
-    public userService: UserService,
+    private userService: UserService,
     private menuService: MenuService,
   ) {}
 
@@ -41,5 +41,9 @@ export class AppComponent implements OnInit {
       console.log('Error: ', err);
       this.logged = false;
     });
+  }
+
+  logout() {
+    this.userService.logout();
   }
 }

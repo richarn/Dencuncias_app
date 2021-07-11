@@ -1,65 +1,94 @@
 [
     {
-        "icon": "home",
-        "name": "Inicio",
-        "redirectTo": "/main/home",
-        "admin": false,
-        "loggedIn": false
-    },
-    {
         "icon": "newspaper",
         "name": "Noticias",
-        "redirectTo": "/publications",
+        "redirectTo": "/tabs/home",
         "admin": false,
         "loggedIn": false
     },
     {
-        "icon": "newspaper",
-        "name": "Admin - noticias",
-        "redirectTo": "/admin-noticias",
-        "admin": true,
-        "loggedIn": true
-    },
-    {
-        "icon": "home",
-        "name": "Admin - denuncias",
-        "redirectTo": "/admin-denuncias",
-        "admin": true,
-        "loggedIn": true
-    },
-    {
-        "icon": "home",
-        "name": "Administrar - usuarios",
-        "redirectTo": "/admin-user",
-        "admin": true,
-        "loggedIn": true
-    },
-    {
-        "icon": "person-add",
-        "name": "Registrarse",
-        "redirectTo": "/registro",
+        "icon": "warning-outline",
+        "name": "Denuncias",
+        "redirectTo": "/tabs/verdenuncias",
         "admin": false,
         "loggedIn": false
     },
     {
-        "icon": "analytics",
-        "name": "Misión",
-        "redirectTo": "/mision",
-        "admin": false,
-        "loggedIn": false
+        "name": "Administrar",
+        "children": [
+            {
+                "icon": "newspaper",
+                "name": "Noticias",
+                "redirectTo": "/tabs/admin-noticias",
+                "admin": true,
+                "loggedIn": true
+            },
+            {
+                "icon": "warning-outline",
+                "name": "Denuncias",
+                "redirectTo": "/tabs/admin-denuncias",
+                "admin": true,
+                "loggedIn": true
+            },
+            {
+                "icon": "person",
+                "name": "Usuarios",
+                "redirectTo": "/tabs/admin-user",
+                "admin": true,
+                "loggedIn": true
+            }
+        ]
     },
     {
-        "icon": "eye",
-        "name": "Visión",
-        "redirectTo": "/vision",
-        "admin": false,
-        "loggedIn": false
+        "name": "Cuenta",
+        "children": [
+            {
+                "icon": "log-in",
+                "name": "Iniciar sesión",
+                "redirectTo": "/login",
+                "admin": false,
+                "loggedIn": false,
+                "hideLoggedIn": true
+            },
+            {
+                "icon": "person-add",
+                "name": "Registrarse",
+                "redirectTo": "/registro",
+                "admin": false,
+                "loggedIn": false,
+                "hideLoggedIn": true
+            },
+            {
+                "icon": "exit",
+                "name": "Cerrar Sessión",
+                "loggedIn": true
+            }
+        ]
     },
     {
-        "icon": "call",
-        "name": "Contacto",
-        "redirectTo": "/contacto",
-        "admin": false,
-        "loggedIn": false
+        "name": "Acerca de",
+        "children": [
+            {
+                "icon": "analytics",
+                "name": "Misión",
+                "redirectTo": "/mision",
+                "admin": false,
+                "loggedIn": false
+            },
+            {
+                "icon": "eye",
+                "name": "Visión",
+                "redirectTo": "/vision",
+                "admin": false,
+                "loggedIn": false
+            },
+            {
+                "icon": "call",
+                "name": "Contacto",
+                "redirectTo": "/contacto",
+                "admin": false,
+                "loggedIn": false
+            }
+        ]
     }
 ]

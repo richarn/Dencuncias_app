@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar color="success">
 
     <ion-buttons  slot="end">
@@ -20,39 +20,47 @@
     </ion-buttons>    
 
 </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content class="center">
+<ion-content>
     
-      <h2 class="title-fonts">Noticias</h2>
-    
+  <div class="background-opacity"></div>
   
-  <ion-slides pager="true" class="slide-full" [options]="slideOpts">
+  <div class="container">
+    <app-header titulo="Noticias"></app-header>
 
-    <ion-slide *ngFor="let noticia of noticias" (click)="redirectTo(noticia)">
+    <div class="header-container">
+      <img src="assets/icon/white-icon.png" alt="Blue icon">
+    </div>
+  
+    <ion-slides pager="true" class="slide-full" [options]="slideOpts">
 
-      <ion-card mode="ios"> 
-        
-        <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
+      <ion-slide *ngFor="let noticia of noticias" (click)="redirectTo(noticia)">
 
-        <ion-card-header>
-          <ion-card-title>{{ noticia.titulo }}</ion-card-title>
-        </ion-card-header>
+        <ion-card mode="ios"> 
+          
+          <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
 
-        <ion-card-content>
-          {{ noticia.descripcion.slice(0, 100) }}...
-        </ion-card-content>
+          <ion-card-header>
+            <ion-card-title>{{ noticia.titulo }}</ion-card-title>
+          </ion-card-header>
 
-      </ion-card>
+          <ion-card-content>
+            {{ noticia.descripcion.slice(0, 100) }}...
+          </ion-card-content>
 
-    </ion-slide>
+        </ion-card>
 
-  </ion-slides>
+      </ion-slide>
+
+    </ion-slides>
+    
+  </div>
   
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="agregarDenuncia()" color="primary">
       <ion-icon name="paper-plane"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
+
 </ion-content>
