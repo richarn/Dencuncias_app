@@ -12,9 +12,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AdminUserPage implements OnInit {
   user;
-  usuario;
   usuarios: any[] = [];
   idUsuario;
+  usuario;
   constructor(
     private popoverCtrl: PopoverController,
     private denunciaService: DenunciaService,
@@ -76,8 +76,6 @@ export class AdminUserPage implements OnInit {
     // petición get id de denuncia para eliminar la denuncia  
     const response: any = await this.userService.eliminar(usuario.id);
     
-    console.log("this: ", response);
-    
     if (response) {
       const toast = await this.toastController.create({
         message: 'Usuario eliminado correctamente',
@@ -88,5 +86,14 @@ export class AdminUserPage implements OnInit {
     }
   }
 
+  registro(){
+    console.log('registro');
+    
+    this.router.navigate(['/registro']);
+  }
 
+  detalle_user(usuario){
+    this.router.navigate(['/tabs/detalle-usuario'], { queryParams: {usuario: usuario.id}});
+    console.log('detalle usuario',usuario.id );
+  }
 }

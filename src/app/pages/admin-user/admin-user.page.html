@@ -5,8 +5,9 @@
 </ion-header>
 
 <ion-content>
-  <h2 class="title-resultado">Listado de Denuncias</h2>
+  <h2 class="title-resultado">Listado de Usuarios</h2>
     
+  <ion-button (click)="registro()">Registrar nuevo usuario</ion-button>
   <ion-list *ngFor="let user of usuarios;">
     <ion-list-header>
       Usuarios Creados
@@ -24,8 +25,8 @@
 
       
       <ion-item-options side="end">
-        <ion-item-option color="success">Editar</ion-item-option>
-        <ion-item-option (click)="confirmarEliminacion(usuario)" color="danger">Eliminar</ion-item-option>
+        <ion-item-option color="success" (click)="detalle_user(user)">Editar</ion-item-option>
+        <ion-item-option (click)="confirmarEliminacion(user)" color="danger">Eliminar</ion-item-option>
       </ion-item-options>
        
     </ion-item-sliding>

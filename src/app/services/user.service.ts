@@ -72,6 +72,18 @@ export class UserService {
     });
   }
   
+  obtenerId(data) {
+    return new Promise(resolve => {
+      console.log('data: ->', data);
+      
+      this.http.get(`${API}/usuarios/${data}`, data)
+        .subscribe(
+          (response: any) => resolve(response),
+          error => resolve(error)
+        );
+    });
+  }
+  
   // Datos del usuario
   async user(fromGuard = false): Promise<boolean> {
 
@@ -120,5 +132,16 @@ export class UserService {
     });
   }
 
+  actualizar(data) {
+    const formData = new FormData();
+    formData.append('_method', 'PUT');
+    return new Promise(resolve => {
+      this.http.post(`${API}/usuarios/${data.id}`, formData)
+      .subscribe(
+        (response: any) => resolve(response),
+        error => resolve(error)
+      );
+    });
+  }
 
 }

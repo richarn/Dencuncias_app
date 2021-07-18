@@ -6,6 +6,7 @@ import { BarrioService } from 'src/app/services/barrio.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
+import { RolesService } from 'src/app/services/roles.service';
 
 @Component({
   selector: 'app-registro',
@@ -14,8 +15,10 @@ import { GeneralService } from 'src/app/services/general.service';
 })
 export class RegistroPage implements OnInit {
 
+  user;
   usuario;
   barrios = [];
+  roles = [];
   registroForm: FormGroup;
 
   constructor(
@@ -23,11 +26,18 @@ export class RegistroPage implements OnInit {
     private userService: UserService,
     private storageService: StorageService,
     private barrioService: BarrioService,
+    private rolesService: RolesService,
     private generalService: GeneralService,
     private router: Router
   ) { 
     this.createForm();
     this.obtenerBarrios();
+    this.obtenerRoles();
+  }
+
+  async ionViewWillEnter(){
+    this.user = await this.userService.getUser();
+    console.log('user: ', this.user);
   }
 
   async ngOnInit() {
@@ -41,7 +51,13 @@ export class RegistroPage implements OnInit {
       this.barrios = response.barrios;
     }
   }
+  async obtenerRoles() {
+    const response: any = await this.rolesService.roles();
 
+    if (response.success) {
+      this.roles = response.roles;
+    }
+  }
 
   createForm() {
     this.registroForm = this.formBuilder.group({

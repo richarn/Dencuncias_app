@@ -14,10 +14,9 @@
   "server": {
     "allowNavigation": [
       "localhost:8101/*",
+      "localhost:8100/*",
       "localhost:8000/*",
       "yregua.com/*"
-    ],
-    "url": "http://192.168.0.105:8100",
-    "cleartext": true
+    ]
   }
 }
