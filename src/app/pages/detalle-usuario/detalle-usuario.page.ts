@@ -29,6 +29,8 @@ export class DetalleUsuarioPage implements OnInit {
       console.log(params);
       if (params.usuario) {
         this.idUsuario = params.usuario;
+        // console.log("iduser:", this.idUsuario);
+        
       }
     });
   }
@@ -46,19 +48,18 @@ export class DetalleUsuarioPage implements OnInit {
   async obtenerUsuarios() {
     
     const response: any = await this.userService.obtenerId(this.idUsuario);
-    console.log(this.idUsuario);
+    console.log("idUsuario:",this.idUsuario);
     
-    //console.log('response: ', response);
+    console.log('response: ', response);
     
-    if (response.success) {
-      console.log("data:",typeof response.data);
-      
-      this.usuario = response.data;
-      if (this.user && this.user.id != 1) {
-        this.cargarFormulario();
-      }
+
+       
+      this.usuario = response.usuarios;
+    
+      this.cargarFormulario();
+
       console.log('despues peticion: ', this.usuario);
-    }
+    
   }
 
 
@@ -89,7 +90,7 @@ export class DetalleUsuarioPage implements OnInit {
       estado : [this.usuario.estado, Validators.required]
     })
 
-    console.log(this.formulario);
+    console.log("cargar Form: ",this.formulario.value);
     
   }
 

@@ -8,18 +8,21 @@
   <ion-label>Actualizar user</ion-label>  
 </ion-card>
 
-<form [formGroup]="formulario" (ngSubmit)="actualizar()">
-
-          <!-- El que creo la denuncia para editar la denuncia en caso de errores-->
-  <ion-item>
-    <ion-label position="floating">Nombre de usuario</ion-label><br><br>
-    <ion-input formControlName="name" [value]="formulario.value.name">
-    </ion-input>
-  </ion-item>  
-
-  <ion-button type="submit">Actualizar</ion-button>
-
-</form>
-
+<ion-card mode="ios" *ngIf="user && user.id == 1">
+  
+  <form [formGroup]="formulario" (ngSubmit)="actualizar()">
+    
+    <!-- El que creo la denuncia para editar la denuncia en caso de errores-->
+    <ion-item>
+      <ion-label position="floating">Nombre de usuario</ion-label><br><br>
+      <ion-input formControlName="name">
+      </ion-input>
+    </ion-item>  
+    
+    <ion-button type="submit">Actualizar</ion-button>
+    
+  </form>
+  
+</ion-card>
 
 </ion-content>
