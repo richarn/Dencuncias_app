@@ -134,6 +134,14 @@ export class UserService {
 
   actualizar(data) {
     const formData = new FormData();
+
+      for (let key in data) {
+        if (key == 'usuarios') {
+          for (let i = 0; i < data[key].length; i++) {
+            formData.append('usuarios[]', data[key][i], 'usuarios');
+          }
+        } else formData.append(key, data[key]);
+      }
     formData.append('_method', 'PUT');
     return new Promise(resolve => {
       this.http.post(`${API}/usuarios/${data.id}`, formData)

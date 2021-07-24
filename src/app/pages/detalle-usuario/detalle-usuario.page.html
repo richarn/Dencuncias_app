@@ -18,7 +18,48 @@
       <ion-input formControlName="name">
       </ion-input>
     </ion-item>  
-    
+
+    <ion-item>
+      <ion-label position="floating">Correo</ion-label><br><br>
+      <ion-input formControlName="email">
+      </ion-input>
+    </ion-item>  
+
+    <ion-item>
+      <ion-label position="floating">C.I</ion-label><br><br>
+      <ion-input formControlName="ci">
+      </ion-input>
+    </ion-item>     
+
+    <ion-item>
+      <ion-label position="floating">Teléfono</ion-label><br><br>
+      <ion-input formControlName="telefono">
+      </ion-input>
+    </ion-item><br><br>
+
+
+    <ion-item>
+      <ion-label position="floating">Barrio</ion-label>    
+      <ion-select formControlName="id_barrio" placeholder="Barrio">
+        <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
+      </ion-select>  
+    </ion-item><br><br>
+
+    <ion-item>
+      <ion-label position="floating">Roles ded usuario</ion-label>
+      <ion-select placeholder="Selecciona estado" formControlName="id_role">
+        <ion-select-option [value]="1">Administrador</ion-select-option>
+        <ion-select-option [value]="2">Usuario</ion-select-option>
+      </ion-select>
+    </ion-item><br><br>  
+
+    <ion-item>
+      <ion-label position="floating">Estado</ion-label>
+      <ion-select placeholder="Selecciona estado" formControlName="estado">
+        <ion-select-option [value]="1">Activo</ion-select-option>
+        <ion-select-option [value]="0">Desactivo</ion-select-option>
+      </ion-select>
+    </ion-item>  
     <ion-button type="submit">Actualizar</ion-button>
     
   </form>

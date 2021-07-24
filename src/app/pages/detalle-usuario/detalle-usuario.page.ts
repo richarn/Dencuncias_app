@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { BarrioService } from 'src/app/services/barrio.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,16 +16,19 @@ export class DetalleUsuarioPage implements OnInit {
   formulario: FormGroup;
   usuario;
   idUsuario;
+  barrios: any[] = [];
   constructor(
     private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
     private activeRoute: ActivatedRoute,
+    private barrioService: BarrioService,
     private userService: UserService,
     private formBuilder: FormBuilder,
   ) { 
 
     this.inicializarFormulario();
+    this.obtenerBarrios();
     this.activeRoute.queryParams.subscribe(params => {
       console.log(params);
       if (params.usuario) {
@@ -62,6 +66,14 @@ export class DetalleUsuarioPage implements OnInit {
     
   }
 
+  async obtenerBarrios() {
+    const response: any = await this.barrioService.barrios();
+    if (response.success) {
+      this.barrios = response.barrios;
+      console.log(this.barrios);
+      
+    }
+  }
 
   inicializarFormulario() {
     this.formulario = this.formBuilder.group({
