@@ -121,6 +121,20 @@ export class DetalleUsuarioPage implements OnInit {
       }
     
     this.router.navigate(['/tabs/detalle-usuario']);
+
+    if (response.success) {
+      const toast = await this.toastController.create({
+        message: 'Denuncia enviada correctamente',
+        duration: 2000
+      });
+
+      // this.denuncia = respuesta.data;
+
+      // await this.generalService.createQueue(this.imagenes, this.subirImagen.bind(this))
+
+      await toast.present();
+      this.router.navigate(['/tabs/admin-user']);
+    }
   
   }
 
