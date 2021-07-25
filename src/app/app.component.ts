@@ -30,12 +30,12 @@ export class AppComponent implements OnInit {
 
   async userData() {
     this.user = await this.userService.getUser();
-    this.logged = !!this.user && this.user.id;
+    this.logged = !!this.user;
     
     this.userService.updateUserInfo
     .subscribe(user => {
       this.user = user;
-      this.logged = (user && user.id) ? true : false;
+      this.logged = (user) ? true : false;
     },
     err => {
       console.log('Error: ', err);

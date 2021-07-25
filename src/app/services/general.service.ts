@@ -2,7 +2,7 @@ import { environment } from 'src/environments/environment';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { StorageService } from './storage.service';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 const API = environment.api;
 
@@ -10,12 +10,15 @@ const API = environment.api;
   providedIn: 'root'
 })
 export class GeneralService {
+
+  private loading;
   
   @Output() removeImage: EventEmitter<any> = new EventEmitter();
   @Output() limpiarImagenes: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loadingController: LoadingController,
   ) { }
 
   async mostrarMensaje(header) {
@@ -46,6 +49,19 @@ export class GeneralService {
       };
       getNextTask();
     });
+  }
+
+  async showLoading(message = 'Cargando...') {
+    this.loading = await this.loadingController.create({
+      message
+    })
+
+    await this.loading.present();
+  }
+
+  hideLoading() {
+    try { this.loading.dismiss() }
+    catch {}
   }
 
 }

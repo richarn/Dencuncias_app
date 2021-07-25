@@ -8,7 +8,6 @@ import { MapaComponent } from './mapa/mapa.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { SelectImageComponent } from './select-image/select-image.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HeaderSolucionadaComponent } from './header-solucionada/header-solucionada.component';
 import { PreviewImagesComponent } from './preview-images/preview-images.component';
 import { CardDenunciaComponent } from './card-denuncia/card-denuncia.component';
 import { CardUserComponent } from './card-user/card-user.component';
@@ -22,7 +21,6 @@ import { CardUserComponent } from './card-user/card-user.component';
     AdminHeaderComponent,
     SelectImageComponent,
     PreviewImagesComponent,
-    HeaderSolucionadaComponent,
     CardDenunciaComponent,
     CardUserComponent,
   ],
@@ -33,7 +31,6 @@ import { CardUserComponent } from './card-user/card-user.component';
     AdminHeaderComponent,
     SelectImageComponent,
     PreviewImagesComponent,
-    HeaderSolucionadaComponent,
     CardDenunciaComponent,
     CardUserComponent,
   ],

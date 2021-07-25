@@ -51,13 +51,6 @@ export class DenunciasPage {
   ) {
     this.createForm();
     this.obtenerBarrios();
-    // Si la url tiene id se obtiene obtiene la denuncia para actualizar
-    // this.activeRoute.queryParams.subscribe(params => {
-      // if (params.denuncia) {
-        // this.idDenuncia = params.denuncia;
-        // this.obtenerDenuncia();
-      // }
-    // });
   }
 
   async ionViewWillEnter() {
@@ -76,17 +69,17 @@ export class DenunciasPage {
       this.cargandoGeo = false;
     });
 
-    this.subscriptions.push(location);
-  }
-
-  async ngOnInit() {
     const removeImage = this.generalService.removeImage
     .subscribe(index => {
       if (this.imagenes[index]) this.imagenes.splice(index, 1);
+      if (this.previewImages[index]) this.previewImages.splice(index, 1);
     });
 
-    this.subscriptions.push(removeImage)
+    this.subscriptions.push(location);
+    this.subscriptions.push(removeImage);
   }
+
+  async ngOnInit() {}
 
   createForm() {
     this.denunciaForm = this.formBuilder.group({
@@ -107,10 +100,6 @@ export class DenunciasPage {
   }
 
   async obtenerDenuncia() {
-    // obtener denuncia y rellenar formulario
-    // servicio.obtenerId(idDenuncia)
-    // this.denuncia = response.body
-    // recorre por las keys del formulario y asigna los datos
     for (let key in this.denuncia) {
       if (this.denunciaForm.value[key]) {
         this.denunciaForm.controls[key].setValue(this.denuncia[key])

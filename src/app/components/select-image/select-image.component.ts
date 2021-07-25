@@ -38,6 +38,7 @@ export class SelectImageComponent implements OnInit {
     const removeImage = this.generalService.removeImage
     .subscribe(index => {
       if (this.imagenes[index]) this.imagenes.splice(index, 1);
+      if (this.tempImages[index]) this.tempImages.splice(index, 1);
     });
 
     this.subscriptions.push(removeImage);

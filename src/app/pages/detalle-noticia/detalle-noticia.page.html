@@ -1,41 +1,27 @@
-<app-header titulo="Noticias">
-  
-</app-header>
-<ion-header>
-  <ion-toolbar color="success">
-
-</ion-toolbar>
-</ion-header>
 
 <ion-content class="center">
+  <div class="background-opacity"></div>
+  
+  <div class="container">
+    <app-header titulo="Noticia"></app-header>
 
-      <ion-card mode="ios" *ngIf="noticia"> 
-        
-        
-        <ion-card-header>
-          <ion-card-title>{{ noticia.titulo }}</ion-card-title>
-        </ion-card-header>
-        
-        <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
-        
-        <ion-card-content>
-          {{ noticia.descripcion.slice(0, 100) }}...
-        </ion-card-content>
+    <div class="header-container">
+      <img src="assets/icon/white-icon.png" alt="Blue icon">
+    </div>
 
-      </ion-card>
-<!--
-      <ion-list>
-        
-        <ion-item *ngIf="noticia">
-          <ion-label>{{ noticia.titulo }}</ion-label>
+    <div class="form-container">
 
-          <img [src]="noticia.imagenes | comprobarImagen" class="slide-image">
-          
-          <ion-label>{{ noticia.descripcion.slice(0, 100) }}...</ion-label>
-       
-        </ion-item>
+      <div class="container-news" *ngIf="noticia">
+        <ion-slides class="images" [options]="slideOpts">
+          <ion-slide *ngFor="let imagen of noticia.imagenes" class="image" [style.background-image]="'url(' + (imagen | formatearImagen) + ')'"></ion-slide>
+        </ion-slides>
 
-      </ion-list>
-    -->
+        <div class="title">{{ noticia.titulo }}</div>
+        <div class="date">{{ noticia.created_at | formatDate }}</div>
+
+        <div class="description">{{ noticia.descripcion }}</div>
+      </div>
+    </div>
+  </div>
 
 </ion-content>

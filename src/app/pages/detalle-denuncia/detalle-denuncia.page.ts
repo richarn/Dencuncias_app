@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
-import { CameraService } from 'src/app/services/camera.service';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { DenunciaService } from 'src/app/services/denuncia.service';
+import { LocationService } from 'src/app/services/location.service';
+import { GeneralService } from 'src/app/services/general.service';
+import { BarrioService } from 'src/app/services/barrio.service';
 import { UserService } from 'src/app/services/user.service';
 
-
-declare var window: any;
+import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-detalle-denuncia',
@@ -15,59 +18,93 @@ declare var window: any;
   styleUrls: ['./detalle-denuncia.page.scss'],
 })
 export class DetalleDenunciaPage implements OnInit {
-
-  imagenes: any[] = [];
   
   user;
-  idDenuncia;
   denuncia;
+  idDenuncia;
+  cargandoGeo = false;
+  formulario: FormGroup;
+
+  barrios = [];
+  imagenes = [];
   imagenesPrevias = [];
   imagenesSolucion = [];
-  formulario: FormGroup;
+
+  ubicacion = { 
+    coords: null,
+    posicion: false
+  };
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
     private denunciasService: DenunciaService,
     private alertController: AlertController,
     private toastController: ToastController,
+    private locationService: LocationService,
+    private generalService: GeneralService,
+    private barrioService: BarrioService,
     private activeRoute: ActivatedRoute,
     private userService: UserService,
     private formBuilder: FormBuilder,
   ) {
-    this.inicializarFormulario();
     this.activeRoute.queryParams.subscribe(params => {
       if (params.denuncia) {
         this.idDenuncia = params.denuncia;
       }
     });
+
+    this.inicializarFormulario();
+    this.obtenerBarrios();
   }
 
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
     this.obtenerDenuncias();
+
+    const location = this.locationService.coordinates
+    .subscribe(coordenadas => {
+      if (coordenadas) {
+        // asignar lat;lng al formulario
+        this.formulario.controls.ubicacion.setValue(`${coordenadas.latitude};${coordenadas.longitude}`);
+      }
+
+      this.cargandoGeo = false;
+    });
+
+    this.subscriptions.push(location);
    }
 
   ngOnInit() {
   }
 
   async obtenerDenuncias() {
-    
+    this.generalService.showLoading('Cargando...');
     const response: any = await this.denunciasService.obtenerId(this.idDenuncia);
-    
-    //console.log('response: ', response);
-    
     if (response.success) {
       
       this.denuncia = response.data;
-      this.imagenesPrevias = this.denuncia.imagenes;
-      this.imagenesSolucion = this.denuncia.imagenesSolucionadas;
 
-      this.imagenesPrevias = this.denuncia.imagenes.filter(imagen => imagen.estado == 1);
+      this.imagenesPrevias = this.denuncia.imagenes.filter(imagen => imagen.estado == 0 || imagen.estado == 1);
       this.imagenesSolucion = this.denuncia.imagenes.filter(imagen => imagen.estado == 2);
+
+      this.imagenesPrevias = this.imagenesPrevias.map(imagen => `${environment.host}${imagen.url}`) || [];
+      this.imagenesSolucion = this.imagenesSolucion.map(imagen => `${environment.host}${imagen.url}`) || [];
+
       if (this.user && this.user.id == this.denuncia.id_user) {
         this.cargarFormulario();
       }
+    }
+
+    this.generalService.hideLoading();
+  }
+
+  async obtenerBarrios() {
+    const response: any = await this.barrioService.barrios();
+    if (response.success) {
+      this.barrios = response.barrios;
     }
   }
 
@@ -93,12 +130,21 @@ export class DetalleDenunciaPage implements OnInit {
       ubicacion : [this.denuncia.ubicacion, Validators.required],
       id_barrio : [this.denuncia.id_barrio, Validators.required],
       id_user : [this.denuncia.id_user, Validators.required]
-      // completar campos
     })
   }
 
   imagenesSeleccionadas(imagenes) {
     this.imagenes = imagenes;
+  }
+
+  getGeo() {
+    if (!this.ubicacion.posicion ) {
+      this.ubicacion.coords = null;
+      return;
+    }
+    
+    this.cargandoGeo = true;
+    this.locationService.requestPermissions();
   }
 
   async confirmar() {
@@ -135,10 +181,6 @@ export class DetalleDenunciaPage implements OnInit {
       await toast.present();
     }
   }
-
-  // seccion camara
-
-  
 
   async actualizar() {
     const data = this.formulario.value;
@@ -190,6 +232,10 @@ export class DetalleDenunciaPage implements OnInit {
     })
 
     await toast.present();
+  }
+
+  onDestroy() {
+    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
 
 }

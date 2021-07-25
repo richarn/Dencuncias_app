@@ -1,0 +1,70 @@
+
+.d-none {
+    display: none;
+}
+
+ion-content {
+    --background: linear-gradient(180deg, rgba(72,159,181,1) 0%, rgba(237,231,227,1) 100%);
+
+    .background-opacity {
+        background-image: url("/assets/images/waves.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 90vh;
+        opacity: 0.1;
+        width: 100%;
+    }
+
+    .container {
+        top: 0;
+        width: 100%;
+        height: 90vh;
+        // padding-top: 2em;
+        position: absolute;
+
+        .header-container {
+            text-align: center;
+    
+            img {
+                width: 64px;
+            }
+        }
+    
+        .form-container {
+            padding: 2em;
+            
+            .container-news {
+                background: white;
+                border-radius: 30px;
+                padding: 1em;
+
+                .images {
+                    // display: flex;
+                    // justify-content: space-around;
+    
+                    .image {
+                        width: 100px;
+                        height: 100px;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-size: cover;
+                        border-radius: 10px;
+                    }
+                }
+
+                .title {
+                    margin-top: 15px;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: rgba(59, 62, 81, 1);
+                }
+
+                .description {
+                    margin-top: 15px;
+                    text-align: justify;
+                }
+            }
+        }
+    }
+
+}

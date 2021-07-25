@@ -31,7 +31,7 @@ export class LoginPage implements OnInit {
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
-    if (this.user && this.user.id) {
+    if (this.user) {
       this.router.navigate(['/tabs/home']);
     }
    }

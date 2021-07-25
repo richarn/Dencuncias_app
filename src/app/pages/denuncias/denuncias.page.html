@@ -19,12 +19,15 @@
             <h2>Enviar Denuncia</h2>
             <p>Para poder enviar su denuncia por favor complete los campos.</p>
           </div>
-                      
+
           <app-select-image (resultados)="imagenesSeleccionadas($event)"></app-select-image>
     
-          <ion-select formControlName="id_barrio" placeholder="Barrio">
-            <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
-          </ion-select>
+          <ion-item>
+            <ion-label position="floating" class="d-none">Barrio</ion-label>
+            <ion-select formControlName="id_barrio" placeholder="Barrio">
+              <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
+            </ion-select>
+          </ion-item>
     
           <ion-item>
             <ion-label position="floating">Descripción Denuncia</ion-label>
