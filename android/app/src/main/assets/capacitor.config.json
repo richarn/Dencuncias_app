@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "denuncias",
+  "appId": "com.yregua",
+  "appName": "Yregua",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
