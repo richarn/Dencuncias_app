@@ -12,9 +12,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AdminUserPage implements OnInit {
   user;
-  usuarios: any[] = [];
-  idUsuario;
   usuario;
+  idUsuario;
+  usuarios: any[] = [];
+  infScrollDisabled = false;
+
   constructor(
     private popoverCtrl: PopoverController,
     private denunciaService: DenunciaService,
@@ -40,10 +42,17 @@ export class AdminUserPage implements OnInit {
     this.obtenerUsuario();
   }
 
-  async obtenerUsuario() {
+  async obtenerUsuario(event?) {
     const response: any = await this.userService.GetUser();
     if (response.success) {
       this.usuarios = response.usuarios;
+
+      if (response.usuarios.length == 0) this.infScrollDisabled = true;
+    }
+
+    if (event) {
+      try { event.target.complete(); }
+      catch(e) {}
     }
   }
 
@@ -86,6 +95,12 @@ export class AdminUserPage implements OnInit {
 
   registro() {
     this.router.navigate(['/registro']);
+  }
+
+  refresh(event) {
+    this.usuarios = [];
+    this.infScrollDisabled = false;
+    this.obtenerUsuario(event);
   }
 
 }
