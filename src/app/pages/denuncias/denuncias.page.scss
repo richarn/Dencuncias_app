@@ -43,6 +43,10 @@ ion-content {
                     color: rgba(59, 62, 81, 1);
                 }
             }
+
+            ion-searchbar {
+                --box-shadow: none;
+            }
     
             ion-list {
                 border-radius: 30px;

@@ -55,8 +55,8 @@ export class SelectImageComponent implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
   }
+
   async camara() {
     const imageData = await this.cameraService.abrirCamara();
     this.procesarImagen(imageData);
@@ -82,7 +82,6 @@ export class SelectImageComponent implements OnInit {
     // convierte a blob para enviar a la api
     const blob = await response.blob();
     this.imagenes.push(blob);
-    console.log('imagenes seleccionadas: ', this.imagenes);
     
     this.resultados.emit({ imagenes: this.imagenes, preview: this.tempImages });
   }

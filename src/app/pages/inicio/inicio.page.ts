@@ -72,6 +72,10 @@ export class InicioPage implements OnInit {
     }
   }
 
+  changeSelection(noticia) {
+    this.noticia = noticia;
+  }
+
   onSearchChange(event) {
     const search = event.detail.value;
 

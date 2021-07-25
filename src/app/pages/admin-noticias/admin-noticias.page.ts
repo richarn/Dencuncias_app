@@ -78,9 +78,6 @@ export class AdminNoticiasPage implements OnInit {
     // se agrega el atributo imagenes con las imagenes a enviar
     data['imagenes'] = this.imagenes;
     
-    // enviar datos del formulario al servicio
-    console.log(data);
-    
     const respuesta: any = await this.noticiaService.noticias(data);
 
     if (respuesta.success) {

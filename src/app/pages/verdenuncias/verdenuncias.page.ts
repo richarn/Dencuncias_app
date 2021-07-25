@@ -83,7 +83,6 @@ export class VerdenunciasPage {
   }
 
   filtrar(event) {
-    console.log(event, this.filterForm.value);
     this.obtenerDenuncias(this.filterForm.value);
   }
 

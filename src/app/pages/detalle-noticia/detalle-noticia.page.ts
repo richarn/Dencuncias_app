@@ -19,7 +19,6 @@ export class DetalleNoticiaPage implements OnInit {
     private router: Router
     ) {
       this.activeRoute.queryParams.subscribe(params => {
-        console.log(params);
         if (params.noticia) {
           this.idNoticia = params.noticia;
           this.obtenerNoticias();
@@ -34,16 +33,11 @@ export class DetalleNoticiaPage implements OnInit {
 
   async obtenerNoticias() {
     //const query = {estado: 1};
-    console.log('antes peticion: ', this.noticia);
     
     const response: any = await this.noticiasService.obtenerId(this.idNoticia);
-    console.log(this.idNoticia);
     
-    if (response.success) {
-      console.log(typeof response.data);
-      
+    if (response.success) {  
       this.noticia = response.data;
-      console.log('despues peticion: ', this.noticia);
     }
   }
 

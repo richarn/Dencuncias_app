@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderSolucionadaComponent } from './header-solucionada/header-solucionada.component';
 import { PreviewImagesComponent } from './preview-images/preview-images.component';
 import { CardDenunciaComponent } from './card-denuncia/card-denuncia.component';
+import { CardUserComponent } from './card-user/card-user.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CardDenunciaComponent } from './card-denuncia/card-denuncia.component';
     SelectImageComponent,
     PreviewImagesComponent,
     HeaderSolucionadaComponent,
-    CardDenunciaComponent
+    CardDenunciaComponent,
+    CardUserComponent,
   ],
   exports: [
     HeaderComponent,
@@ -32,7 +34,8 @@ import { CardDenunciaComponent } from './card-denuncia/card-denuncia.component';
     SelectImageComponent,
     PreviewImagesComponent,
     HeaderSolucionadaComponent,
-    CardDenunciaComponent
+    CardDenunciaComponent,
+    CardUserComponent,
   ],
   imports: [
     CommonModule,

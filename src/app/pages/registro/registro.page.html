@@ -88,19 +88,34 @@
             </ion-input>
           </ion-item>
           
-          <div class="button-group">
-            <ion-button 
-              expand="block"
-              shape="round"
-              type="submit"
-              [disabled]="registroForm.invalid"
-              color="primary">
-              REGISTRARSE
-            </ion-button>
+          <div class="extra-container" *ngIf="!(user && user.id)">
+            <div class="button-group">
+              <ion-button 
+                expand="block"
+                shape="round"
+                type="submit"
+                [disabled]="registroForm.invalid"
+                color="primary">
+                REGISTRARSE
+              </ion-button>
+            </div>
+  
+            <div class="login-container">
+              Ya tienes una cuenta? <a [routerLink]="['/login']" routerLinkActive="router-link-active" >Iniciar Sesión</a>
+            </div>
           </div>
 
-          <div class="login-container">
-            Ya tienes una cuenta? <a [routerLink]="['/login']" routerLinkActive="router-link-active" >Iniciar Sesión</a>
+          <div class="extra-container" *ngIf="user && user.role && user.role.nivel == 1">
+            <div class="button-group">
+              <ion-button 
+                expand="block"
+                shape="round"
+                type="submit"
+                [disabled]="registroForm.invalid"
+                color="primary">
+                REGISTRAR
+              </ion-button>
+            </div>
           </div>
 
         </ion-list>

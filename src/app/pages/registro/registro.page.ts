@@ -37,7 +37,6 @@ export class RegistroPage implements OnInit {
 
   async ionViewWillEnter(){
     this.user = await this.userService.getUser();
-    console.log('user: ', this.user);
   }
 
   async ngOnInit() {
@@ -51,6 +50,7 @@ export class RegistroPage implements OnInit {
       this.barrios = response.barrios;
     }
   }
+
   async obtenerRoles() {
     const response: any = await this.rolesService.roles();
 

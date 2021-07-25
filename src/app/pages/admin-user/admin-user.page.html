@@ -1,37 +1,53 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-title>Administrar usuarios y roles</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="main">
+  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Suelta para actualizar el listado" refreshingSpinner="circles" refreshingText="Actualizando..."></ion-refresher-content>
+  </ion-refresher>
 
-<ion-content>
-  <h2 class="title-resultado">Listado de Usuarios</h2>
-    
-  <ion-button (click)="registro()">Registrar nuevo usuario</ion-button>
-  <ion-list *ngFor="let user of usuarios;">
-    <ion-list-header>
-      Usuarios Creados
-    </ion-list-header>
+  <div class="background-opacity"></div>
 
-    
-    <ion-item-sliding>
-      
-      <ion-item>
-        <ion-label>
-          <h2>{{ user.name }}</h2>
-          <h3>{{ user.telefono }} </h3>
-        </ion-label>
-      </ion-item>
+  <div class="container">
+      <app-header titulo="Administrar usuarios"></app-header>
 
-      
-      <ion-item-options side="end">
-        <ion-item-option color="success" (click)="detalle_user(user)">Editar</ion-item-option>
-        <ion-item-option (click)="confirmarEliminacion(user)" color="danger">Eliminar</ion-item-option>
-      </ion-item-options>
-       
-    </ion-item-sliding>
-    
-  </ion-list>
+      <div class="header-container">
+        <img src="assets/icon/white-icon.png" alt="Blue icon">
+      </div>
+
+      <div class="form-container">
+          <div class="page-container">
+            <ion-grid>
+                <ion-row class="sincronizar">
+                  <ion-col size="12">
+                    <ion-searchbar mode="ios" placeholder="Buscar"></ion-searchbar>
+                  </ion-col>
+                </ion-row>
+            </ion-grid>
+
+            <ion-grid *ngIf="usuarios.length">
+              <ion-row *ngFor="let user of usuarios">
+                <app-card-user [user]="user" style="width: 90%;" (deleteUser)="confirmarEliminacion(user)"></app-card-user>
+              </ion-row>
+  
+              <ion-infinite-scroll [disabled]="infScrollDisabled" threshold="150px" (ionInfinite)="scrolling = true; obtenerUsuario($event)">
+                <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando..."></ion-infinite-scroll-content>
+              </ion-infinite-scroll>
+            </ion-grid>
+
+            <ion-grid *ngIf="!usuarios.length" class="no-results">
+              <ion-row>
+                <ion-col size="12">
+                  <h4>No hay usuarios</h4>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="registro()" color="primary">
+      <ion-icon name="person-add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
 
 

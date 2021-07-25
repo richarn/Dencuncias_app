@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { BarrioService } from 'src/app/services/barrio.service';
+import { RolesService } from 'src/app/services/roles.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -17,32 +18,32 @@ export class DetalleUsuarioPage implements OnInit {
   usuario;
   idUsuario;
   barrios: any[] = [];
+  roles: any[] = [];
+
   constructor(
     private router: Router,
     private alertController: AlertController,
     private toastController: ToastController,
     private activeRoute: ActivatedRoute,
     private barrioService: BarrioService,
+    private roleService: RolesService,
     private userService: UserService,
     private formBuilder: FormBuilder,
   ) { 
+    this.activeRoute.queryParams.subscribe(params => {
+      if (params.usuario) {
+        this.idUsuario = params.usuario;
+      }
+    });
 
     this.inicializarFormulario();
     this.obtenerBarrios();
-    this.activeRoute.queryParams.subscribe(params => {
-      console.log(params);
-      if (params.usuario) {
-        this.idUsuario = params.usuario;
-        // console.log("iduser:", this.idUsuario);
-        
-      }
-    });
+    this.obtenerRoles();
   }
 
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
-    console.log('user: ', this.user);
     this.obtenerUsuarios();
    }
    
@@ -52,26 +53,23 @@ export class DetalleUsuarioPage implements OnInit {
   async obtenerUsuarios() {
     
     const response: any = await this.userService.obtenerId(this.idUsuario);
-    console.log("idUsuario:",this.idUsuario);
-    
-    console.log('response: ', response);
-    
+    this.usuario = response.usuarios;
 
-       
-      this.usuario = response.usuarios;
-    
-      this.cargarFormulario();
-
-      console.log('despues peticion: ', this.usuario);
-    
+    this.cargarFormulario();
   }
 
   async obtenerBarrios() {
     const response: any = await this.barrioService.barrios();
     if (response.success) {
       this.barrios = response.barrios;
-      console.log(this.barrios);
-      
+    }
+  }
+
+  async obtenerRoles() {
+    const response: any = await this.roleService.roles();
+
+    if (response.success) {
+      this.roles = response.roles;
     }
   }
 
@@ -101,9 +99,6 @@ export class DetalleUsuarioPage implements OnInit {
       id_role : [this.usuario.id_role, Validators.required],
       estado : [this.usuario.estado, Validators.required]
     })
-
-    console.log("cargar Form: ",this.formulario.value);
-    
   }
 
 
@@ -118,6 +113,7 @@ export class DetalleUsuarioPage implements OnInit {
           duration: 2000
         });
         
+        await toast.present();
       }
     
     this.router.navigate(['/tabs/detalle-usuario']);
@@ -142,18 +138,19 @@ export class DetalleUsuarioPage implements OnInit {
   async confirmarActualizacion() {
     // petición PUT para actualizar el estado de la denuncia
     this.usuario.estado = 1;
-    console.log('antes de actualizar estado: ', this.usuario);
     const response: any = await this.userService.actualizar(this.usuario);
     if (response.ok) {
       const toast = await this.toastController.create({
         message: 'Usuario confirmado correctamente',
         duration: 2000
       });
+
+      await toast.present();
     }
   }
 
   async confirmar() {
-    const alert = this.alertController.create({
+    const alert = await this.alertController.create({
       header: 'Confirmar usuario',
       subHeader: '¿Estas seguro de continuar?',
       buttons: [
@@ -169,6 +166,7 @@ export class DetalleUsuarioPage implements OnInit {
       ]
     })
 
+    return await alert.present();
   }
 
 }

@@ -34,14 +34,14 @@
     </div>
   
     <div class="form-container">
-      <ion-searchbar placeholder="Buscar noticias" type="text" (ionChange)="onSearchChange($event)" [debounce]="250"></ion-searchbar>
+      <ion-searchbar mode="ios" placeholder="Buscar noticias" type="text" (ionChange)="onSearchChange($event)" [debounce]="250"></ion-searchbar>
   
       <div class="trending">
 
         <h3>DESTACADOS</h3>
 
         <div class="news-container" *ngIf="noticia">
-          <div class="selected-news" [style.background-image]="'url(' + (noticia.imagenes | comprobarImagen) + ')'">
+          <div class="selected-news" (click)="redirectTo(noticia)" [style.background-image]="'url(' + (noticia.imagenes | comprobarImagen) + ')'">
             <div class="info">
               <div class="title">{{ noticia.titulo }}</div>
               <div class="description">{{ noticia.descripcion.slice(0, 30) }}...</div>
@@ -50,7 +50,7 @@
           </div>
   
           <ion-slides pager="true" class="slide-full" [options]="slideOpts">
-            <ion-slide *ngFor="let noticia of noticias" (click)="redirectTo(noticia)">
+            <ion-slide *ngFor="let noticia of noticias" (click)="changeSelection(noticia)">
               <div class="image" [style.background-image]="'url(' + (noticia.imagenes | comprobarImagen) + ')'"></div>
             </ion-slide>
           </ion-slides>

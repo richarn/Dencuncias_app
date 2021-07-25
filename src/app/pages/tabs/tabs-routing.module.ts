@@ -79,6 +79,7 @@ const routes: Routes = [
       },
       {
         path: 'detalle-usuario',
+        canActivate: [AuthGuard],
         loadChildren: () => import('../detalle-usuario/detalle-usuario.module').then( m => m.DetalleUsuarioPageModule)
       },
       {

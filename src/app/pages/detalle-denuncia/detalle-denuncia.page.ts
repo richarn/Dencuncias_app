@@ -36,7 +36,6 @@ export class DetalleDenunciaPage implements OnInit {
   ) {
     this.inicializarFormulario();
     this.activeRoute.queryParams.subscribe(params => {
-      console.log(params);
       if (params.denuncia) {
         this.idDenuncia = params.denuncia;
       }
@@ -46,7 +45,6 @@ export class DetalleDenunciaPage implements OnInit {
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
-    console.log('user: ', this.user);
     this.obtenerDenuncias();
    }
 
@@ -56,12 +54,10 @@ export class DetalleDenunciaPage implements OnInit {
   async obtenerDenuncias() {
     
     const response: any = await this.denunciasService.obtenerId(this.idDenuncia);
-    console.log(this.idDenuncia);
     
     //console.log('response: ', response);
     
     if (response.success) {
-      console.log("data:",typeof response.data);
       
       this.denuncia = response.data;
       this.imagenesPrevias = this.denuncia.imagenes;
@@ -72,7 +68,6 @@ export class DetalleDenunciaPage implements OnInit {
       if (this.user && this.user.id == this.denuncia.id_user) {
         this.cargarFormulario();
       }
-      console.log('despues peticion: ', this.denuncia);
     }
   }
 
@@ -100,15 +95,10 @@ export class DetalleDenunciaPage implements OnInit {
       id_user : [this.denuncia.id_user, Validators.required]
       // completar campos
     })
-
-    console.log(this.formulario);
-    
   }
 
   imagenesSeleccionadas(imagenes) {
     this.imagenes = imagenes;
-    console.log('imagenes', imagenes);
-    
   }
 
   async confirmar() {
@@ -135,13 +125,14 @@ export class DetalleDenunciaPage implements OnInit {
     // petición PUT para actualizar el estado de la denuncia
     this.denuncia.estado = 1;
     this.denuncia['imagenes'] = this.imagenes;
-    console.log('antes de actualizar estado: ', this.denuncia);
     const response: any = await this.denunciasService.actualizar(this.denuncia);
     if (response.ok) {
       const toast = await this.toastController.create({
         message: 'Denuncia confirmada correctamente',
         duration: 2000
       });
+
+      await toast.present();
     }
   }
 
@@ -160,6 +151,7 @@ export class DetalleDenunciaPage implements OnInit {
           duration: 2000
         });
         
+        await toast.present();
       }
     
     this.router.navigate(['/tabs/user-denuncias']);
@@ -193,9 +185,11 @@ export class DetalleDenunciaPage implements OnInit {
       if (index > -1) this.denuncia.imagenes.splice(index, 1);
     }
 
-    this.toastController.create({
+    const toast = await this.toastController.create({
       message: response.body.message
     })
+
+    await toast.present();
   }
 
 }

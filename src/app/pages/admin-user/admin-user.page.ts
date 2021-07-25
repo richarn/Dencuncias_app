@@ -44,8 +44,6 @@ export class AdminUserPage implements OnInit {
     const response: any = await this.userService.GetUser();
     if (response.success) {
       this.usuarios = response.usuarios;
-      console.log(this.usuarios);
-      
     }
   }
 
@@ -86,14 +84,8 @@ export class AdminUserPage implements OnInit {
     }
   }
 
-  registro(){
-    console.log('registro');
-    
+  registro() {
     this.router.navigate(['/registro']);
   }
 
-  detalle_user(usuario){
-    this.router.navigate(['/tabs/detalle-usuario'], { queryParams: {usuario: usuario.id}});
-    console.log('detalle usuario',usuario.id );
-  }
 }

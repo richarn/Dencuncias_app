@@ -33,8 +33,6 @@ export class NoticiaService {
   //get id noticia
   obtenerId(data) {
     return new Promise(resolve => {
-      console.log('data: ->', data);
-      
       this.http.get(`${API}/noticias/${data}`, data)
         .subscribe(
           (response: any) => resolve(response),

@@ -63,8 +63,7 @@ export class DenunciasPage {
   async ionViewWillEnter() {
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
-    console.log('user: ', this.user);
-    
+
     if (this.user) { this.denunciaForm.controls.id_user.setValue(this.user.id); }
 
     // Espera las coordenadas enviadas desde el servicio
@@ -104,8 +103,6 @@ export class DenunciasPage {
     const response: any = await this.barrioService.barrios();
     if (response.success) {
       this.barrios = response.barrios;
-      console.log(this.barrios);
-      
     }
   }
 
@@ -200,8 +197,6 @@ export class DenunciasPage {
 
 
   getGeo() {
-    console.log('ubicacion: ', this.ubicacion);
-    
     if (!this.ubicacion.posicion ) {
       this.ubicacion.coords = null;
       return;

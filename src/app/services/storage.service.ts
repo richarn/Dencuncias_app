@@ -23,8 +23,6 @@ export class StorageService {
   async get(key: string): Promise<any> {
     try {
       const result = await this.storage.get(key);
-      console.log('result: ', result);
-      
       if (result != null) {
         return typeof result == 'string' ? result : JSON.parse(result);
       }
@@ -40,7 +38,6 @@ export class StorageService {
   async set(key: string, value: any): Promise<any> {
     try {
       const result = await this.storage.set(key, value);
-      console.log('set string in storage: ' + result);
       return true;
     } catch (reason) {
       console.log(reason);

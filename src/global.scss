@@ -64,7 +64,8 @@ ion-select-option {
     --color: #3B3E51 !important;
 }
 
-ion-input {
+ion-input,
+ion-select {
     border: 1px solid #D1D1D1;
     border-radius: 50px;
     --padding-top: 0.8em !important;

@@ -15,7 +15,6 @@ export class HeaderSolucionadaComponent implements OnInit {
   async ngOnInit() {
 
     this.user = await this.userService.getUser();
-    console.log(this.user.id);
     
   }
 

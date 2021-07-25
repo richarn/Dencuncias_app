@@ -74,8 +74,6 @@ export class UserService {
   
   obtenerId(data) {
     return new Promise(resolve => {
-      console.log('data: ->', data);
-      
       this.http.get(`${API}/usuarios/${data}`, data)
         .subscribe(
           (response: any) => resolve(response),
@@ -88,7 +86,6 @@ export class UserService {
   async user(fromGuard = false): Promise<boolean> {
 
     const token = await this.storageService.get("token");
-    console.log('token: ', token);
 
     if (!token && fromGuard) {
       this.navController.navigateRoot('/login');
