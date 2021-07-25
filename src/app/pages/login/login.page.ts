@@ -4,6 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginPage implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private storageService: StorageService,
+    private generalService: GeneralService,
     private toastController: ToastController,
   ) {
     this.createForm();
@@ -44,6 +46,8 @@ export class LoginPage implements OnInit {
   }
 
   async onSubmit() {
+    this.generalService.showLoading('Iniciando sesión...');
+
     const cualquiercosa: any = await this.userService.login(this.loginForm.value);
     if (cualquiercosa.ok) {
       this.router.navigate(['/'])
@@ -53,6 +57,8 @@ export class LoginPage implements OnInit {
         duration: 3000
       });
     }
+
+    this.generalService.hideLoading();
   }
 
 }

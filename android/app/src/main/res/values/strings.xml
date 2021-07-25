@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">denuncias</string>
-    <string name="title_activity_main">denuncias</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">Yregua</string>
+    <string name="title_activity_main">Yregua</string>
+    <string name="package_name">com.yregua</string>
+    <string name="custom_url_scheme">com.yregua</string>
 </resources>

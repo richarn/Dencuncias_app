@@ -9,7 +9,7 @@
       <img src="assets/icon/white-icon.png" alt="Blue icon">
     </div>
 
-    <div class="form-container" *ngIf="user && denuncia && (user.id == denuncia.id_user) && denuncia.estado != 2">
+    <div class="form-container" *ngIf="user && denuncia && (user.id == denuncia.id_user) && (user && user.role && user.role.nivel == 1 || denuncia.estado != 2)">
 
       <form [formGroup]="formulario" (ngSubmit)="actualizar()">
         <ion-list>
