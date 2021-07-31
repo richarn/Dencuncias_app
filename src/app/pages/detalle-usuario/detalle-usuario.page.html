@@ -60,7 +60,7 @@
           <ion-item *ngIf="user && user.role && user.role.nivel == 1">
             <ion-label position="floating">Rol Usuario</ion-label>
               <ion-select formControlName="id_role">
-                <ion-select-option *ngFor="let rol of roles" [value]="rol.id">{{ rol.nivel }}</ion-select-option>
+                <ion-select-option *ngFor="let rol of roles" [value]="rol.id">{{ rol.nombre }}</ion-select-option>
               </ion-select>
           </ion-item>
 

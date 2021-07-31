@@ -23,8 +23,8 @@
               </ion-grid>
       
               <ion-grid *ngIf="denuncias.length">
-                  <ion-row *ngFor="let denuncia of denuncias" (click)="detalle(denuncia)">
-                    <app-card-denuncia [denuncia]="denuncia" [estado]="denuncia.estado" style="width: 90%;"></app-card-denuncia>
+                  <ion-row *ngFor="let denuncia of denuncias">
+                    <app-card-denuncia [denuncia]="denuncia" [estado]="denuncia.estado" style="width: 90%;"  (deleteDenuncia)="confirmarEliminacion(denuncia)" style="width: 90%;"></app-card-denuncia>
                   </ion-row>
       
                   <ion-infinite-scroll [disabled]="infScrollDisabled" threshold="150px" (ionInfinite)="scrolling = true; obtenerDenuncias($event)">

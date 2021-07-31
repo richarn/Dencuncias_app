@@ -15,6 +15,7 @@ export class AdminUserPage implements OnInit {
   usuario;
   idUsuario;
   usuarios: any[] = [];
+  scrolling: boolean = false;
   infScrollDisabled = false;
 
   constructor(

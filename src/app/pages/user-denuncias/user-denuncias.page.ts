@@ -65,6 +65,43 @@ export class UserDenunciasPage implements OnInit {
     this.router.navigate(['/tabs/detalle-denuncia'], { queryParams: {denuncia: denuncia.id}})
   }
 
+    async confirmarEliminacion(denuncia) {
+    
+    const alert = this.alertController.create({
+      header: 'Confirmar eliminacion',
+      subHeader: '¿Estas seguro de continuar?',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => this.eliminar(denuncia)
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {}
+        }
+      ]
+    })
+
+    return (await alert).present();    
+  }
+
+
+
+  async eliminar(denuncia) {
+    
+    // petición get id de denuncia para eliminar la denuncia  
+    const response: any = await this.denunciasService.eliminar(denuncia.id);
+    
+    if (response) {
+      const toast = await this.toastController.create({
+        message: 'Denuncia eliminada correctamente',
+        duration: 2000
+      });
+      await toast.present();
+      this.obtenerDenuncias(null, {}, true);
+    }
+  }
   refresh(event) {
     this.denuncias = [];
     this.infScrollDisabled = false;
