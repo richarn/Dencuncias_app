@@ -1,4 +1,4 @@
-<ion-card class="card card-user" [ngClass]="{'bg-danger': estado == 0,'bg-warning': estado == 1, 'bg-success': estado == 2}">
+<ion-card class="card card-user" [ngClass]="{'bg-danger': estado == 0,'bg-warning': estado == 1, 'bg-success': estado == 2}" (click)="showOptions()">
   <ion-card-content>
       <ion-grid fixed>
           <ion-row>
@@ -10,7 +10,7 @@
                   <!-- <ion-label class="text-muted fecha-user">{{ user.fecha_user | formatDate }}</ion-label> -->
               </ion-col>
               <ion-col size="2" class="btn-mas">
-                  <ion-button (click)="showOptions()" fill="outline" shape="round">
+                  <ion-button fill="outline" shape="round">
                     <ion-icon name="chevron-forward-outline"></ion-icon>
                   </ion-button>
               </ion-col>

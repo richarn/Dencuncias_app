@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { DenunciaService } from 'src/app/services/denuncia.service';
@@ -42,7 +42,6 @@ export class DetalleDenunciaPage implements OnInit {
     private router: Router,
     private denunciasService: DenunciaService,
     private alertController: AlertController,
-    private toastController: ToastController,
     private locationService: LocationService,
     private generalService: GeneralService,
     private barrioService: BarrioService,
@@ -206,35 +205,34 @@ export class DetalleDenunciaPage implements OnInit {
   }
 
   async confirmarDenuncia() {
+    this.generalService.showLoading('Confirmando...');
+
     // petición PUT para actualizar el estado de la denuncia
     this.denuncia.estado = 1;
     this.denuncia['imagenes'] = this.imagenes;
     const response: any = await this.denunciasService.actualizar(this.denuncia);
     if (response.ok) {
-      const toast = await this.toastController.create({
-        message: 'Denuncia confirmada correctamente',
-        duration: 2000
-      });
+      this.generalService.mostrarMensaje('Denuncia confirmada correctamente');
+    } else this.generalService.mostrarMensaje('Ha ocurrido un problema, por favor intentelo más tarde');
 
-      await toast.present();
-    }
+    this.generalService.hideLoading();
   }
 
   async actualizar() {
+    this.generalService.showLoading('Actualizando...');
+
     const data = this.formulario.value;
     data['imagenes'] = this.imagenes;
     const response: any = await this.denunciasService.actualizar(data);
   
-      if (response.success) {
-        const toast = await this.toastController.create({
-          message: 'Denuncia enviada correctamente',
-          duration: 2000
-        });
-        
-        await toast.present();
-      }
-    
-    this.router.navigate(['/tabs/user-denuncias']);
+    if (response.success) {
+      this.imagenesSinSubir = [];
+      this.generalService.limpiarImagenes.emit();
+      this.generalService.mostrarMensaje('Denuncia actualizada correctamente');
+    } else this.generalService.mostrarMensaje('Ha ocurrido un problema, por favor intentelo más tarde');
+
+    this.generalService.hideLoading();
+    if (this.user && this.user.role && this.user.role.nivel != 1) this.router.navigate(['/tabs/user-denuncias']);
   }
 
   async confirmarEliminacion(imagen) {
@@ -265,11 +263,7 @@ export class DetalleDenunciaPage implements OnInit {
       if (index > -1) this.denuncia.imagenes.splice(index, 1);
     }
 
-    const toast = await this.toastController.create({
-      message: response.body.message
-    })
-
-    await toast.present();
+    this.generalService.showLoading(response.body.message);
   }
 
   onDestroy() {

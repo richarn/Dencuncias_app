@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
-import { DenunciaService } from 'src/app/services/denuncia.service';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
+import { GeneralService } from 'src/app/services/general.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -19,14 +19,10 @@ export class AdminUserPage implements OnInit {
   infScrollDisabled = false;
 
   constructor(
-    private popoverCtrl: PopoverController,
-    private denunciaService: DenunciaService,
-    private userService: UserService,
-    private activeRoute: ActivatedRoute,
-    private navCtrl: NavController,
-    private router: Router,
     private alertController: AlertController,
-    private toastController: ToastController
+    private generalService: GeneralService,
+    private userService: UserService,
+    private router: Router,
   ) { 
 
     this.obtenerUsuario();
@@ -85,11 +81,7 @@ export class AdminUserPage implements OnInit {
     const response: any = await this.userService.eliminar(usuario.id);
     
     if (response) {
-      const toast = await this.toastController.create({
-        message: 'Usuario eliminado correctamente',
-        duration: 2000
-      });
-      await toast.present();
+      this.generalService.mostrarMensaje('Usuario eliminado correctamente');
       this.obtenerUsuario();
     }
   }

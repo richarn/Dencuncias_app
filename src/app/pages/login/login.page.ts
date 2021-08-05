@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
-import { StorageService } from 'src/app/services/storage.service';
-import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+import { StorageService } from 'src/app/services/storage.service';
 import { GeneralService } from 'src/app/services/general.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,6 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private storageService: StorageService,
     private generalService: GeneralService,
-    private toastController: ToastController,
   ) {
     this.createForm();
   }
@@ -52,10 +51,7 @@ export class LoginPage implements OnInit {
     if (cualquiercosa.ok) {
       this.router.navigate(['/'])
     } else {
-      this.toastController.create({
-        header: 'El usuario y/o contraseña son incorrectos',
-        duration: 3000
-      });
+      this.generalService.mostrarMensaje('El usuario y/o contraseña son incorrectos');
     }
 
     this.generalService.hideLoading();

@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UserService } from 'src/app/services/user.service';
-import { CameraService } from 'src/app/services/camera.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { DenunciaService } from 'src/app/services/denuncia.service';
 import { LocationService } from 'src/app/services/location.service';
 import { GeneralService } from 'src/app/services/general.service';
@@ -43,11 +40,10 @@ export class DenunciasPage {
     private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private denunciaService: DenunciaService,
-    private generalService: GeneralService,
     private barrioService: BarrioService,
-    private toastController: ToastController,
-    private locationService: LocationService
+    private generalService: GeneralService,
+    private locationService: LocationService,
+    private denunciaService: DenunciaService,
   ) {
     this.createForm();
     this.obtenerBarrios();
@@ -124,10 +120,7 @@ export class DenunciasPage {
     const respuesta: any = await this.denunciaService.registrar(data);
 
     if (respuesta.success) {
-      const toast = await this.toastController.create({
-        message: 'Denuncia enviada correctamente',
-        duration: 2000
-      });
+      this.generalService.mostrarMensaje('Denuncia enviada correctamente');
 
       // this.denuncia = respuesta.data;
 
@@ -138,7 +131,6 @@ export class DenunciasPage {
       this.generalService.limpiarImagenes.emit();
       this.denunciaForm.reset();
 
-      await toast.present();
       this.createForm();
       this.router.navigate(['/']);
     }
@@ -165,10 +157,7 @@ export class DenunciasPage {
     const respuesta: any = await this.denunciaService.actualizar(data);
 
     if (respuesta.success) {
-      const toast = await this.toastController.create({
-        message: 'Denuncia actualizada correctamente',
-        duration: 2000
-      });
+      this.generalService.mostrarMensaje('Denuncia actualizada correctamente');
 
       // this.denuncia = respuesta.data;
       // await this.generalService.createQueue(this.imagenes, this.subirImagen.bind(this))
@@ -177,8 +166,6 @@ export class DenunciasPage {
       this.ubicacion.posicion = false;
       this.generalService.limpiarImagenes.emit();
       this.denunciaForm.reset();
-
-      await toast.present();
 
       this.router.navigate(['/']);
     }

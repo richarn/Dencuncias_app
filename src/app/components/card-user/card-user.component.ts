@@ -23,10 +23,12 @@ export class CardUserComponent implements OnInit {
     const sheet = await this.actionSheetController.create({
       buttons: [
         {
+          icon: 'pencil-outline',
           text: 'Editar',
           handler: () => this.detalle_user()
         },
         {
+          icon: 'trash-outline',
           text: 'Eliminar',
           handler: () => this.deleteUser.emit(this.user)
         }

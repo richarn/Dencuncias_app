@@ -34,6 +34,7 @@ export class UserService {
           (response: any) => {
             // Guarda el token de acceso
             this.storageService.set('token', response.body.access_token);
+            this.getUser();
             return resolve(response);
           },
           (error) => resolve(error)
@@ -115,7 +116,7 @@ export class UserService {
     this.userInfo = null;
     this.storageService.clear();
     await this.getUser();
-    this.updateUserInfo.emit(this.user);
+    this.updateUserInfo.emit(this.userInfo);
     this.navCtrl.navigateRoot('/login', {animated: true});
   }
 

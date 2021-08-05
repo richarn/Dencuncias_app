@@ -23,10 +23,12 @@ export class CardDenunciaComponent implements OnInit {
     const sheet = await this.actionSheetController.create({
       buttons: [
         {
+          icon: 'pencil-outline',
           text: 'Editar',
           handler: () => this.redirectTo(this.denuncia)
         },
         {
+          icon: 'trash-outline',
           text: 'Eliminar',
           handler: () => this.deleteDenuncia.emit(this.denuncia)
         }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+
 import { DenunciaService } from 'src/app/services/denuncia.service';
+import { GeneralService } from 'src/app/services/general.service';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -22,7 +24,7 @@ export class UserDenunciasPage implements OnInit {
   constructor(
     private denunciasService: DenunciaService,
     private alertController: AlertController,
-    private toastController: ToastController,
+    private generalService: GeneralService,
     private activeRoute: ActivatedRoute,
     private userService: UserService,
     private router: Router
@@ -47,14 +49,14 @@ export class UserDenunciasPage implements OnInit {
     if (this.user) query['usuario'] = this.user.id;
 
     const response: any = await this.denunciasService.GetDenuncia(query);
-    if (response.success) {
-      this.denuncias = response.data;
+    if (response.ok) {
+      this.denuncias.push(...response.body.data);
     }
 
     if (event) {
       event.target.complete();
 
-      if (response.data.length === 0) { this.infScrollDisabled = true; }
+      if (response.body.data.length === 0) { this.infScrollDisabled = true; }
     }
 
     this.scrolling = false;
@@ -94,11 +96,7 @@ export class UserDenunciasPage implements OnInit {
     const response: any = await this.denunciasService.eliminar(denuncia.id);
     
     if (response) {
-      const toast = await this.toastController.create({
-        message: 'Denuncia eliminada correctamente',
-        duration: 2000
-      });
-      await toast.present();
+      this.generalService.mostrarMensaje('Denuncia eliminada correctamente');
       this.obtenerDenuncias(null, {}, true);
     }
   }

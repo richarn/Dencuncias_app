@@ -47,7 +47,7 @@ export class DenunciaService {
 
       const parametros = new HttpParams({ fromObject: query })
 
-      this.http.get(`${API}/denuncias`, { params: parametros})
+      this.http.get(`${API}/denuncias`, { params: parametros, observe: 'response' })
         .subscribe(
           (response: any) => resolve(response),
           error => resolve(error)

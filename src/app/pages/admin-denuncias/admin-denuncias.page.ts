@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActionSheetController, AlertController, NavController, PopoverController, ToastController } from '@ionic/angular';
-import { DenunciaService } from 'src/app/services/denuncia.service';
-import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 
+import { DenunciaService } from 'src/app/services/denuncia.service';
+import { GeneralService } from 'src/app/services/general.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-admin-denuncias',
@@ -26,11 +27,8 @@ export class AdminDenunciasPage implements OnInit {
     private actionSheetController: ActionSheetController,
     private denunciaService: DenunciaService,
     private alertController: AlertController,
-    private toastController: ToastController,
-    private popoverCtrl: PopoverController,
-    private activeRoute: ActivatedRoute,
+    private generalService: GeneralService,
     private userService: UserService,
-    private navCtrl: NavController,
     private router: Router,
   ) {}
   
@@ -45,14 +43,14 @@ export class AdminDenunciasPage implements OnInit {
   async obtenerDenuncias(event, query = {}, pull: boolean = false) {
     const response: any = await this.denunciaService.GetDenuncia(query, pull);
 
-    if (response.success) {
-      this.denuncias = response.data;
+    if (response.ok) {
+      this.denuncias.push(...response.body.data);
     }
 
     if (event) {
       event.target.complete();
 
-      if (response.data.length === 0) { this.infScrollDisabled = true; }
+      if (response.body.data.length === 0) { this.infScrollDisabled = true; }
     }
 
     this.scrolling = false;
@@ -116,11 +114,7 @@ export class AdminDenunciasPage implements OnInit {
     const response: any = await this.denunciaService.eliminar(denuncia.id);
     
     if (response) {
-      const toast = await this.toastController.create({
-        message: 'Denuncia eliminada correctamente',
-        duration: 2000
-      });
-      await toast.present();
+      this.generalService.mostrarMensaje('Denuncia eliminada correctamente')
       this.obtenerDenuncias(null, {}, true);
     }
   }

@@ -45,14 +45,14 @@ export class ResultadosPage {
   async obtenerDenuncia(event, query = {}, pull: boolean = false) {
     if (!query['estado']) query['estado'] = 2;
     const response: any = await this.denunciaService.GetDenuncia(query, pull);
-    if (response.success) {
-      this.denuncias = response.data;
+    if (response.ok) {
+      this.denuncias.push(...response.body.data);
     }
 
     if (event) {
       event.target.complete();
 
-      if (response.data.length === 0) { this.infScrollDisabled = true; }
+      if (response.body.data.length === 0) { this.infScrollDisabled = true; }
     }
 
     this.scrolling = false;

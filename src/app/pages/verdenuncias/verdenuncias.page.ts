@@ -62,14 +62,14 @@ export class VerdenunciasPage {
     if (!query['estado']) query['estado'] = 1;
 
     const response: any = await this.denunciaService.GetDenuncia(query, pull);
-    if (response.success) {
-      this.denuncias = response.data;
+    if (response.ok) {
+      this.denuncias.push(...response.body.data);
     }
       
     if (event) {
       event.target.complete();
 
-      if (response.data.length === 0) { this.infScrollDisabled = true; }
+      if (response.body.data.length === 0) { this.infScrollDisabled = true; }
     }
 
     this.scrolling = false;

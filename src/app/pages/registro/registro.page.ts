@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from 'src/app/services/user.service';
-import { StorageService } from 'src/app/services/storage.service';
-import { BarrioService } from 'src/app/services/barrio.service';
-import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+import { StorageService } from 'src/app/services/storage.service';
 import { GeneralService } from 'src/app/services/general.service';
+import { BarrioService } from 'src/app/services/barrio.service';
 import { RolesService } from 'src/app/services/roles.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-registro',
@@ -22,12 +22,12 @@ export class RegistroPage implements OnInit {
   registroForm: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private userService: UserService,
+    private generalService: GeneralService,
     private storageService: StorageService,
     private barrioService: BarrioService,
     private rolesService: RolesService,
-    private generalService: GeneralService,
+    private userService: UserService,
+    private formBuilder: FormBuilder,
     private router: Router
   ) { 
     this.createForm();

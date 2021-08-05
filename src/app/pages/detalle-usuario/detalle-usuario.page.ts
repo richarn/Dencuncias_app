@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+
+import { GeneralService } from 'src/app/services/general.service';
 import { BarrioService } from 'src/app/services/barrio.service';
 import { RolesService } from 'src/app/services/roles.service';
 import { UserService } from 'src/app/services/user.service';
@@ -21,14 +23,14 @@ export class DetalleUsuarioPage implements OnInit {
   roles: any[] = [];
 
   constructor(
-    private router: Router,
     private alertController: AlertController,
-    private toastController: ToastController,
-    private activeRoute: ActivatedRoute,
+    private generalService: GeneralService,
     private barrioService: BarrioService,
+    private activeRoute: ActivatedRoute,
     private roleService: RolesService,
     private userService: UserService,
     private formBuilder: FormBuilder,
+    private router: Router,
   ) { 
     this.activeRoute.queryParams.subscribe(params => {
       if (params.usuario) {
@@ -107,28 +109,18 @@ export class DetalleUsuarioPage implements OnInit {
 
     const response: any = await this.userService.actualizar(data);
   
-      if (response.success) {
-        const toast = await this.toastController.create({
-          message: 'Usuario confirmado correctamente',
-          duration: 2000
-        });
-        
-        await toast.present();
-      }
+    if (response.success) {
+      this.generalService.mostrarMensaje('Usuario confirmado correctamente');
+    }
     
     this.router.navigate(['/tabs/detalle-usuario']);
 
     if (response.success) {
-      const toast = await this.toastController.create({
-        message: 'Denuncia enviada correctamente',
-        duration: 2000
-      });
+      this.generalService.mostrarMensaje('Denuncia enviada correctamente');
 
       // this.denuncia = respuesta.data;
 
       // await this.generalService.createQueue(this.imagenes, this.subirImagen.bind(this))
-
-      await toast.present();
       this.router.navigate(['/tabs/admin-user']);
     }
   
@@ -140,12 +132,7 @@ export class DetalleUsuarioPage implements OnInit {
     this.usuario.estado = 1;
     const response: any = await this.userService.actualizar(this.usuario);
     if (response.ok) {
-      const toast = await this.toastController.create({
-        message: 'Usuario confirmado correctamente',
-        duration: 2000
-      });
-
-      await toast.present();
+      this.generalService.mostrarMensaje('Usuario confirmado correctamente');
     }
   }
 

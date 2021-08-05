@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { UserService } from 'src/app/services/user.service';
-import { CameraService } from 'src/app/services/camera.service';
-import { StorageService } from 'src/app/services/storage.service';
-
-import { Subscription } from 'rxjs';
 import { NoticiaService } from 'src/app/services/noticia.service';
 import { GeneralService } from 'src/app/services/general.service';
+import { UserService } from 'src/app/services/user.service';
+
+import { Subscription } from 'rxjs';
 
 declare var window: any;
 @Component({
@@ -26,16 +22,13 @@ export class AdminNoticiasPage implements OnInit {
   noticias;
   noticiasForm: FormGroup;
 
-
   subscriptions: Subscription[] = [];
 
   constructor(
-    private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private generalService: GeneralService,
     private noticiaService: NoticiaService,
-    private toastController: ToastController,
 
   ){
     this.createForm();
@@ -81,18 +74,10 @@ export class AdminNoticiasPage implements OnInit {
     const respuesta: any = await this.noticiaService.noticias(data);
 
     if (respuesta.success) {
-      const toast = await this.toastController.create({
-        message: 'Noticia enviada correctamente',
-        duration: 2000
-    });
+      this.generalService.mostrarMensaje('Noticia enviada correctamente');
 
       this.imagenes = [];
       this.previewImages = [];
-      // this.noticiasForm.reset();
-
-      await toast.present();
-
-      // this.router.navigate(['/']);
     }   
   }  
  
