@@ -88,7 +88,7 @@ export class DetalleDenunciaPage implements OnInit {
 
   ngOnInit() {
   }
-
+  //denuncias
   async obtenerDenuncias() {
     this.generalService.showLoading('Cargando...');
     const response: any = await this.denunciasService.obtenerId(this.idDenuncia);
