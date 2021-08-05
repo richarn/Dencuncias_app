@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class CardDenunciaComponent implements OnInit {
 
+  @Input() user: any;
   @Input() denuncia: any;
   @Input() estado: string;
   @Output() deleteDenuncia: EventEmitter<any> = new EventEmitter();
@@ -20,22 +21,24 @@ export class CardDenunciaComponent implements OnInit {
 
   ngOnInit() { }
   async showOptions() {
-    const sheet = await this.actionSheetController.create({
-      buttons: [
-        {
-          icon: 'pencil-outline',
-          text: 'Editar',
-          handler: () => this.redirectTo(this.denuncia)
-        },
-        {
-          icon: 'trash-outline',
-          text: 'Eliminar',
-          handler: () => this.deleteDenuncia.emit(this.denuncia)
-        }
-      ]
-    });
-
-    return await sheet.present();
+    if (this.user && this.user.role && this.user.role.nivel == 1) {
+      const sheet = await this.actionSheetController.create({
+        buttons: [
+          {
+            icon: 'pencil-outline',
+            text: 'Editar',
+            handler: () => this.redirectTo(this.denuncia)
+          },
+          {
+            icon: 'trash-outline',
+            text: 'Eliminar',
+            handler: () => this.deleteDenuncia.emit(this.denuncia)
+          }
+        ]
+      });
+  
+      return await sheet.present();
+    }
   }
 
   redirectTo(denuncia) {

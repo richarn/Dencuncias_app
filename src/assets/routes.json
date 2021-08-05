@@ -80,21 +80,21 @@
             {
                 "icon": "analytics",
                 "name": "Misión",
-                "redirectTo": "/mision",
+                "redirectTo": "/info/mision",
                 "admin": false,
                 "loggedIn": false
             },
             {
                 "icon": "eye",
                 "name": "Visión",
-                "redirectTo": "/vision",
+                "redirectTo": "/info/vision",
                 "admin": false,
                 "loggedIn": false
             },
             {
                 "icon": "call",
                 "name": "Contacto",
-                "redirectTo": "/contacto",
+                "redirectTo": "/info/contacto",
                 "admin": false,
                 "loggedIn": false
             }

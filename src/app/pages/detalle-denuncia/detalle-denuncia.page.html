@@ -113,13 +113,13 @@
         <div class="previous">
           <h3 *ngIf="denuncia.estado == 1">Imagenes del estado actual</h3>
           <h3 *ngIf="denuncia.estado == 2">Imagenes del estado anterior</h3>
-          <app-preview-images [previewImages]="imagenesPrevias"></app-preview-images>  
+          <app-preview-images [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>  
         </div>
   
         <div class="current" *ngIf="denuncia.estado == 2">
           <h3>Imagenes del estado actual</h3>
   
-          <app-preview-images [previewImages]="imagenesSolucion"></app-preview-images>
+          <app-preview-images [type]="1" [previewImages]="imagenesSolucion"></app-preview-images>
           
           <div class="date">
             <h4>Fecha solución:</h4>

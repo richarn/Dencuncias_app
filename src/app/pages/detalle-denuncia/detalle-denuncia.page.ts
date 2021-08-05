@@ -77,8 +77,14 @@ export class DetalleDenunciaPage implements OnInit {
     const removeImage = this.generalService.removeImage
     .subscribe(({ index, type }) => {
       if (this.imagenes[index]) this.imagenes.splice(index, 1);
-      if (type == 1 && this.imagenesPrevias[index]) this.imagenesPrevias.splice(index, 1);
       if (type == 0 && this.imagenesSinSubir[index]) this.imagenesSinSubir.splice(index, 1);
+      if (type == 1 && this.imagenesPrevias[index]) this.imagenesPrevias.splice(index, 1);
+      if (type == 2 && this.imagenesSolucion[index]) this.imagenesSolucion.splice(index, 1);
+
+      let imagenesPrevias = this.denuncia.imagenes.filter(imagen => imagen.estado == 0 || imagen.estado == 1);
+      let imagenesSolucion = this.denuncia.imagenes.filter(imagen => imagen.estado == 2);
+      if (type == 1 && imagenesPrevias[index]) this.eliminar(imagenesPrevias[index]);
+      if (type == 2 && imagenesSolucion[index]) this.eliminar(imagenesSolucion[index]);
     });
 
     this.subscriptions.push(removeImage);
@@ -233,26 +239,7 @@ export class DetalleDenunciaPage implements OnInit {
 
     this.generalService.hideLoading();
     if (this.user && this.user.role && this.user.role.nivel != 1) this.router.navigate(['/tabs/user-denuncias']);
-  }
-
-  async confirmarEliminacion(imagen) {
-    const alert = await this.alertController.create({
-      header: 'Eliminar',
-      subHeader: '¿Estas seguro de eliminar la imagen?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {}
-        },
-        {
-          text: 'Aceptar',
-          handler: () => this.eliminar(imagen)
-        }
-      ]
-    })
-
-    return await alert.present();
+    else this.router.navigate(['/tabs/admin-denuncias']);
   }
 
   async eliminar(imagen) {
@@ -263,7 +250,9 @@ export class DetalleDenunciaPage implements OnInit {
       if (index > -1) this.denuncia.imagenes.splice(index, 1);
     }
 
-    this.generalService.showLoading(response.body.message);
+    this.generalService.mostrarMensaje(response.body.message);
+
+    this.generalService.hideLoading();
   }
 
   onDestroy() {

@@ -36,7 +36,7 @@ export class ResultadosPage {
 
   async ionViewWillEnter() {
     this.user = await this.userService.getUser();
-    this.obtenerDenuncia(null, {}, true);
+    this.refresh(null);
   }
 
   ngOnInit() {
