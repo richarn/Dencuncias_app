@@ -2,6 +2,7 @@
 .images {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
 
     .image {
         width: 100px;
@@ -10,5 +11,6 @@
         background-position: center;
         background-size: cover;
         border-radius: 10px;
+        margin-top: 5px;
     }
 }

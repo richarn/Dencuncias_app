@@ -29,6 +29,7 @@ export class DetalleDenunciaPage implements OnInit {
   imagenes = [];
   imagenesPrevias = [];
   imagenesSolucion = [];
+  imagenesSinSubir = [];
 
   ubicacion = { 
     coords: null,
@@ -74,6 +75,14 @@ export class DetalleDenunciaPage implements OnInit {
       this.cargandoGeo = false;
     });
 
+    const removeImage = this.generalService.removeImage
+    .subscribe(({ index, type }) => {
+      if (this.imagenes[index]) this.imagenes.splice(index, 1);
+      if (type == 1 && this.imagenesPrevias[index]) this.imagenesPrevias.splice(index, 1);
+      if (type == 0 && this.imagenesSinSubir[index]) this.imagenesSinSubir.splice(index, 1);
+    });
+
+    this.subscriptions.push(removeImage);
     this.subscriptions.push(location);
    }
 
@@ -127,14 +136,43 @@ export class DetalleDenunciaPage implements OnInit {
       descripcion_denuncia: [this.denuncia.descripcion_denuncia, Validators.required],
       descripcion_solucion : [this.denuncia.descripcion_solucion, Validators.required],
       estado : [this.denuncia.estado, Validators.required],
-      ubicacion : [this.denuncia.ubicacion, Validators.required],
+      ubicacion : [this.denuncia.ubicacion],
       id_barrio : [this.denuncia.id_barrio, Validators.required],
       id_user : [this.denuncia.id_user, Validators.required]
+    }, {
+      validators: [
+        // campo a estar pendiente de cambios, condición, valor a cumplir, campo a asignar la validación
+        this.requiredValidator('estado', '==', 2, 'descripcion_solucion')
+      ]
     })
   }
 
-  imagenesSeleccionadas(imagenes) {
-    this.imagenes = imagenes;
+  requiredValidator(masterControlLabel: string, operator: string, conditionalValue: any, slaveControlLabel: string) {
+    return (group: FormGroup): { [key: string]: any } => {
+      const masterControl = group.controls[masterControlLabel];
+      const slaveControl = group.controls[slaveControlLabel];
+      if (eval(`'${masterControl.value}' ${operator} '${conditionalValue}'`) || !masterControl.value) {
+        return Validators.required(slaveControl);
+        // switch (type) {
+          // case 'required':
+          //   return Validators.required(slaveControl);
+        
+          // case 'isEmail':
+          //   return Validators.email(slaveControl);
+
+          // case 'minLength':
+          //   return Validators.minLength(10);
+          //   break;
+        // }
+      }
+      slaveControl.setErrors(null);
+      return null;
+    };
+  }
+
+  imagenesSeleccionadas({ imagenes, preview }) {
+    this.imagenes.push(...imagenes);
+    this.imagenesSinSubir.push(...preview);
   }
 
   getGeo() {

@@ -9,7 +9,7 @@
       <img src="assets/icon/white-icon.png" alt="Blue icon">
     </div>
 
-    <div class="form-container" *ngIf="user && denuncia && (user.id == denuncia.id_user) && (user && user.role && user.role.nivel == 1 || denuncia.estado != 2)">
+    <div class="form-container" *ngIf="user && denuncia && (user.id == denuncia.id_user || user && user.role && user.role.nivel == 1 && denuncia.estado != 2)">
 
       <form [formGroup]="formulario" (ngSubmit)="actualizar()">
         <ion-list>
@@ -67,7 +67,11 @@
             <p *ngIf="imagenesPrevias.length">Toca la imagen para eliminar</p>
           </div>
 
-          <app-preview-images [previewImages]="imagenesPrevias"></app-preview-images>
+          <!-- Imagenes que ya están guardadas -->
+          <app-preview-images [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>
+
+          <!-- Imagenes seleccionadas para subir -->
+          <app-preview-images [type]="0" [previewImages]="imagenesSinSubir"></app-preview-images>
         </div>
 
         <div class="map-container">
@@ -86,7 +90,7 @@
       </form>
     </div>
 
-    <div class="form-container" *ngIf="denuncia && (!user || (user && user.id != denuncia.id_user))">
+    <div class="form-container" *ngIf="denuncia && (!user || (user && user.id != denuncia.id_user || denuncia.estado == 2))">
       <div class="denuncia-container">
 
         <div class="info">

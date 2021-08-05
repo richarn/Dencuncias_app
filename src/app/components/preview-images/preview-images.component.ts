@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
 import { GeneralService } from 'src/app/services/general.service';
@@ -8,8 +8,9 @@ import { GeneralService } from 'src/app/services/general.service';
   templateUrl: './preview-images.component.html',
   styleUrls: ['./preview-images.component.scss'],
 })
-export class PreviewImagesComponent implements OnInit {
+export class PreviewImagesComponent implements OnInit, OnChanges {
 
+  @Input() type: any; // 0 sin subir, 1 guardadas
   @Input() previewImages: any[] = [];
 
   constructor(
@@ -18,6 +19,10 @@ export class PreviewImagesComponent implements OnInit {
   ) { }
 
   ngOnInit() {}
+
+  ngOnChanges(changes) {
+    if (changes.previewImages) this.previewImages = changes.previewImages.currentValue;
+  }
 
   async confirmarEliminacion(index) {
     const alert = await this.alertController.create({
@@ -40,8 +45,8 @@ export class PreviewImagesComponent implements OnInit {
   }
 
   eliminar(index) {
-    this.previewImages.splice(index, 1);
-    this.generalService.removeImage.emit(index);
+    // this.previewImages.splice(index, 1);
+    this.generalService.removeImage.emit({ index, type: this.type });
   }
 
 }

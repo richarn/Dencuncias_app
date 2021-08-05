@@ -36,9 +36,9 @@ export class SelectImageComponent implements OnInit {
     });
 
     const removeImage = this.generalService.removeImage
-    .subscribe(index => {
+    .subscribe(({ index, type }) => {
       if (this.imagenes[index]) this.imagenes.splice(index, 1);
-      if (this.tempImages[index]) this.tempImages.splice(index, 1);
+      if (type == 0 && this.tempImages[index]) this.tempImages.splice(index, 1);
     });
 
     this.subscriptions.push(removeImage);
@@ -84,7 +84,10 @@ export class SelectImageComponent implements OnInit {
     const blob = await response.blob();
     this.imagenes.push(blob);
     
-    this.resultados.emit({ imagenes: this.imagenes, preview: this.tempImages });
+    this.resultados.emit({ imagenes: [...this.imagenes], preview: [...this.tempImages] });
+
+    this.imagenes = [];
+    this.tempImages = [];
   }
 
   onDestroy() {
