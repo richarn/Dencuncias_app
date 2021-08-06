@@ -74,6 +74,14 @@ export class DetalleDenunciaPage implements OnInit {
       this.cargandoGeo = false;
     });
 
+    const limpiarImagenes = this.generalService.limpiarImagenes
+    .subscribe(() => {
+      this.imagenes = [];
+      this.imagenesPrevias = [];
+      this.imagenesSinSubir = [];
+      this.imagenesSolucion = [];
+    });
+
     const removeImage = this.generalService.removeImage
     .subscribe(({ index, type }) => {
       if (this.imagenes[index]) this.imagenes.splice(index, 1);
@@ -87,6 +95,7 @@ export class DetalleDenunciaPage implements OnInit {
       if (type == 2 && imagenesSolucion[index]) this.eliminar(imagenesSolucion[index]);
     });
 
+    this.subscriptions.push(limpiarImagenes);
     this.subscriptions.push(removeImage);
     this.subscriptions.push(location);
    }
@@ -139,8 +148,8 @@ export class DetalleDenunciaPage implements OnInit {
     this.formulario = this.formBuilder.group({
       id: [this.denuncia.id, Validators.required],
       descripcion_denuncia: [this.denuncia.descripcion_denuncia, Validators.required],
-      descripcion_solucion : [this.denuncia.descripcion_solucion, Validators.required],
-      estado : [this.denuncia.estado, Validators.required],
+      descripcion_solucion : [this.denuncia.descripcion_solucion],
+      estado : [this.denuncia.estado],
       ubicacion : [this.denuncia.ubicacion],
       id_barrio : [this.denuncia.id_barrio, Validators.required],
       id_user : [this.denuncia.id_user, Validators.required]
@@ -218,6 +227,7 @@ export class DetalleDenunciaPage implements OnInit {
     this.denuncia['imagenes'] = this.imagenes;
     const response: any = await this.denunciasService.actualizar(this.denuncia);
     if (response.ok) {
+      this.generalService.limpiarImagenes.emit();
       this.generalService.mostrarMensaje('Denuncia confirmada correctamente');
     } else this.generalService.mostrarMensaje('Ha ocurrido un problema, por favor intentelo más tarde');
 
@@ -232,7 +242,6 @@ export class DetalleDenunciaPage implements OnInit {
     const response: any = await this.denunciasService.actualizar(data);
   
     if (response.success) {
-      this.imagenesSinSubir = [];
       this.generalService.limpiarImagenes.emit();
       this.generalService.mostrarMensaje('Denuncia actualizada correctamente');
     } else this.generalService.mostrarMensaje('Ha ocurrido un problema, por favor intentelo más tarde');
@@ -255,8 +264,10 @@ export class DetalleDenunciaPage implements OnInit {
     this.generalService.hideLoading();
   }
 
-  onDestroy() {
+  ionViewWillLeave() {
     this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
+
+  onDestroy() {}
 
 }

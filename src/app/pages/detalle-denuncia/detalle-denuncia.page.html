@@ -9,7 +9,7 @@
       <img src="assets/icon/white-icon.png" alt="Blue icon">
     </div>
 
-    <div class="form-container" *ngIf="user && denuncia && (user.id == denuncia.id_user || user && user.role && user.role.nivel == 1 && denuncia.estado != 2)">
+    <div class="form-container" *ngIf="user && denuncia && (user.id == denuncia.id_user || user && user.role && user.role.nivel == 1)">
 
       <form [formGroup]="formulario" (ngSubmit)="actualizar()">
         <ion-list>
@@ -28,13 +28,13 @@
             </ion-select>
           </ion-item>
 
-          <ion-item *ngIf="user.id_role != 1">
+          <ion-item *ngIf="user.id_role != 1 || formulario.value.estado < 2">
             <ion-label position="floating">Descripción Denuncia</ion-label>
             <ion-textarea placeholder="Descripción..." formControlName="descripcion_denuncia"></ion-textarea>
           </ion-item>
 
           <!-- Administrador para hacer la denuncia solucionada -->
-          <ion-item *ngIf="user.id_role == 1">
+          <ion-item *ngIf="user.id_role == 1 && formulario.value.estado == 2">
             <ion-label position="floating">Descripción Solución</ion-label>
             <ion-textarea formControlName="descripcion_solucion"></ion-textarea>
           </ion-item>
@@ -62,16 +62,31 @@
 
         <div class="images-container">
           <div class="subheader">
-            <h2>Imagenes seleccionadas</h2>
-            <p *ngIf="!imagenesPrevias.length">No hay imagenes seleccionadas</p>
-            <p *ngIf="imagenesPrevias.length">Toca la imagen para eliminar</p>
+            <h2 *ngIf="formulario.value.estado < 2">Imagenes seleccionadas</h2>
+            <h2 *ngIf="formulario.value.estado == 2">Imagenes estado anterior</h2>
+            <p *ngIf="!imagenesPrevias.length && !imagenesSinSubir.length">No hay imagenes seleccionadas</p>
+            <p *ngIf="imagenesPrevias.length || imagenesSinSubir.length">Toca la imagen para eliminar</p>
           </div>
 
           <!-- Imagenes que ya están guardadas -->
           <app-preview-images [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>
 
           <!-- Imagenes seleccionadas para subir -->
-          <app-preview-images [type]="0" [previewImages]="imagenesSinSubir"></app-preview-images>
+          <app-preview-images *ngIf="formulario.value.estado < 2" [type]="0" [previewImages]="imagenesSinSubir"></app-preview-images>
+        </div>
+
+        <div class="images-container" *ngIf="formulario.value.estado == 2">
+          <div class="subheader">
+            <h2>Imagenes estado actual</h2>
+            <p *ngIf="!imagenesSolucion.length && !imagenesSinSubir.length">No hay imagenes seleccionadas</p>
+            <p *ngIf="imagenesSolucion.length || imagenesSinSubir.length">Toca la imagen para eliminar</p>
+          </div>
+
+          <!-- Imagenes que ya están guardadas -->
+          <app-preview-images [type]="2" [previewImages]="imagenesSolucion"></app-preview-images>
+
+          <!-- Imagenes seleccionadas para subir -->
+          <app-preview-images *ngIf="formulario.value.estado == 2" [type]="0" [previewImages]="imagenesSinSubir"></app-preview-images>
         </div>
 
         <div class="map-container">
@@ -90,7 +105,7 @@
       </form>
     </div>
 
-    <div class="form-container" *ngIf="denuncia && (!user || (user && user.id != denuncia.id_user || denuncia.estado == 2))">
+    <div class="form-container" *ngIf="denuncia && (!user || (user && (user && user.id != denuncia.id_user && user.role && user.role.nivel != 1) && denuncia.estado == 2))">
       <div class="denuncia-container">
 
         <div class="info">
