@@ -88,7 +88,9 @@ export class UserDenunciasPage implements OnInit {
     return (await alert).present();    
   }
 
-
+  agregarDenuncia() {
+    this.router.navigate(['/tabs/denuncias'])
+  }
 
   async eliminar(denuncia) {
     

@@ -11,9 +11,9 @@ export class CardDenunciaComponent implements OnInit {
 
   @Input() user: any;
   @Input() denuncia: any;
-  @Input() estado: string;
+  @Input() estado: any;
   @Output() deleteDenuncia: EventEmitter<any> = new EventEmitter();
-
+  
   constructor(
     private actionSheetController: ActionSheetController,
     private router: Router
