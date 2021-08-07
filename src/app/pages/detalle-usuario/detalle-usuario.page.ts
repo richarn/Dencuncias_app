@@ -80,12 +80,11 @@ export class DetalleUsuarioPage implements OnInit {
       id: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', Validators.required],
-      password : ['', Validators.required],
       ci : ['', Validators.required],
       telefono : ['', Validators.required],
       id_barrio : ['', Validators.required],
       id_role : ['', Validators.required],
-      estado : ['', Validators.required]
+      estado : ['']
     })
   }
 
@@ -94,12 +93,11 @@ export class DetalleUsuarioPage implements OnInit {
       id: [this.usuario.id, Validators.required],
       name: [this.usuario.name, Validators.required],
       email : [this.usuario.email, Validators.required],
-      password : [this.usuario.password, Validators.required],
       ci : [this.usuario.ci, Validators.required],
       telefono : [this.usuario.telefono, Validators.required],
       id_barrio : [this.usuario.id_barrio, Validators.required],
       id_role : [this.usuario.id_role, Validators.required],
-      estado : [this.usuario.estado, Validators.required]
+      estado : [this.usuario.estado]
     })
   }
 
@@ -116,7 +114,7 @@ export class DetalleUsuarioPage implements OnInit {
     this.router.navigate(['/tabs/detalle-usuario']);
 
     if (response.success) {
-      this.generalService.mostrarMensaje('Denuncia enviada correctamente');
+      this.generalService.mostrarMensaje('Usuario actualizado correctamente');
 
       // this.denuncia = respuesta.data;
 

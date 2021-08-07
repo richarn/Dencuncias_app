@@ -7,6 +7,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -34,6 +35,7 @@ import { CustomHttpInterceptor } from './interceptors/http-interceptor';
     Camera,
     Diagnostic,
     Geolocation,
+    PhotoViewer,
     LocationAccuracy,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {

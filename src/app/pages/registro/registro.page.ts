@@ -65,7 +65,7 @@ export class RegistroPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       password_confirmation: [''],
-      ci: ['', Validators.required],
+      ci: ['', [Validators.required, Validators.minLength(7)]],
       telefono: ['', Validators.required],
       id_barrio: ['', Validators.required],
       id_role: [2, Validators.required],
@@ -74,7 +74,12 @@ export class RegistroPage implements OnInit {
   }
 
   async onSubmit() {
-    const datoServicio: any = await this.userService.registro(this.registroForm.value);
+    const data = {...this.registroForm.value};
+    if (this.user && this.user.role.nivel == 1) {
+      data['ignoreToken'] = true;
+    }
+
+    const datoServicio: any = await this.userService.registro(data);
     if (datoServicio.ok) {
       this.generalService.mostrarMensaje('Usuario registrado correctamente');
       this.router.navigate(['/login'])

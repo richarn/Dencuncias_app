@@ -69,10 +69,10 @@
           </div>
 
           <!-- Imagenes que ya están guardadas -->
-          <app-preview-images [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>
+          <app-preview-images [user]="user" [denuncia]="denuncia" [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>
 
           <!-- Imagenes seleccionadas para subir -->
-          <app-preview-images *ngIf="formulario.value.estado < 2" [type]="0" [previewImages]="imagenesSinSubir"></app-preview-images>
+          <app-preview-images *ngIf="formulario.value.estado < 2" [type]="0" [user]="user" [denuncia]="denuncia" [previewImages]="imagenesSinSubir"></app-preview-images>
         </div>
 
         <div class="images-container" *ngIf="formulario.value.estado == 2">
@@ -83,10 +83,10 @@
           </div>
 
           <!-- Imagenes que ya están guardadas -->
-          <app-preview-images [type]="2" [previewImages]="imagenesSolucion"></app-preview-images>
+          <app-preview-images [user]="user" [denuncia]="denuncia" [type]="2" [previewImages]="imagenesSolucion"></app-preview-images>
 
           <!-- Imagenes seleccionadas para subir -->
-          <app-preview-images *ngIf="formulario.value.estado == 2" [type]="0" [previewImages]="imagenesSinSubir"></app-preview-images>
+          <app-preview-images *ngIf="formulario.value.estado == 2" [user]="user" [denuncia]="denuncia" [type]="0" [previewImages]="imagenesSinSubir"></app-preview-images>
         </div>
 
         <div class="map-container">
@@ -105,7 +105,7 @@
       </form>
     </div>
 
-    <div class="form-container" *ngIf="denuncia && (!user || (user && (user && user.id != denuncia.id_user && user.role && user.role.nivel != 1) && denuncia.estado == 2))">
+    <div class="form-container" *ngIf="denuncia && (!user || (user && (user && user.id != denuncia.id_user && user.role && user.role.nivel != 1)))">
       <div class="denuncia-container">
 
         <div class="info">
@@ -128,13 +128,13 @@
         <div class="previous">
           <h3 *ngIf="denuncia.estado == 1">Imagenes del estado actual</h3>
           <h3 *ngIf="denuncia.estado == 2">Imagenes del estado anterior</h3>
-          <app-preview-images [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>  
+          <app-preview-images [user]="user" [denuncia]="denuncia" [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>  
         </div>
   
         <div class="current" *ngIf="denuncia.estado == 2">
           <h3>Imagenes del estado actual</h3>
   
-          <app-preview-images [type]="1" [previewImages]="imagenesSolucion"></app-preview-images>
+          <app-preview-images [user]="user" [denuncia]="denuncia" [type]="1" [previewImages]="imagenesSolucion"></app-preview-images>
           
           <div class="date">
             <h4>Fecha solución:</h4>

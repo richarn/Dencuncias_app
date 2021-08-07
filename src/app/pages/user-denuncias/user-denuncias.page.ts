@@ -48,7 +48,7 @@ export class UserDenunciasPage implements OnInit {
   async obtenerDenuncias(event, query = {}, pull: boolean = false) {
     if (this.user) query['usuario'] = this.user.id;
 
-    const response: any = await this.denunciasService.GetDenuncia(query);
+    const response: any = await this.denunciasService.GetDenuncia(query, pull);
     if (response.ok) {
       this.denuncias.push(...response.body.data);
     }

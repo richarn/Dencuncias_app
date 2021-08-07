@@ -10,6 +10,8 @@ import { GeneralService } from 'src/app/services/general.service';
 })
 export class PreviewImagesComponent implements OnInit, OnChanges {
 
+  @Input() user;
+  @Input() denuncia;
   @Input() type: any; // 0 sin subir, 1 guardadas
   @Input() previewImages: any[] = [];
 
@@ -25,23 +27,27 @@ export class PreviewImagesComponent implements OnInit, OnChanges {
   }
 
   async confirmarEliminacion(index) {
-    const alert = await this.alertController.create({
-      header: 'Eliminar',
-      subHeader: '¿Estas seguro de eliminar la imagen?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {}
-        },
-        {
-          text: 'Aceptar',
-          handler: () => this.eliminar(index)
-        }
-      ]
-    })
+    if (this.user && (this.user.role && this.user.role.nivel == 1 || this.user.id == this.denuncia.id_user)) {
+      const alert = await this.alertController.create({
+        header: 'Eliminar',
+        subHeader: '¿Estas seguro de eliminar la imagen?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {}
+          },
+          {
+            text: 'Aceptar',
+            handler: () => this.eliminar(index)
+          }
+        ]
+      })
 
-    return await alert.present();
+      return await alert.present();
+    } else {
+      this.generalService.previewImage(this.previewImages[index]);
+    }
   }
 
   eliminar(index) {

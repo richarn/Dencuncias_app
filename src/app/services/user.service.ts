@@ -49,7 +49,7 @@ export class UserService {
         .subscribe(
           (response: any) => {
             // Guarda el token de acceso
-            this.storageService.set('token', response.body.access_token);
+            if (response.body.access_token) this.storageService.set('token', response.body.access_token);
             return resolve(response);
           },
           (error) => resolve(error)

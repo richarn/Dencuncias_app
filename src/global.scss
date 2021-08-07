@@ -36,6 +36,10 @@ body {
     font-family: Roboto var(--ion-font-family);
 }
 
+.text-danger {
+    color: var(--ion-color-danger);
+}
+
 ion-item {
     --border-color: transparent;
     &.item-interactive.ion-invalid {

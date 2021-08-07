@@ -37,8 +37,8 @@
 
           <ion-item>
             <ion-label position="floating">C.I</ion-label>
-            <ion-input type="text" formControlName="ci">
-            </ion-input>
+            <ion-input type="text" formControlName="ci"></ion-input>
+            <label class="text-danger" *ngIf="registroForm.controls.ci.dirty && registroForm.controls.ci.hasError('minlength')">Minimo 7 caracteres</label>
           </ion-item>
 
           <ion-item>
@@ -61,7 +61,7 @@
             <ion-label position="floating">Rol Usuario</ion-label>
               
               <ion-select formControlName="id_role">
-                <ion-select-option *ngFor="let rol of roles" [value]="rol.id">{{ rol.nivel }}</ion-select-option>
+                <ion-select-option *ngFor="let rol of roles" [value]="rol.id">{{ rol.nombre }}</ion-select-option>
               </ion-select>
             
           </ion-item>

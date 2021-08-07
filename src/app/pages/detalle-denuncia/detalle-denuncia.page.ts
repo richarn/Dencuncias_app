@@ -100,8 +100,8 @@ export class DetalleDenunciaPage implements OnInit {
     this.subscriptions.push(location);
    }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
+
   //denuncias
   async obtenerDenuncias() {
     this.generalService.showLoading('Cargando...');
@@ -165,7 +165,7 @@ export class DetalleDenunciaPage implements OnInit {
     return (group: FormGroup): { [key: string]: any } => {
       const masterControl = group.controls[masterControlLabel];
       const slaveControl = group.controls[slaveControlLabel];
-      if (eval(`'${masterControl.value}' ${operator} '${conditionalValue}'`) || !masterControl.value) {
+      if (eval(`'${masterControl.value}' ${operator} '${conditionalValue}'`) || (!masterControl.value && masterControlLabel != 'estado')) {
         return Validators.required(slaveControl);
         // switch (type) {
           // case 'required':

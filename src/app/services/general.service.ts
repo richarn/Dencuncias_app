@@ -1,8 +1,8 @@
 import { environment } from 'src/environments/environment';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { StorageService } from './storage.service';
 import { LoadingController, ToastController } from '@ionic/angular';
+
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 const API = environment.api;
 
@@ -17,6 +17,7 @@ export class GeneralService {
   @Output() limpiarImagenes: EventEmitter<any> = new EventEmitter();
 
   constructor(
+    private photoViewer: PhotoViewer,
     private toastController: ToastController,
     private loadingController: LoadingController,
   ) { }
@@ -49,6 +50,10 @@ export class GeneralService {
       };
       getNextTask();
     });
+  }
+
+  previewImage(url) {
+    this.photoViewer.show(url);
   }
 
   async showLoading(message = 'Cargando...') {
