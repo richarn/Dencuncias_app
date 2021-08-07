@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Location } from '@angular/common';
+import { Platform } from '@ionic/angular';
 
 import { LocationService } from './services/location.service';
 import { MenuService } from './services/menu.service';
 import { UserService } from './services/user.service';
+
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +25,8 @@ export class AppComponent implements OnInit {
     private locationService: LocationService,
     private userService: UserService,
     private menuService: MenuService,
+    private platform: Platform,
+    private location: Location,
   ) {}
 
   ngOnInit() {
@@ -38,6 +43,11 @@ export class AppComponent implements OnInit {
       this.user = user;
       this.logged = (user) ? true : false;
     });
+
+    this.platform.backButton
+    .subscribe(() => {
+      this.location.back();
+    })
 
     this.subscriptions.push(userInfo);
   }

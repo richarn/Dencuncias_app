@@ -76,6 +76,7 @@ export class SelectImageComponent implements OnInit {
     if (this.tempImages.length < 3) this.tempImages.push(img);
     else {
       this.alertCantImg();
+      return;
     }
 
     // obtiene la imagen
@@ -86,8 +87,6 @@ export class SelectImageComponent implements OnInit {
     
     this.resultados.emit({ imagenes: [...this.imagenes], preview: [...this.tempImages] });
 
-    this.imagenes = [];
-    this.tempImages = [];
   }
 
   onDestroy() {

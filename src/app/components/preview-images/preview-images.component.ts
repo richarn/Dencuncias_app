@@ -45,7 +45,7 @@ export class PreviewImagesComponent implements OnInit, OnChanges {
       })
 
       return await alert.present();
-    } else {
+    } else if (this.previewImages[index] && !this.previewImages[index].includes('_capacitor_file_')) {
       this.generalService.previewImage(this.previewImages[index]);
     }
   }

@@ -56,7 +56,7 @@
             <p *ngIf="previewImages.length">Toca la imagen para eliminar</p>
           </div>
 
-          <app-preview-images [previewImages]="previewImages"></app-preview-images>
+          <app-preview-images [user]="user" [denuncia]="denunciaForm.value" [type]="0" [previewImages]="previewImages"></app-preview-images>
         </div>
 
         <div class="map-container">

@@ -65,14 +65,21 @@ export class DenunciasPage {
       this.cargandoGeo = false;
     });
 
+    const limpiarImagenes = this.generalService.limpiarImagenes
+    .subscribe(() => {
+      this.imagenes = [];
+      this.previewImages = [];
+    });
+
     const removeImage = this.generalService.removeImage
-    .subscribe(index => {
+    .subscribe(({ index, type }) => {
       if (this.imagenes[index]) this.imagenes.splice(index, 1);
       if (this.previewImages[index]) this.previewImages.splice(index, 1);
     });
 
     this.subscriptions.push(location);
     this.subscriptions.push(removeImage);
+    this.subscriptions.push(limpiarImagenes);
   }
 
   async ngOnInit() {}
