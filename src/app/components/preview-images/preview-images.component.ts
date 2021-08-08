@@ -12,6 +12,7 @@ export class PreviewImagesComponent implements OnInit, OnChanges {
 
   @Input() user;
   @Input() denuncia;
+  @Input() noticia;
   @Input() type: any; // 0 sin subir, 1 guardadas
   @Input() previewImages: any[] = [];
 
@@ -27,7 +28,7 @@ export class PreviewImagesComponent implements OnInit, OnChanges {
   }
 
   async confirmarEliminacion(index) {
-    if (this.user && (this.user.role && this.user.role.nivel == 1 || this.user.id == this.denuncia.id_user)) {
+    if (this.user && (this.user.role && this.user.role.nivel == 1 || this.user.id == this.denuncia.id_user || this.user.id == this.noticia.id_user)) {
       const alert = await this.alertController.create({
         header: 'Eliminar',
         subHeader: '¿Estas seguro de eliminar la imagen?',

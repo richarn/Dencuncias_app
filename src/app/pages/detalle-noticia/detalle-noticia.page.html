@@ -13,7 +13,8 @@
 
       <div class="container-news" *ngIf="noticia">
         <ion-slides class="images" [options]="slideOpts">
-          <ion-slide *ngFor="let imagen of noticia.imagenes" class="image" [style.background-image]="'url(' + (imagen | formatearImagen) + ')'"></ion-slide>
+          <h3 *ngIf="noticia.estado == 1">Imagenes del estado actual</h3>
+          <app-preview-images  [user]="user" [noticia]="noticia" [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>
         </ion-slides>
 
         <div class="title">{{ noticia.titulo }}</div>

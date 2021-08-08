@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from 'src/app/services/general.service';
 
 import { NoticiaService } from 'src/app/services/noticia.service';
+import { UserService } from 'src/app/services/user.service';
 
 import { environment } from 'src/environments/environment';
 
@@ -29,12 +30,17 @@ export class DetalleNoticiaPage implements OnInit {
     },
   }
 
+  imagenes = [];
+  imagenesPrevias = [];
+  imagenesSinSubir = [];
+  user;
   constructor(
     private noticiasService: NoticiaService,
     private generalService: GeneralService,
     private activeRoute: ActivatedRoute,
     private formBuider: FormBuilder,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     this.activeRoute.queryParams.subscribe((params) => {
       if (params.noticia) {
@@ -44,6 +50,10 @@ export class DetalleNoticiaPage implements OnInit {
     });
   }
 
+  async ionViewWillEnter() {
+    // obtener datos del usuario desde el servicio y asignar al formulario
+    this.user = await this.userService.getUser();
+   }
   ngOnInit() {}
 
   async obtenerNoticias() {
@@ -58,4 +68,8 @@ export class DetalleNoticiaPage implements OnInit {
     this.generalService.hideLoading();
   }
 
+  imagenesSeleccionadas({ imagenes, preview }) {
+    this.imagenes = imagenes;
+    this.imagenesSinSubir = preview;
+  }
 }

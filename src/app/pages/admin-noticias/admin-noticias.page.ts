@@ -16,12 +16,12 @@ declare var window: any;
 export class AdminNoticiasPage implements OnInit {
 
   imagenes: any[]=[];
-  previewImages: string[] = [];
+  // previewImages: string[] = [];
 
   user;
   noticias;
   noticiasForm: FormGroup;
-
+  previewImages: any[] = [];
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -38,16 +38,27 @@ export class AdminNoticiasPage implements OnInit {
     //obtener los datos del usuario
     this.user = await this.userService.getUser();
     if (this.user) {this.noticiasForm.controls.id_user.setValue(this.user.id); }
+
+    const limpiarImagenes = this.generalService.limpiarImagenes
+    .subscribe(() => {
+      this.imagenes = [];
+      this.previewImages = [];
+    });
+
+    const removeImage = this.generalService.removeImage
+    .subscribe(({ index, type }) => {
+      if (this.imagenes[index]) this.imagenes.splice(index, 1);
+      if (this.previewImages[index]) this.previewImages.splice(index, 1);
+    });
+
+
+    this.subscriptions.push(removeImage);
+    this.subscriptions.push(limpiarImagenes);
   }
 
 
   ngOnInit() {
-    const removeImage = this.generalService.removeImage
-    .subscribe(index => {
-      if (this.imagenes[index]) this.imagenes.splice(index, 1);
-    });
 
-    this.subscriptions.push(removeImage)
   }
 
   createForm() {
@@ -71,6 +82,7 @@ export class AdminNoticiasPage implements OnInit {
     // se agrega el atributo imagenes con las imagenes a enviar
     data['imagenes'] = this.imagenes;
     
+    
     const respuesta: any = await this.noticiaService.noticias(data);
 
     if (respuesta.success) {
@@ -81,11 +93,16 @@ export class AdminNoticiasPage implements OnInit {
     }   
   }  
  
-  imagenesSeleccionadas(event) {
-    this.imagenes = event.imagenes;
-    this.previewImages = event.preview;
-  }
+  // imagenesSeleccionadas(event) {
+  //   this.imagenes = event.imagenes;
+  //   this.previewImages = event.preview;
+  // }
+  
 
+  imagenesSeleccionadas({ imagenes, preview }) {
+    this.imagenes = imagenes;
+    this.previewImages = preview;
+  }
   onDestroy() {
     this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }

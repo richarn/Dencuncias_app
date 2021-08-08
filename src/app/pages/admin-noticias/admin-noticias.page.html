@@ -40,7 +40,8 @@
             <p *ngIf="previewImages.length">Toca la imagen para eliminar</p>
           </div>
 
-          <app-preview-images [previewImages]="previewImages"></app-preview-images>
+          <!-- <app-preview-images [previewImages]="previewImages"></app-preview-images> -->
+          <app-preview-images [user]="user" [denuncia]="noticiasForm.value" [type]="0" [previewImages]="previewImages"></app-preview-images>
         </div>
 
         <div class="button-group">
