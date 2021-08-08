@@ -83,16 +83,16 @@ export class DetalleDenunciaPage implements OnInit {
     });
 
     const removeImage = this.generalService.removeImage
-    .subscribe(({ index, type }) => {
+    .subscribe(({ index, type:estado }) => {
       if (this.imagenes[index]) this.imagenes.splice(index, 1);
-      if (type == 0 && this.imagenesSinSubir[index]) this.imagenesSinSubir.splice(index, 1);
-      if (type == 1 && this.imagenesPrevias[index]) this.imagenesPrevias.splice(index, 1);
-      if (type == 2 && this.imagenesSolucion[index]) this.imagenesSolucion.splice(index, 1);
+      if (estado == 0 && this.imagenesSinSubir[index]) this.imagenesSinSubir.splice(index, 1);
+      if (estado == 1 && this.imagenesPrevias[index]) this.imagenesPrevias.splice(index, 1);
+      if (estado == 2 && this.imagenesSolucion[index]) this.imagenesSolucion.splice(index, 1);
 
       let imagenesPrevias = this.denuncia.imagenes.filter(imagen => imagen.estado == 0 || imagen.estado == 1);
       let imagenesSolucion = this.denuncia.imagenes.filter(imagen => imagen.estado == 2);
-      if (type == 1 && imagenesPrevias[index]) this.eliminar(imagenesPrevias[index]);
-      if (type == 2 && imagenesSolucion[index]) this.eliminar(imagenesSolucion[index]);
+      if (estado == 1 && imagenesPrevias[index]) this.eliminar(imagenesPrevias[index]);
+      if (estado == 2 && imagenesSolucion[index]) this.eliminar(imagenesSolucion[index]);
     });
 
     this.subscriptions.push(limpiarImagenes);
@@ -185,8 +185,8 @@ export class DetalleDenunciaPage implements OnInit {
   }
 
   imagenesSeleccionadas({ imagenes, preview }) {
-    this.imagenes.push(...imagenes);
-    this.imagenesSinSubir.push(...preview);
+    this.imagenes = imagenes;
+    this.imagenesSinSubir = preview;
   }
 
   getGeo() {

@@ -143,9 +143,9 @@ export class DenunciasPage {
     }
   }
 
-  imagenesSeleccionadas(event) {
-    this.imagenes = event.imagenes;
-    this.previewImages = event.preview;
+  imagenesSeleccionadas({ imagenes, preview }) {
+    this.imagenes = imagenes;
+    this.previewImages = preview;
   }
 
   // async subirImagen(blob: Blob) {
