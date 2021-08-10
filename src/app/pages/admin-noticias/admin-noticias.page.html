@@ -24,11 +24,15 @@
             <ion-label position="floating">Titulo</ion-label>
             <ion-input type="text" formControlName="titulo_noticia">
             </ion-input>
+            <label class="text-danger" *ngIf="noticiasForm.controls.titulo_noticia.dirty && noticiasForm.controls.titulo_noticia.hasError('required')">Complete este campo</label>
+
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Descripción Noticia</ion-label>
             <ion-textarea placeholder="Descripción noticia..." formControlName="descripcion_noticia"></ion-textarea>
+            <label class="text-danger" *ngIf="noticiasForm.controls.descripcion_noticia.dirty && noticiasForm.controls.descripcion_noticia.hasError('required')">Complete este campo</label>
+
           </ion-item>
 
         </ion-list>

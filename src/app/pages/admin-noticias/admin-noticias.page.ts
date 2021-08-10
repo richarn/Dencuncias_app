@@ -65,8 +65,8 @@ export class AdminNoticiasPage implements OnInit {
     console.log('createForm: asdf');
      
     this.noticiasForm = this.formBuilder.group({
-    titulo_noticia: ['', Validators.required],
-    descripcion_noticia: ['', Validators.required],
+    titulo_noticia: ['', [Validators.required, Validators.nullValidator]],
+    descripcion_noticia: ['', [Validators.required, Validators.nullValidator]],
     estado : [0, Validators.required],
     id_user : ['', Validators.required],
 
