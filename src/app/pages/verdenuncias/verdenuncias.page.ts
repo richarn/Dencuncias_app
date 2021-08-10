@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
+
+import { FiltrosComponent } from 'src/app/components/filtros/filtros.component';
 
 import { DenunciaService } from 'src/app/services/denuncia.service';
-import { BarrioService } from 'src/app/services/barrio.service';
 import { UserService } from 'src/app/services/user.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-verdenuncias',
@@ -16,20 +16,16 @@ export class VerdenunciasPage {
 
   user;
   idDenuncia;
-  barrios = [];
   denuncias = [];
 
   scrolling = false;
-  filterForm: FormGroup;
   infScrollDisabled: boolean = false;
 
   constructor(
+    private modalController: ModalController,
     private denunciaService: DenunciaService,
-    private barrioService: BarrioService,
     private activeRoute: ActivatedRoute,
     private userService: UserService,
-    private formBuilder: FormBuilder,
-    private navCtrl: NavController,
     private router: Router,
   ) {
 
@@ -48,15 +44,7 @@ export class VerdenunciasPage {
     this.user = await this.userService.getUser();
   }
 
-  ngOnInit() {
-  }
-
-  createForm() {
-    this.filterForm = this.formBuilder.group({
-      id_barrio: [''],
-      fecha: ['']
-    });
-  }
+  async ngOnInit() {}
 
   async obtenerDenuncias(event, query = {}, pull: boolean = false) {
     if (!query['estado']) query['estado'] = 1;
@@ -75,15 +63,21 @@ export class VerdenunciasPage {
     this.scrolling = false;
   }
 
-  async obtenerBarrios() {
-    const response: any = await this.barrioService.barrios();
-    if (response.success) {
-      this.barrios = response.barrios;
-    }
-  }
+  async showFilters() {
+    const modal = await this.modalController.create({
+      component: FiltrosComponent,
+      cssClass: 'max-height-40 align-items-end'
+    });
 
-  filtrar(event) {
-    this.obtenerDenuncias(this.filterForm.value);
+    await modal.present();
+
+    modal.onWillDismiss()
+    .then(event => {
+      if (event.data) {
+        this.denuncias = [];
+        this.obtenerDenuncias(null, event.data, true);
+      }
+    })
   }
 
   redirectTo(denuncia) {

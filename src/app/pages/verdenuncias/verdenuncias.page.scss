@@ -36,6 +36,13 @@ ion-content {
                     color: rgba(59, 62, 81, 1);
                 }
             }
+
+            .title {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 0.5em;
+            }
+
             ion-list {
                 border-radius: 30px;
                 padding: 2em;

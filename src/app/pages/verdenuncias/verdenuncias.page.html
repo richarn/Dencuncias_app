@@ -20,6 +20,14 @@
                             <ion-searchbar mode="ios" placeholder="Buscar"></ion-searchbar>
                         </ion-col>
                     </ion-row> -->
+                    <ion-row (click)="showFilters()">
+                        <ion-col size="12">
+                            <h2 class="title">
+                                <span>Filtrar denuncias</span>
+                                <ion-icon slot="end" name="options-outline"></ion-icon>
+                            </h2>
+                        </ion-col>
+                    </ion-row>
                 </ion-grid>
         
                 <ion-grid *ngIf="denuncias.length">
