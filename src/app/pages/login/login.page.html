@@ -27,12 +27,15 @@
                        formControlName="email"
                        required>
             </ion-input>
+            <label class="text-danger" *ngIf="loginForm.controls.email.dirty && loginForm.controls.email.hasError('email')">Ingrese una cuenta válida</label>
+            
           </ion-item>
-    
+          
           <ion-item>
             <ion-label position="floating">Contraseña</ion-label>
             <ion-input type="password" formControlName="password">
             </ion-input>
+            <label class="text-danger" *ngIf="loginForm.controls.password.dirty && loginForm.controls.password.hasError('required')">Complete este campo</label>
           </ion-item>
           
           <div class="button-group">
