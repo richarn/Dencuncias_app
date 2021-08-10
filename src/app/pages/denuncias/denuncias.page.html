@@ -27,11 +27,14 @@
             <ion-select formControlName="id_barrio" placeholder="Barrio">
               <ion-select-option *ngFor="let barrio of barrios" [value]="barrio.id">{{ barrio.descripcion }}</ion-select-option>
             </ion-select>
+            <label class="text-danger" *ngIf="denunciaForm.controls.id_barrio.dirty && denunciaForm.controls.id_barrio.hasError('required')">Seleccione un barrio</label>
           </ion-item>
     
           <ion-item>
             <ion-label position="floating">Descripción Denuncia</ion-label>
-            <ion-textarea placeholder="Descripción..." formControlName="descripcion_denuncia"></ion-textarea >
+            <ion-textarea placeholder="Descripción..." formControlName="descripcion_denuncia"></ion-textarea>
+            <label class="text-danger" *ngIf="denunciaForm.controls.descripcion_denuncia.dirty && denunciaForm.controls.descripcion_denuncia.hasError('required')">Complete este campo</label>
+
           </ion-item>
   
           <ion-item>

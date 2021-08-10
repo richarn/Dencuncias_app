@@ -87,8 +87,8 @@ export class DenunciasPage {
   createForm() {
     this.denunciaForm = this.formBuilder.group({
       id: [''],
-      id_barrio: ['', Validators.required],
-      descripcion_denuncia: ['', Validators.required],
+      id_barrio: ['', [Validators.required, Validators.nullValidator]],
+      descripcion_denuncia: ['', [Validators.required, Validators.nullValidator]],
       estado : [0, Validators.required],
       ubicacion : ['', Validators.required],
       id_user : ['', Validators.required],
