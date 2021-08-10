@@ -1,24 +1,23 @@
 {
-  "appId": "com.yregua",
-  "appName": "Yregua",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www",
-  "linuxAndroidStudioPath": "/media/richar/OS/MisDatosUMate/android-studio/bin/studio.sh",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {},
-  "server": {
-    "allowNavigation": [
-      "localhost:8101/*",
-      "localhost:8100/*",
-      "localhost:8000/*",
-      "yregua.com/*"
-    ],
-    "url": "http://localhost:8100",
-    "cleartext": true
-  }
+	"appId": "com.yregua",
+	"appName": "Yregua",
+	"bundledWebRuntime": false,
+	"npmClient": "npm",
+	"webDir": "www",
+	"linuxAndroidStudioPath": "/media/richar/OS/MisDatosUMate/android-studio/bin/studio.sh",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"cordova": {},
+	"server": {
+		"allowNavigation": [
+			"localhost:8101/*",
+			"localhost:8100/*",
+			"localhost:8000/*",
+			"yregua.com/*"
+		],
+		"url": "http://localhost:8100"
+	}
 }

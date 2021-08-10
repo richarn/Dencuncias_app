@@ -13,7 +13,6 @@
 
       <div class="container-news" *ngIf="noticia">
         <ion-slides class="images" [options]="slideOpts">
-          <h3 *ngIf="noticia.estado == 1">Imagenes del estado actual</h3>
           <app-preview-images  [user]="user" [noticia]="noticia" [type]="1" [previewImages]="imagenesPrevias"></app-preview-images>
         </ion-slides>
 

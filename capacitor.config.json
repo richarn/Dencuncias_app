@@ -17,8 +17,6 @@
       "localhost:8100/*",
       "localhost:8000/*",
       "yregua.com/*"
-    ],
-    "url": "http://localhost:8100",
-    "cleartext": true
+    ]
   }
 }

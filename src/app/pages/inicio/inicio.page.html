@@ -34,11 +34,11 @@
     </div>
   
     <div class="form-container">
-      <ion-searchbar mode="ios" placeholder="Buscar noticias" type="text" (ionChange)="onSearchChange($event)" [debounce]="250"></ion-searchbar>
+      <!-- <ion-searchbar mode="ios" placeholder="Buscar noticias" type="text" (ionChange)="onSearchChange($event)" [debounce]="250"></ion-searchbar> -->
   
       <div class="trending">
 
-        <h3>DESTACADOS</h3>
+        <h3>DESTACADAS</h3>
 
         <div class="news-container" *ngIf="noticia">
           <div class="selected-news" (click)="redirectTo(noticia)" [style.background-image]="'url(' + (noticia.imagenes | comprobarImagen) + ')'">
