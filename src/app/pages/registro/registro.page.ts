@@ -61,15 +61,15 @@ export class RegistroPage implements OnInit {
 
   createForm() {
     this.registroForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z][^0-9]*$')]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      password_confirmation: [''],
+      password: ['', [Validators.required, Validators.nullValidator]],
+      password_confirmation: ['', Validators.nullValidator],
       ci: ['', [Validators.required, Validators.minLength(7)]],
-      telefono: ['', Validators.required],
-      id_barrio: ['', Validators.required],
-      id_role: [2, Validators.required],
-      estado: [1, Validators.required]
+      telefono: ['', [Validators.required, Validators.nullValidator]],
+      id_barrio: ['', [Validators.required, Validators.nullValidator]],
+      id_role: [2, [Validators.required, Validators.nullValidator]],
+      estado: [1, [Validators.required, Validators.nullValidator]]
     });
   }
 
