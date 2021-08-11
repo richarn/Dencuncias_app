@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ContactoService } from 'src/app/services/contacto.service';
 
 @Component({
   selector: 'app-info',
@@ -15,7 +16,9 @@ export class InfoPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private contactoService: ContactoService
+
   ) {
     this.activatedRoute.params
     .subscribe(params => {
