@@ -44,6 +44,8 @@ export class FiltrosComponent implements OnInit {
 
   confirm() {
     this.modalController.dismiss(this.filterForm.value);
+    console.log("form", this.filterForm.value);
+    
   }
 
   close() {

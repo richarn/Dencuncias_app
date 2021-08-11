@@ -39,7 +39,7 @@ export class VerdenunciasPage {
 
   async ionViewWillEnter() {
     this.refresh(null);
-
+    
     // obtener datos del usuario desde el servicio y asignar al formulario
     this.user = await this.userService.getUser();
   }
