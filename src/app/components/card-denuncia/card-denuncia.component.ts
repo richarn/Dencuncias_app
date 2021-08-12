@@ -21,7 +21,7 @@ export class CardDenunciaComponent implements OnInit {
 
   ngOnInit() { }
   async showOptions() {
-    if (this.user && this.user.role && this.user.role.nivel == 1) {
+    if (this.user && this.user.role && this.user.role.nivel == 1 || this.user.role.nivel != 1) {
       const sheet = await this.actionSheetController.create({
         buttons: [
           {
