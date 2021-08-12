@@ -59,7 +59,8 @@ export class InfoPage implements OnInit {
     const result: any = await this.contactoService.crear(this.contactForm.value);
     if (result.success) {
       this.generalService.mostrarMensaje('Mensaje enviado.');
-      this.router.navigate(['/contacto'])
+      this.contactForm.reset();
+
     } else {
       this.generalService.mostrarMensaje('El mensaje no pudo ser enviado.');
     }
