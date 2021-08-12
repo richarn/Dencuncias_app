@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ContactoService } from 'src/app/services/contacto.service';
+import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
   selector: 'app-info',
@@ -17,7 +18,9 @@ export class InfoPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private contactoService: ContactoService
+    private contactoService: ContactoService,
+    private generalService: GeneralService,
+    private router: Router
 
   ) {
     this.activatedRoute.params
@@ -48,9 +51,20 @@ export class InfoPage implements OnInit {
 
   createForm() {
     this.contactForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      subject: ['', Validators.required],
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
     })
+  }
+  async onSubmit() {
+    const result: any = await this.contactoService.crear(this.contactForm.value);
+    if (result.success) {
+      this.generalService.mostrarMensaje('Mensaje enviado.');
+      this.router.navigate(['/contacto'])
+    } else {
+      this.generalService.mostrarMensaje('El mensaje no pudo ser enviado.');
+    }
+
+    this.generalService.hideLoading();
   }
 
 }
