@@ -14,8 +14,15 @@
 
     <ion-title text-capitalize>{{ titulo }}</ion-title>
 
-    <ion-avatar slot="end">
-      <!-- <img src="assets/icon/white-icon.png" /> -->
+    <ion-avatar slot="end" color="success" (click)="redirectTo(contacto)">
+      <img src="assets/images/chat.jpg"/>
     </ion-avatar>
+    <!-- <ion-icon name="chatbubbles"></ion-icon> -->
+      <!-- <ion-fab vertical="top" horizontal="end" slot="end">
+        <ion-fab-button class="ifab" size="small"  color="primary">
+        </ion-fab-button>
+      </ion-fab>
+         -->
+
   </ion-toolbar>
 </ion-header>

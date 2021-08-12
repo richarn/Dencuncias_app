@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,10 +13,11 @@ export class HeaderComponent implements OnInit {
   @Input() titulo:  string;
   
   user;
-
+  contacto;
   constructor(
     private userService: UserService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {
     //this.inicializarFormulario;
    }
@@ -31,7 +33,12 @@ export class HeaderComponent implements OnInit {
     })
   }
 
+
     
+  redirectTo(contacto) {
+    this.router.navigate(['/info/contacto']);
+  }
+
   back() {
     this.location.back();
   }
