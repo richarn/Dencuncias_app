@@ -152,6 +152,7 @@
           <div class="state">
             <h4>Estado:</h4>
             <p>{{ denuncia.estado == 2 ? 'Solucionado' : 'Pendiente de solución' }}</p>
+            <p style="color: red;">{{ denuncia.estado == 0 ? 'Pendiente' : 'Pendiente de solución' }}</p>
           </div>
 
         </div>
